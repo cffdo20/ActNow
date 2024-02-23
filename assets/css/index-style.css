@@ -1,0 +1,76 @@
+
+body{
+    font-family: 'Rubik', sans-serif !important; 
+}
+
+/* NAVBAR */
+.navbar{
+    background-color: #2346A6; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.navbar .btn{
+    border-radius: 50px; 
+    background-color: #F4D35E; 
+}
+
+.img{
+    max-width: 45px; 
+    height: auto; 
+}
+
+#actnow-name{
+    font-weight: 500; 
+}
+
+.btn-acessibilidade{
+    background-color: #333; 
+}
+
+
+/* HOVER - NAVBAR */
+.navbar .nav-link:hover{
+    text-decoration: underline; 
+    text-decoration-color: #fff; 
+    text-decoration-thickness: 2px;
+
+}
+
+.navbar .btn:hover{
+    transform: scale(1.1); 
+    transition: transform 0.3s ease-in-out; 
+
+}
+
+/* MAIN SECTION */
+.main-btn{
+    background-color: #158CBA; 
+    color: #fff; 
+    border-radius: 50px; 
+    padding: 0.3rem 2rem 0.3rem 2rem; 
+}
+
+
+/* HOVER - MAIN SECTION */
+.main-btn:hover{
+    transform: scale(1.1); 
+    transition: transform 0.3s ease-in-out;
+    color: #fff;  
+    border: 0.3px solid rgba(0, 0, 0, 0.177); 
+}
+
+.login-btn:hover{
+    text-decoration: underline; 
+    text-decoration-thickness: 2px;
+}
+
+
+
+/* AREAS SECTION */
+.areas-container{
+    background-color: #F2EFE5; 
+}
+
+
+
+/* FOOTER */

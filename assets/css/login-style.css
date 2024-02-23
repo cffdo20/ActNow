@@ -1,0 +1,14 @@
+.form-container{
+    background-color: #f0f0f0;
+    border-radius: 30px; 
+    width: fit-content; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.form-control{
+    border-radius: 30px; 
+}
+
+.login-widget{
+    border-radius: 4.25rem; 
+}
