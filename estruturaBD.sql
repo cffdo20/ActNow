@@ -2,10 +2,10 @@ create schema actnow2024;
 use actnow2024;
 
 create table usuario(
-	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT '10000',
+	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT,
     ususername varchar(20) not null,
     usemail varchar(80) not null,
-    primary key (usucodigo)
+    primary key (uscodigo)
 );
 
 create table instituicao(
@@ -19,7 +19,7 @@ create table instituicao(
 
 create table voluntario(
 	volcpf char(11) not null,
-    volusacod int not null,
+    voluscod int unsigned not null,
     volnome varchar(80) not null,
     volnomesocial varchar(100) null,
     volbio varchar(300),
@@ -40,30 +40,95 @@ create table projetosocial(
     projdatainicio date not null,
     projdatafinal date null,
     projstatus tinyint not null,
-    projuscodigo int not null,
+    projuscodigo int unsigned not null,
     primary key(projid),
     foreign key (projuscodigo) references usuario (uscodigo)
 );
 
-create table atividade();
+create table atividade(
+	atid int unsigned not null auto_increment,
+    attitulo varchar(100) not null,
+    atdescricao varchar(50) not null,
+    atdataentrega date null,
+    atstatus tinyint not null,
+    atprojid int unsigned not null,
+    primary key (atid),
+    foreign key (atprojid) references projetosocial(projid)
+);
 
 create table cidade(
 	cidcodigo int unsigned not null auto_increment,
-    
+    cidnome varchar(40) not null,
+    cidestcod int unsigned not null,
+    primary key (cidcodigo),
+    foreign key (cidestcod) references estado (estcodigo)
 );
 
-create table estado();
+create table estado(
+	estcodigo int unsigned not null auto_increment,
+    estsigla char(2) unique not null,
+    estnome varchar(30) unique not null,
+    primary key (estcodigo)
+);
 
-create table habilidade();
+create table habilidade(
+	habid int unsigned not null auto_increment,
+    habnome varchar(20),
+    primary key (habid)
+);
 
-create table voluntariohabilidade();
+create table voluntariohabilidade(
+	volhabid int unsigned not null,
+    volhabcpf char(11) not null,
+    primary key(volhabid, volhabcpf),
+    foreign key (volhabid) references habilidade(habid),
+    foreign key (volhabcpf) references voluntario(volcpf)
+);
 
-create table diasemana();
+create table diasemana(
+	dsid int unsigned not null auto_increment,
+    dsnomeclatura varchar(15) not null,
+    primary key (dsid)
+);
 
-create table turnodia();
+create table turnodia(
+	turid int unsigned not null auto_increment,
+    turnomeclatura varchar(10) not null,
+    primary key (turid)
+);
 
-create table voluntariodiasemana();
+create table voluntariodiasemana(
+	voldsid int unsigned not null,
+    voldscpf char(11) not null,
+    voldsturid int unsigned not null,
+    primary key(voldsid,voldscpf),
+    foreign key (voldsid) references diasemana(dsid),
+    foreign key (voldscpf) references voluntario(volcpf),
+    foreign key (voldsturid) references turnodia(turid)
+);
 
-create table voluntarioprojeto();
+create table voluntarioprojeto(
+	volprojid int unsigned not null,
+    volprojcpf char(11) not null,
+    primary key(volprojid, volprojcpf),
+    foreign key (volprojid) references projetosocial(projid),
+    foreign key (volprojcpf) references voluntario(volcpf)
+);
 
-create table instituicaoprojeto();
+create table instituicaoprojeto(
+	instprojid int unsigned not null,
+    instprojcnpj char(14) not null,
+    primary key(instprojid, instprojcnpj),
+    foreign key (instprojid) references projetosocial(projid),
+    foreign key (instprojcnpj) references instituicao(instcnpj)
+);
+
+create table projetofuncionamento(
+	projfunprojid int unsigned not null,
+    projfundsid int unsigned not null,
+    projfunturid int unsigned not null,
+    primary key(projfunprojid, projfundsid, projfunturid),
+    foreign key (projfundsid) references diasemana(dsid),
+    foreign key (projfunprojid) references projetosocial(projid),
+    foreign key (projfunturid) references turnodia(turid)
+);
