@@ -1,3 +1,4 @@
+drop schema actnow2024;
 create schema actnow2024;
 use actnow2024;
 
