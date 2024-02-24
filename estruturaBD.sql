@@ -17,6 +17,21 @@ create table instituicao(
     FOREIGN KEY (instuscod) REFERENCES usuario (uscodigo)
 );
 
+create table estado(
+	estcodigo int unsigned not null auto_increment,
+    estsigla char(2) unique not null,
+    estnome varchar(30) unique not null,
+    primary key (estcodigo)
+);
+
+create table cidade(
+	cidcodigo int unsigned not null auto_increment,
+    cidnome varchar(40) not null,
+    cidestcod int unsigned not null,
+    primary key (cidcodigo),
+    foreign key (cidestcod) references estado (estcodigo)
+);
+
 create table voluntario(
 	volcpf char(11) not null,
     voluscod int unsigned not null,
@@ -54,21 +69,6 @@ create table atividade(
     atprojid int unsigned not null,
     primary key (atid),
     foreign key (atprojid) references projetosocial(projid)
-);
-
-create table cidade(
-	cidcodigo int unsigned not null auto_increment,
-    cidnome varchar(40) not null,
-    cidestcod int unsigned not null,
-    primary key (cidcodigo),
-    foreign key (cidestcod) references estado (estcodigo)
-);
-
-create table estado(
-	estcodigo int unsigned not null auto_increment,
-    estsigla char(2) unique not null,
-    estnome varchar(30) unique not null,
-    primary key (estcodigo)
 );
 
 create table habilidade(
