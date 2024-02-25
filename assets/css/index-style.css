@@ -21,10 +21,11 @@ body{
 
 #actnow-name{
     font-weight: 500; 
+    color: #ee964b;
 }
 
 .btn-acessibilidade{
-    background-color: #333; 
+    background-color: #333333; 
 }
 
 
@@ -51,6 +52,7 @@ body{
 }
 
 
+
 /* HOVER - MAIN SECTION */
 .main-btn:hover{
     transform: scale(1.1); 
@@ -63,6 +65,9 @@ body{
     text-decoration: underline; 
     text-decoration-thickness: 2px;
 }
+
+
+
 
 
 

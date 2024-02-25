@@ -1,8 +1,9 @@
 .form-container{
-    background-color: #f0f0f0;
+    background-color: #F3F1EB;
     border-radius: 30px; 
     width: fit-content; 
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
 }
 
 .form-control{
@@ -11,4 +12,19 @@
 
 .login-widget{
     border-radius: 4.25rem; 
+}
+
+.btn{
+    border-radius: 50px; 
+}
+
+.form-control{
+    font-weight: 300; 
+}
+
+#password-btn{
+    position: absolute; 
+    right: 10px; 
+    top: 43%; 
+    
 }
