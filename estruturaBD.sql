@@ -64,7 +64,7 @@ create table projetosocial(
 create table atividade(
 	atid int unsigned not null auto_increment,
     attitulo varchar(100) not null,
-    atdescricao varchar(50) not null,
+    atdescricao varchar(200) not null,
     atdataentrega date null,
     atstatus tinyint not null,
     atprojid int unsigned not null,
@@ -102,7 +102,7 @@ create table voluntariodiasemana(
 	voldsid int unsigned not null,
     voldscpf char(11) not null,
     voldsturid int unsigned not null,
-    primary key(voldsid,voldscpf),
+    primary key(voldsid,voldscpf,voldsturid),
     foreign key (voldsid) references diasemana(dsid),
     foreign key (voldscpf) references voluntario(volcpf),
     foreign key (voldsturid) references turnodia(turid)
@@ -124,7 +124,7 @@ create table instituicaoprojeto(
     foreign key (instprojcnpj) references instituicao(instcnpj)
 );
 
-create table projetofuncionamento(
+create table projetosocialfuncionamento(
 	projfunprojid int unsigned not null,
     projfundsid int unsigned not null,
     projfunturid int unsigned not null,
