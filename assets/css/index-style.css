@@ -76,9 +76,24 @@ body{
     background-color: #F2EFE5; 
 }
 
+.subject-container{
+    background-color: white; 
+    border-radius: 50px; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+}
+
 
 
 /* FOOTER */
 .footer{
     background-color: #2346A6;
+}
+
+
+/* FOOTER - HOVER */
+footer a:hover{
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    
+
 }
