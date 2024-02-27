@@ -12,6 +12,7 @@
 
 .login-widget{
     border-radius: 4.25rem; 
+    max-width: 80%; 
 }
 
 .btn{
