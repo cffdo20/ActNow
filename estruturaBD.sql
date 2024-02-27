@@ -1,4 +1,4 @@
-drop schema actnow2024;
+drop schema if exists actnow2024;
 create schema actnow2024;
 use actnow2024;
 
@@ -56,9 +56,9 @@ create table projetosocial(
     projdatainicio date not null,
     projdatafinal date null,
     projstatus tinyint not null,
-    projuscodigo int unsigned not null,
+    projuscod int unsigned not null,
     primary key(projid),
-    foreign key (projuscodigo) references usuario (uscodigo)
+    foreign key (projuscod) references usuario (uscodigo)
 );
 
 create table atividade(

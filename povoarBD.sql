@@ -759,7 +759,7 @@ values (10, '12345678910'),
 		(16, '12345678910');
 
 -- inserindo projetos sociais
-insert into projetosocial(projtitulo, projdescricao, projpublicoalvo, projjustificativa, projobjetivos, projdatainicio, projdatafinal, projstatus, projuscodigo)
+insert into projetosocial(projtitulo, projdescricao, projpublicoalvo, projjustificativa, projobjetivos, projdatainicio, projdatafinal, projstatus, projuscod)
 values ('Construindo Comunidades', 'Um projeto para construir espaços comunitários que promovam a inclusão e a solidariedade.', 'Moradores de comunidades carentes', 'O projeto visa promover o senso de comunidade e melhorar a qualidade de vida dos moradores.', 'Construir um centro comunitário e organizar eventos culturais e educacionais.', '2024-03-01', NULL, 1, 5),
 		('Educação para Todos', 'Um projeto para fornecer acesso à educação de qualidade para crianças carentes.', 'Crianças de comunidades carentes', 'O projeto visa combater a desigualdade social através da educação.', 'Construir uma escola e fornecer materiais educacionais.', '2024-02-15', NULL, 1, 12),
 		('Horta Comunitária', 'Um projeto para criar uma horta comunitária e promover hábitos alimentares saudáveis.', 'Moradores locais de todas as idades', 'O projeto visa aumentar o acesso a alimentos frescos e saudáveis e promover a sustentabilidade.', 'Construir uma horta comunitária e oferecer workshops sobre agricultura urbana.', '2024-04-01', NULL, 1, 9),
