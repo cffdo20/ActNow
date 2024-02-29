@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="assets/js/script.js"defer ></script>
+    
     <link rel="stylesheet" href="assets/css/index-style.css">
 
     <title>ActNow</title>
@@ -18,7 +20,7 @@
     <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
         <div class="container-fluid">
 
-            <a href="index.html" class="navbar-brand text-light "><img class = "img img-fluid me-2"src="assets/img/logo.png" alt="Logo do ActNow">ActNow</a>
+            <a href="index.html" class="logo-name navbar-brand text-light "><img class = "img img-fluid me-2"src="assets/img/logo.png" alt="Logo do ActNow">ActNow</a>
 
             <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,7 +30,7 @@
                 <ul class="navbar-nav ms-auto">
 
                     <li class="nav-item">
-                        <a href="cadastrar-projeto.html" class = "nav-link text-light">Projetos</a>
+                        <a href="./view/cadastrar-projeto.html" class = "nav-link text-light">Projetos</a>
                     </li>
 
                     <li class="nav-item">
@@ -60,8 +62,8 @@
         <div class="container ms-auto mt-4">
             <div class="row">
                 <div class="col-lg-6  mt-2 p-1 p-md-5">
-                    <h1 class ="display-5 pb-4 text-center text-md-start">Conheça o ActNow</h1>
-                    <p class = "lead text-center text-md-start">O <span id = "actnow-name">ActNow</span> é uma comunidade para Gerenciamento de Ações Sociais e Recrutamento de voluntários em Projetos Educacionais.</p>
+                    <h1 class ="main-name display-5 pb-4 text-center text-md-start">Conheça o <span id = "actnow-name">ActNow</span></h1>
+                    <p class = "lead text-center text-md-start">O ActNow é uma comunidade para Gerenciamento de Ações Sociais e Recrutamento de voluntários em Projetos Educacionais.</p>
 
                     <p class = "lead text-center text-md-start">Inscreva-se e participe de um evento de seu interesse!</p>
                     
@@ -88,42 +90,88 @@
 
     <section>
         <div class="areas-container container-fluid pb-3">
-            <h4 class = "lead text-center pt-3 pb-3">Inscreva-se nos eventos que mais combinam com você</h2>
-            <div class="row">
+            <h4 class = " text-center pt-3 pb-3">Participe dos projetos que mais combinam com você</h2>
+            <div class="container">
+                <div class="row">
                 
-                <div class="col-lg-3">
-                    <div class="subject-container text-center">
-                        <h5>Tecnologia</h5>
+                    <div class="col-lg-4 pb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="bi bi-laptop"></span>
+                                <h5 id = "card-tecnologia"class="card-title">Tecnologia</h5>
+                                <p class="card-text">Tem habilidades em informática, programação ou design? Junte-se a projetos educacionais e inspire jovens a explorarem o mundo da tecnologia. </p>
+                                <a href=""></a>
+                            </div>
+                        </div>
                     </div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis quibusdam unde molestiae. Vero corporis est dolor, itaque accusamus dignissimos pariatur perspiciatis! Impedit nam nobis ratione maiores? Non, consequuntur. Pariatur, a?
-                </div>
-                <div class="col-lg-3">
-                    <div class="subject-container text-center">
-                        <h5 class = "text-primary">Matemática</h5>
-                    </div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores temporibus atque praesentium quos. Sit architecto sapiente deleniti soluta quaerat! Quos maxime numquam ex maiores. Possimus eum eaque alias facilis.
 
-                </div>
-                <div class="col-lg-3">
-                    <div class="subject-container text-center">
-                        <h5 class = "text-secondary">Saúde</h5>
+                    <div class="col-lg-4 pb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="bi bi-calculator"></span>
+                                <h5 id = "card-matematica" class="card-title">Matemática</h5>
+                                <p class="card-text">Você adora desafios matemáticos e tem o dom de ensinar? Participe de projetos educacionais e seja um mentor para jovens estudantes.</p>
+                                <a href=""></a>
+                            </div>
+                        </div>
                     </div>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex, labore dolore quo nisi nam, ipsa excepturi asperiores porro vel sunt dolorem mollitia alias corporis quis assumenda hic modi, facilis aliquid.
-
-                </div>
-                <div class="col-lg-3">
-                    <div class="subject-container text-center">
-                        <h5 class = "text-warning">Cultura</h5>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="bi bi-bandaid"></span>
+                                <h5 id = "card-saude" class="card-title">Saúde</h5>
+                                <p class="card-text">Preocupa-se com o bem-estar dos jovens e deseja promover hábitos saudáveis desde cedo? Junte-se a projetos educacionais na área da saúde.</p>
+                                <a href=""></a>
+                            </div>
+                        </div>
                     </div>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum deserunt, odit, voluptatibus ad sapiente necessitatibus excepturi, doloremque beatae recusandae ut exercitationem! Quae nulla rerum eligendi molestiae atque maiores, fuga facere.
-
+                        
                 </div>
+
+                <div class="row pt-4 pb-4">
+                    <div class="col-lg-4 pb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="bi bi-music-note"></span>
+                                <h5 id = "card-musica" class="card-title">Música</h5>
+                                <p class="card-text">Você é apaixonado por música e quer compartilhar essa paixão com jovens talentosos? Participe de projetos educacionais na área da música e ofereça aulas de instrumentos e muito mais.</p>
+                                <a href=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 pb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="bi bi-book"></span>
+                                <h5 id = "card-cultura" class="card-title">Cultura</h5>
+                                <p class="card-text">Valoriza a preservação das tradições culturais e o enriquecimento do patrimônio histórico? Junte-se a projetos que ofereçam atividades como oficinas de artesanato e passeios históricos.</p>
+                                <a href=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <span class="bi bi-megaphone"></span>
+                                <h5 id = "card-linguagens" class="card-title">Linguagens</h5>
+                                <p class="card-text">Você tem gosto por idiomas e literatura e deseja inspirar jovens a explorarem o mundo da comunicação? Participe de projetos educacionais na área de linguagens e ofereça aulas de línguas.</p>
+                                <a href=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <p class = "lead text-center pt-2">E mais...</p> -->
+                </div>
+
+
+                
             </div>
             
             
         </div>
     </section>
     <!-- FIM DA SESSÃO ÁREAS -->
+
+
 
     <!-- FOOTER -->
     <footer>
@@ -171,6 +219,8 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script> -->
     
 </body>
 </html>

@@ -6,6 +6,13 @@
 
 }
 
+.header-container{
+    background-color: #8192B0;
+
+    border-top-left-radius: 28px;
+    border-top-right-radius: 10px;
+}
+
 .form-control{
     border-radius: 30px; 
 }
@@ -14,6 +21,7 @@
     border-radius: 4.25rem; 
     max-width: 80%; 
 }
+
 
 .btn{
     border-radius: 50px; 
