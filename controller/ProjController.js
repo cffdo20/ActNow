@@ -6,8 +6,11 @@ class ProjController {
         publicoAlvoProj, justificativaProj, objetivosProj,
         dataInicioProj, statusProj) {
         
+        // Converter a Data
+        this.dataInicioProj = new Date(dataInicioProj);
+
         var novoProjeto = new ProjetoSocial(idProjeto, tituloProj, descricaoProj, publicoAlvoProj,
-            justificativaProj, objetivosProj, dataInicioProj, statusProj);
+            justificativaProj, objetivosProj, this.dataInicioProj, statusProj);
         
         novoProjeto.adicionarGestorProj(usuario);
         

@@ -2,23 +2,21 @@
 const Usuario = require('./model/Usuario.js');
 const ProjetoSocial = require('./model/ProjetoSocial.js');
 
-// Importando módulo ProjController
+// Importando módulos Controllers
 const ProjController = require('./controller/ProjController.js');
+const UsuController = require('./controller/UsuController.js');
 
 /** Simulação de evento de usario criando um Projeto */
-// Recebemos uma instancia de usuário
-const usuario = new Usuario(1, 'josed', 'josediogo@gmail.com', 'diogo123');
+// Recebemos uma instancia de usuário de exemplo
+const usuario = UsuController.gerarUsuarioExemplo();
 
-// Recebemos os dados do proeto informados pelo usuário
+// Recebemos os dados do projeto informados pelo Front-End
 const idProjeto = 1, tituloProj = 'Educando o Futuro', descricaoProj = 'Projeto voltado a educação de crianças em computação',
       publicoAlvoProj = 'Crianças entre 5 e 10 anos', justificativaProj = 'Quanto antes as crianças tiverem contato com a computação teremos melhores programadores no futuro',
-      objetivosProj = 'Ensinar a base de lógica de computação e algoritmos para crianças', statusProj = 1;
-const dataInicioProj = new Date('2024-02-29'); // Data de início
+      objetivosProj = 'Ensinar a base de lógica de computação e algoritmos para crianças', dataInicioProj = '2024-03-05T18:30:00', statusProj = 1;
 
 // A função que cria um projeto é chamada
-var projetoNovo = new ProjetoSocial();
-projetonovo = ProjController.criarProjeto(usuario, idProjeto, tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj, statusProj);
-
+var projetonovo = ProjController.criarProjeto(usuario, idProjeto, tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj, statusProj);
 
 // Importando 'express' para criar uma saída HTML
 const express = require('express');
