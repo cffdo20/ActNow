@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Envio de Requisição HTTP</title>
+</head>
+<body>
+    <form id="formProjeto" action="http://localhost:3000/projetos" method="POST">    
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" value="">
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao"></textarea>
+        <label for="publicoAlvo">Público Alvo:</label>
+        <input type="text" id="publicoAlvo" name="publicoAlvo" value="">
+        <label for="justificativa">Justificativa:</label>
+        <textarea id="justificativa" name="justificativa"></textarea>
+        <label for="objetivos">Objetivos:</label>
+        <textarea id="objetivos" name="objetivos"></textarea>
+        <label for="dataInicio">Data de Início:</label>
+        <input type="datetime-local" id="dataInicio" name="dataInicio" value="">
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="1" selected>Ativo</option>
+            <option value="0">Inativo</option>
+        </select>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
