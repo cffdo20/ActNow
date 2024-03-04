@@ -1,36 +1,33 @@
 // Importando módulos Controllers
-const ProjController = require('./controller/ProjController.js');
-const UsuController = require('./controller/UsuController.js');
+const projetoController = require('./controller/ProjController.js');
+const usuarioController = require('./controller/UsuController.js');
 
-// Importando 'express' para requisiçõe HTTP
+// Importando 'express' para requisiçõe HTTP e inicialização do host
 const express = require('express');
+// Importando 'body-parser' para lidar com o corpo da requisição HTTP
+const bodyParser = require('body-parser');
+
+// Configurando const app para aplicar 'express'
 const app = express();
+// Configuração do 'body-parser' para lidar com o corpo das requisições
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Setando a porta a ser usada no localhost
 const PORT = 3000;
 
-// Importando 'body-parser' para lidar com o corpo da requisição HTTP
-const bodyParser = require('body-parser');
-// Configuração do body-parser para lidar com o corpo das requisições
-app.use(bodyParser.urlencoded({ extended: true }));
-
-/*/ Importando 'cors' para permitir requisições HTTP de outro local
-const cors = require('cors');
-// Adicionando middleware para permitir requisições HTTP de outro local
-app.use(cors());
-
 /** Simulação de evento de usario criando um Projeto */
 // Recebemos uma instancia de usuário de exemplo
-const usuario = UsuController.gerarUsuarioExemplo();
+const usuario = usuarioController.gerarUsuarioExemplo();
 
 // Rota para lidar com a solicitação POST enviada pelo formulário
 app.post('/projetos', (req, res) => {   // Recebemos os dados do projeto informados pelo Front-End
 
     // A função que cria um projeto é chamada
-    let projetonovo = ProjController.criarProjeto(usuario , 1, req.body.titulo, req.body.descricao, req.body.publicoAlvo,
+    var projetonovo = projetoController.criarProjeto(usuario, req.body.titulo, req.body.descricao, req.body.publicoAlvo,
         req.body.justificativa, req.body.objetivos, req.body.dataInicio, req.body.status);
 
     //Gerar uma sáida HTML para visualização no localhost
-    let htmlContent = `
+    var htmlContent = `
         <!DOCTYPE html>
         <html lang="pt-br">
         <head>
@@ -51,12 +48,8 @@ app.post('/projetos', (req, res) => {   // Recebemos os dados do projeto informa
         </body>
         </html>
         `;
-
-    // Rota para enviar a resposta HTML
-    //app.get('/projetos', (req, res) => {
-    //});
     
-    // Responde ao frontend com uma mensagem de sucesso
+    // Responde ao frontend com a página do projeto criado
     res.send(htmlContent);
 
 });
