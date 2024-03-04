@@ -22,7 +22,7 @@
   <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
     <div class="container-fluid">
 
-      <a href="index.html" class="navbar-brand text-light "><img class="img img-fluid me-2" src="../assets/img/logo.png"
+      <a href="../index.html" class="navbar-brand text-light "><img class="img img-fluid me-2" src="../assets/img/logo.png"
           alt="Logo do ActNow">ActNow</a>
 
       <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
@@ -68,23 +68,23 @@
     <div class="form-container container mx-4 mx-md-auto mt-2 d-flex justify-content-center pb-5 pb-md-2">
       <div class="row">
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <img class="login-widget img-fluid" src="../assets/img/havingfun-widget.png" alt="">
+          <img class="login-widget img-fluid" src="../assets/img/project-widget.png" alt="">
         </div>
 
         <div class="col-12 col-md-6">
-          <form action="">
+          <form id = "cadastroProjetoForm" action="" method = "POST">
             <div class="form-group p-2">
               <h5 class="mt-2">Informações Básicas</h5>
 
               <span class="bi bi-balloon"></span>
-              <label for="projeto-email">Nome do Projeto</label>
+              <label for="projeto-email">Título do Projeto</label>
               <input class="form-control font-weight-lighter" id="projeto-nome" name="projeto-nome" type="text">
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-box-seam "></span>
               <label for="descricao">Descrição do Projeto</label>
-              <textarea class="form-control input-sm" id="proj-descricao" name="descricao" type="text"></textarea>
+              <textarea class="form-control input-sm" id="proj-descricao" name="projeto-descricao" type="text"></textarea>
               <!-- <span class="fa fa-eye"></span> -->
 
             </div>
@@ -92,7 +92,7 @@
 
 
             <div class="d-flex justify-content-center">
-              <a href="cadastrar-projetomais.html" class="mt-3 btn btn-primary">Continuar</a>
+              <input type="submit" value="Continuar" class="mt-3 btn btn-primary">
             </div>
 
           </form>
