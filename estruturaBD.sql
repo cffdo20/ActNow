@@ -1,5 +1,5 @@
-drop schema if exists actnow2024;
-create schema actnow2024;
+drop database if exists actnow2024;
+create database actnow2024;
 use actnow2024;
 
 create table usuario(
