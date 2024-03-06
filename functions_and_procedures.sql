@@ -98,7 +98,7 @@ select * from atividade;
 -- Stored procedure para alterar a data de uma atividade
 
 DELIMITER $$
-CREATE Procedure sp_alterar_data_atividade(in p_dfat_parametros VARCHAR(1000))
+CREATE Procedure sp_alterar_data_atividade(in p_adta_parametros VARCHAR(1000))
 BEGIN
 
 	DECLARE v_adta_atid int unsigned;
@@ -114,4 +114,44 @@ DELIMITER ;
 
 call sp_alterar_data_atividade('1,2024-11-25,');
 
-select * from atividade;
+select * from atividade
+
+-- Stored procedure para alterar o status de uma atividade
+
+DELIMITER $$
+CREATE Procedure sp_alterar_status_atividade(in p_asta_parametros VARCHAR(1000))
+BEGIN
+
+	DECLARE v_asta_atid int unsigned;
+	DECLARE v_asta_atstatus VARCHAR(1);
+    DECLARE v_asta_atstatustinyint tinyint(1) unsigned;
+    
+    SET v_asta_atid = cast(f_extrair_parametros(p_asta_parametros, 1) as unsigned int);
+	SET v_asta_atstatus = f_extrair_parametros(p_asta_parametros, 2);
+	if(v_asta_atstatus='1') then
+		set v_asta_atstatustinyint = 1;
+    else
+		set v_asta_atstatustinyint = 0;
+    end if;
+    
+    update atividade set atstatus=v_asta_atstatustinyint where atid=v_asta_atid;
+SELECT 'Status da atividade alterada no banco de dados' AS resposta;
+END$$
+DELIMITER ;
+
+-- Stored procedure ara alterar a descrição de uma atividade
+
+DELIMITER $$
+CREATE Procedure sp_alterar_descricao_atividade(in p_adesa_parametros VARCHAR(1000))
+BEGIN
+
+	DECLARE v_adesa_atid int unsigned;
+	DECLARE v_adesa_atdescricao VARCHAR(200);
+    
+    SET v_adesa_atid = cast(f_extrair_parametros(p_adesa_parametros, 1) as unsigned int);
+	SET v_adesa_atdescricao = f_extrair_parametros(p_adesa_parametros, 2);
+    
+    update atividade set atdescricao=v_adesa_atdescricao where atid=v_adesa_atid;
+SELECT 'Descrição da atividade alterada no banco de dados' AS resposta;
+END$$
+DELIMITER ;
