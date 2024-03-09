@@ -4,7 +4,7 @@ use actnow2024;
 
 create table usuario(
 	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT,
-    ususername varchar(20) not null,
+    ususername varchar(20) unique not null,
     usemail varchar(80) not null,
     primary key (uscodigo)
 );
@@ -13,7 +13,7 @@ create table instituicao(
 	instcnpj char(14) not null,
     instuscod int unsigned not null,
     instnomefantasia varchar(100) not null,
-    instrazaosocial varchar(100) not null,
+    instrazaosocial varchar(100) unique not null,
     primary key (instcnpj),
     FOREIGN KEY (instuscod) REFERENCES usuario (uscodigo)
 );
@@ -48,7 +48,7 @@ create table voluntario(
 
 create table projetosocial(
 	projid int unsigned not null auto_increment,
-    projtitulo varchar(100) not null,
+    projtitulo varchar(100) unique not null,
     projdescricao varchar(500) not null,
     projpublicoalvo varchar(45) not null,
     projjustificativa varchar(100) not null,
