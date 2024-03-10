@@ -14,6 +14,7 @@ BEGIN
 	DECLARE v_crpj_projjustificativa VARCHAR(100);
 	DECLARE v_crpj_projobjetivos VARCHAR(100);
 	DECLARE v_crpj_projdatainicio VARCHAR(10);
+    DECLARE v_crpj_projdatafinal VARCHAR(10);
 	DECLARE v_crpj_projstatusvarchar VARCHAR(1);
     DECLARE v_crpj_projstatustinyint tinyint;
 	DECLARE v_crpj_projuscod VARCHAR(2);
@@ -31,7 +32,7 @@ BEGIN
     else
 		set v_crpj_projstatustinyint = f_transformar_string_status(v_crpj_projstatusvarchar);
         if not f_validar_codigo_usuario(v_crpj_projuscod) then
-			select 'ERRO: O usuário indicado não existe.' as erro;
+			select 'ERRO: Este usuário não existe.' as erro;
 		else
 			if (select count(*) from projetosocial where projtitulo=v_crpj_projtitulo)>=1 then
 				select 'ERRO: Já existe um projeto com esse Título.' as erro;
@@ -41,7 +42,7 @@ BEGIN
 				if (select count(*) from projetosocial where projtitulo=v_crpj_projtitulo and projuscod=v_crpj_projuscod)<1 then
 					select 'ERRO: O projeto não foi criado no banco de dados.' as erro;
 				else
-					select 'Projeto criado no banco de dados.' as resposta;
+					select 'Projeto criado com sucesso.' as resposta;
 				end if;
             end if;
         end if;
@@ -50,7 +51,7 @@ BEGIN
 END$$
 DELIMITER ;
 
--- call sp_criar_projeto('Teste,teste,teste,teste,teste,2024-01-02,1,1,');
+-- call sp_criar_projeto('Ttitulo,Descricao,Publico,Justificativa,Objetivos,Data de Início(2024-01-02),Status(0,1),Código do Usuário,');
 
 -- select * from projetosocial;
 
@@ -179,6 +180,51 @@ DELIMITER ;
 -- call sp_alterar_descricao_atividade('1000,teste,');
 
 -- Stored procedure pra calendário de atividades pelo Título do Projeto.
+DELIMITER $$
+CREATE Procedure sp_consultar_atividades_projeto(in p_cp_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cp_projtitulo VARCHAR(500);
+    declare v_cp_projid int default 0;
+    declare v_cp_ususername varchar(20);
+    SET v_cp_projtitulo = f_extrair_parametros(p_cp_parametros, 1);
+    set v_cp_projid = f_buscar_id_projeto(v_cp_projtitulo);
+    
+    if f_validar_id_projeto(v_cp_projid) is not true then
+		select 'ERRO: O projeto indicado não existe.' as erro;
+    else
+		if f_transformar_string_status((select projstatus from projetosocial where projid=v_cp_projid)) = 0 then
+			select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_formata_data(projdatafinal) 'final',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+        else
+			select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+        end if;
+    end if;
+END$$
+DELIMITER ;
 -- Stored procedure para validar usuário pelo username.
 -- Stored procedures para consultar informações de usuário pelo username.
+
 -- Stored procedure para consultar informações de projeto pelo título do projeto.
+DELIMITER $$
+CREATE Procedure sp_consultar_projeto(in p_cp_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cp_projtitulo VARCHAR(500);
+    declare v_cp_projid int default 0;
+    declare v_cp_ususername varchar(20);
+    SET v_cp_projtitulo = f_extrair_parametros(p_cp_parametros, 1);
+    set v_cp_projid = f_buscar_id_projeto(v_cp_projtitulo);
+    
+    if f_validar_id_projeto(v_cp_projid) is not true then
+		select 'ERRO: O projeto indicado não existe.' as erro;
+    else
+		if f_transformar_string_status((select projstatus from projetosocial where projid=v_cp_projid)) = 0 then
+			select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_formata_data(projdatafinal) 'final',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+        else
+			select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+        end if;
+    end if;
+END$$
+DELIMITER ;
+
+-- call sp_consultar_projeto('Construindo Comunidades,');
+
+-- select * from projetosocial;

@@ -336,3 +336,31 @@ DELIMITER ;
 -- select f_buscar_ativ_atid_attitulo_projeto(1,'Campeonato de Futebol');
 
 -- select * from atividade where atprojid=1;
+
+-- Função para formatar data
+DELIMITER $$
+CREATE FUNCTION f_formata_data(p_data date) RETURNS varchar(10)
+BEGIN
+	declare v_data_resultado varchar(10);
+    set v_data_resultado = concat(reverse(left(reverse(p_data), locate('-', reverse(p_data))-1)),'/', left(right(p_data, (length(p_data)-locate('-', p_data))), locate('-', right(p_data, (length(p_data)-locate('-', p_data))))-1),'/',left(p_data, locate('-', p_data)-1));
+    return v_data_resultado;
+END$$
+DELIMITER ;
+
+-- select f_formata_data(projdatainicio) from projetosocial;
+
+-- Função para buscar username por código de usuário
+DELIMITER $$
+CREATE FUNCTION f_buscar_username(p_bu_uscodigo int) RETURNS varchar(20)
+BEGIN
+	declare v_bu_ususername varchar(20);
+    if (f_validar_codigo_usuario(p_bu_uscodigo)) is not true then
+		set v_bu_ususername = 'ERRO: O usuário indicado não existe';
+    else
+		set v_bu_ususername = (select ususername from usuario where uscodigo=p_bu_uscodigo);
+    end if;
+    return v_bu_ususername;
+END$$
+DELIMITER ;
+
+select f_buscar_username(1);
