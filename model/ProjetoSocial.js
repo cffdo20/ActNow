@@ -4,17 +4,17 @@ const Usuario = require('./Usuario');
 // Criação da classe ProjetoSocial
 class ProjetoSocial {
     // Método construtor para inicializar propriedades
-    constructor(idProjeto, tituloProj, descricaoProj, publicoAlvoProj,
-      justificativaProj, objetivosProj, dataInicioProj, statusProj) {
-      this.idProjeto = idProjeto;
+    constructor(tituloProj, descricaoProj, publicoAlvoProj,
+      justificativaProj, objetivosProj, dataInicioProj, dataFimProj) {
+      this.idProjeto = 1; // Mudar lógica depois
       this.tituloProj = tituloProj;
       this.descricaoProj = descricaoProj;
       this.publicoAlvoProj = publicoAlvoProj;
       this.justificativaProj = justificativaProj;
       this.objetivosProj = objetivosProj;
       this.dataInicioProj = dataInicioProj;
-      this.dataFimProj = null;
-      this.statusProj = statusProj;
+      this.dataFimProj = dataFimProj;
+      this.statusProj = 1;
       this.usuario = null;
     }
   
