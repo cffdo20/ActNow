@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../assets/css/index-style.css">
   <link rel="stylesheet" href="../assets/css/login-style.css">
 
-  <title>Cadastrar Projeto Teste</title>
+  <title>Cadastrar Projeto</title>
 </head>
 
 <body>
@@ -65,7 +65,7 @@
     <h4 class="mt-3 text-center">Cadastre seu Projeto</h4>
     <p class="text-center lead">Crie projetos educacionais e compartilhe conhecimentos com o ActNow</p>
 
-    <div class="form-container container mx-4 mx-md-auto mt-2 pb-5 pb-md-2 mb-5">
+    <div class="form-container container mx-4 mx-md-auto mt-2 d-flex justify-content-center pb-5 pb-md-2">
       <div class="row">
         <div class="col-12 col-md-6 d-flex align-items-center">
           <img class="login-widget img-fluid" src="../assets/img/project-widget.png" alt="">
@@ -77,50 +77,16 @@
               <h5 class="mt-2">Informações Básicas</h5>
               <span class="bi bi-balloon"></span>
               <label for="projeto-nome">Título do Projeto</label>
-              <input class="form-control font-weight-lighter" id="projeto-nome" name="projNome" type="text">
+              <input class="form-control font-weight-lighter" id="projeto-nome" name="projetoNome" type="text">
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-box-seam "></span>
               <label for="proj-descricao">Descrição do Projeto</label>
-              <textarea class="form-control input-sm" id="proj-descricao" name="projDescricao" type="text" placeholder = "O projeto se trata de uma iniciativa para promover aulas de informática..."></textarea>
-              
+              <textarea class="form-control input-sm" id="proj-descricao" name="projetoDescricao" type="text"></textarea>
+              <!-- <span class="fa fa-eye"></span> -->
 
             </div>
-
-            <div class="form-group p-2">
-                <h5 class="mt-2">Mais informações</h5>
-
-                <span class="bi bi-people"></span>
-                <label for="projeto-publico">Público-Alvo</label>
-                <input class="form-control font-weight-lighter" id="projeto-publico" name="projPublico" type="text" placeholder = "Estudantes da rede de ensino pública">
-                </div>
-
-                <div class="form-group p-2">
-                <span class="bi bi-card-text "></span>
-                <label for="proj-importancia">Justifique a importância do seu projeto</label>
-                <textarea class="form-control input-sm" id="proj-importancia" name="projJustificativa" type="text">
-                </textarea>
-                </div>
-
-                <div class="form-group p-2">
-                <span class="bi bi-card-text "></span>
-                <label for="proj-objetivos">Fale sobre os objetivos do Projeto</label>
-                <textarea class="form-control input-sm" id="proj-objetivos" name="projObjetivos" type="text">
-                </textarea>
-                </div>
-
-
-                <div class="form-group p-2">
-                    <h5 class="mt-2">Datas</h5>
-                    <label for="projData-inicio">Data de início do Projeto</label>
-                    <input class = "form-control input-sm" id= "projData-inicio" name = "projDataInicio" type="date">    
-                </div>
-    
-                  <div class="form-group p-2">
-                    <label for="projData-fim">Data estimada para o fim do Projeto</label>
-                    <input class = "form-control input-sm" id= "projData-fim" name = "proDataFim" type="date">    
-                </div>
 
 
 

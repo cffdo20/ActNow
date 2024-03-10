@@ -17,12 +17,13 @@
   <title>Cadastrar Atividade</title>
 </head>
 
-<body
+<body>
   <!-- HEADER -->
+
   <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
     <div class="container-fluid">
 
-      <a href="index.html" class="navbar-brand text-light "><img class="img img-fluid me-2" src="../assets/img/logo.png"
+      <a href="../index.html" class="navbar-brand text-light "><img class="img img-fluid me-2" src="../assets/img/logo.png"
           alt="Logo do ActNow">ActNow</a>
 
       <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
@@ -63,36 +64,46 @@
 
   <main>
     <h4 class="mt-3 text-center">Cadastre uma atividade para seu projeto</h4>
-    <p class="text-center lead">Crie eventos relacionados e estabeleça datas</p>
+    <p class="text-center lead">Crie eventos relacionados e estabeleça prazos </p>
 
-    <div class="form-container container mx-4 mx-md-auto mt-2 d-flex justify-content-center pb-5 pb-md-2">
+    <div class="form-container container mx-4 mx-md-auto mt-2 pb-5 pb-md-2 mb-4">
       <div class="row">
         <div class="col-12 col-md-6 d-flex align-items-center">
-          <img class="login-widget img-fluid" src="../assets/img/havingfun-widget.png" alt="">
+          <img class="login-widget img-fluid" src="../assets/img/task-widget.png" alt="">
         </div>
 
         <div class="col-12 col-md-6">
-          <form id = "cadastroAtividadeForm" action="" method = "POST">
+          <form id = "cadastroAtividadeForm" action="http://localhost:3000/atividades" method = "POST">
             <div class="form-group p-2">
               <h5 class="mt-2">Informações Básicas</h5>
 
               <span class="bi bi-balloon"></span>
-              <label for="projeto-nome">Nome da Atividade</label>
-              <input class="form-control font-weight-lighter" id="projeto-nome" name="atividadeNome" type="text">
+              <label for="atv-titulo">Título da Atividade</label>
+              <input class="form-control font-weight-lighter" id="atv-titulo" name="atvTitulo" type="text">
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-box-seam "></span>
-              <label for="proj-descricao">Descrição da Atividade</label>
-              <textarea class="form-control input-sm" id="proj-descricao" name="atividadeDescricao" type="text"></textarea>
+              <label for="atv-descricao">Descrição da Atividade</label>
+              <textarea class="form-control input-sm" id="atv-descricao" name="atvDescricao" type="text"></textarea>
               <!-- <span class="fa fa-eye"></span> -->
-
             </div>
+
+            <div class="form-group p-2">
+              <h5 class="mt-2">Prazos</h5>
+              <label for="atvData-entrega">Data de entrega da Atividade</label>
+              <input class = "form-control input-sm" id= "atvData-entrega" name = "atvDataEntrega" type="date">    
+          </div>
+
+            <!-- <div class="form-group p-2">
+              <label for="projData-fim">Data estimada para o fim do Projeto</label>
+              <input class = "form-control input-sm" id= "projData-fim" name = "proDataFim" type="date">    
+          </div> -->
 
 
 
             <div class="d-flex justify-content-center">
-              <a href="cadastrar-projetomais.html" class="mt-3 btn btn-primary">Continuar</a>
+              <input type="submit" value="Cadastrar" class="btn btn-primary">
             </div>
 
           </form>
