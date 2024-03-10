@@ -1,4 +1,4 @@
-use actnow2024;
+use actnow;
 
 -- Inserindo dados na tabela de turnos do dia
 insert into turnodia(turnomeclatura)

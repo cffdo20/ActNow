@@ -1,6 +1,6 @@
-drop database if exists actnow2024;
-create database actnow2024;
-use actnow2024;
+drop database if exists actnow;
+create database actnow;
+use actnow;
 
 create table usuario(
 	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT,

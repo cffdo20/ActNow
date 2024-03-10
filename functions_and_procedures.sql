@@ -1,22 +1,26 @@
-use actnow2024;
+use actnow;
 set global log_bin_trust_function_creators=1;
 
 /* 
-A fazer:
+Em espera:
+    -Validar data de inicio do projeto - stand by;
+    -Validar data de entrega de atividade - Stand by;
+    -Validar alteraçõa na data de entrega da atividade - stand by;
+    -Validar datas - stand by;
+
+Feito:
 - Terminar de criar as funções - Feito;
-- Implementar o uso das funções utilizáveis nas SPs existentes;
+- Implementar o uso das funções utilizáveis nas SPs existentes - Feito;
 - Gerar validações nas SPs exitentes:
-	-Validar títulos de projetos;
-    -Validar data de inicio do projeto;
-    -Validar datas;
-    -Validar código do usuário do projeto;
-    -Validar criação de projeto;
-    -Validar data de entrega de atividade;
-    -Validar id do projeto na atividade;
-    -Validar definição de atividade;
-    -Validar alteraçõa na data de entrega da atividade;
-    -Validar alteração no status da atividade;
-    -Validar alteração na descrição da atividade;
+	-Validar títulos de projetos - Feito;
+    -Validar código do usuário do projeto - Feito;
+    -Validar criação de projeto - Feito;
+    -Validar id do projeto na atividade - Feito;
+    -Validar definição de atividade - Feito;
+    -Validar alteração no status da atividade - feito;
+    -Validar alteração na descrição da atividade - feito;
+    
+A fazer:
 - Terminar de criar as SPs necessárias par a sprint atual;
 */
 
@@ -53,7 +57,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_validar_string_status('1');
+-- select f_validar_string_status('1');
 
 -- Função para transforma string de status em tinyint.
 DELIMITER $$
@@ -73,7 +77,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_transformar_string_status('1');
+-- select f_transformar_string_status('1');
 
 -- Função para gerar string com base no status.
 DELIMITER $$
@@ -93,7 +97,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_gerar_status_string(1);
+-- select f_gerar_status_string(1);
 
 -- Função para buscar codigo do usuário pelo username
 DELIMITER $$
@@ -109,7 +113,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_codigo_usuario('user');
+-- select f_buscar_codigo_usuario('user');
 
 -- Função para validar o usuário pelo código
 DELIMITER $$
@@ -125,7 +129,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_validar_codigo_usuario(0);
+-- select f_validar_codigo_usuario(0);
 
 -- função para contar projetos por usuário
 DELIMITER $$
@@ -140,7 +144,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_contar_projeto_usuario(1);
+-- select f_contar_projeto_usuario(1);
 
 -- Função para pesquisar ID do projeto pelo código do usuário.
 DELIMITER $$
@@ -190,7 +194,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_projeto_codigo_usuario(1);
+-- select f_buscar_projeto_codigo_usuario(1);
 
 -- função para buscar id do projeto pelo título
 DELIMITER $$
@@ -206,7 +210,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_id_projeto('Construindo Comunidades');
+-- select f_buscar_id_projeto('Construindo Comunidades');
 
 -- Função para validar projeto pelo ID.
 DELIMITER $$
@@ -253,7 +257,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_contar_ativ_projeto(1);
+-- select f_contar_ativ_projeto(1);
 
 -- Função para encontrar IDs de atividades de um projeto.
 DELIMITER $$
@@ -303,9 +307,9 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_atividade_projeto_id(1);
+-- select f_buscar_atividade_projeto_id(1);
 
-select atprojid, count(*) from atividade group by atprojid;
+-- select atprojid, count(*) from atividade group by atprojid;
 
 -- função para encontrar id da atividade por id de projeto e título
 DELIMITER $$
@@ -315,7 +319,7 @@ BEGIN
     declare v_cont int default 1;
     declare v_string_id_ativ varchar(100) default '';
     declare v_id_ativ_resultado, v_id_ativ_posicao int default 0;
-    set v_string_id_ativ = f_buscar_atividade_id_projeto(p_capt_projid);
+    set v_string_id_ativ = f_buscar_atividade_projeto_id(p_capt_projid);
     set v_capt_qt_ativ = f_contar_ativ_projeto(p_capt_projid);
     while v_cont<=v_capt_qt_ativ do
 		set v_id_ativ_posicao = cast(f_extrair_parametros(v_string_id_ativ,v_cont) as unsigned int);
@@ -328,8 +332,9 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_ativ_atid_attitulo_projeto(1,'teste');
-select * from atividade where atprojid=1;
+-- select f_buscar_ativ_atid_attitulo_projeto(1,'Campeonato de Futebol');
+
+-- select * from atividade where atprojid=1;
 
 
 -- STORED PROCEDURES -----------------------------
@@ -356,20 +361,34 @@ BEGIN
 	SET v_crpj_projobjetivos = f_extrair_parametros(p_crpj_parametros, 5);
 	SET v_crpj_projdatainicio = cast(f_extrair_parametros(p_crpj_parametros, 6) as date);
     set v_crpj_projstatusvarchar = f_extrair_parametros(p_crpj_parametros, 7);
-    if !f_validar_string_status then
-		select 'ERRO: O status informado para o projeto é inválido' as erro;
+	SET v_crpj_projuscod = cast(f_extrair_parametros(p_crpj_parametros, 8) as unsigned int);
+    if not f_validar_string_status(v_crpj_projstatusvarchar) then
+		select 'ERRO: O status informado para o projeto é inválido.' as erro;
     else
 		set v_crpj_projstatustinyint = f_transformar_string_status(v_crpj_projstatusvarchar);
+        if not f_validar_codigo_usuario(v_crpj_projuscod) then
+			select 'ERRO: O usuário indicado não existe.' as erro;
+		else
+			if (select count(*) from projetosocial where projtitulo=v_crpj_projtitulo)>=1 then
+				select 'ERRO: Já existe um projeto com esse Título.' as erro;
+            else
+				insert into projetosocial(projtitulo,projdescricao,projpublicoalvo,projjustificativa,projobjetivos,projdatainicio,projdatafinal,projstatus,projuscod) 
+				values(v_crpj_projtitulo,v_crpj_projdescricao,v_crpj_projpublicoalvo,v_crpj_projjustificativa,v_crpj_projobjetivos,v_crpj_projdatainicio,NULL,v_crpj_projstatustinyint,v_crpj_projuscod);
+				if (select count(*) from projetosocial where projtitulo=v_crpj_projtitulo and projuscod=v_crpj_projuscod)<1 then
+					select 'ERRO: O projeto não foi criado no banco de dados.' as erro;
+				else
+					select 'Projeto criado no banco de dados.' as resposta;
+				end if;
+            end if;
+        end if;
 	end if;
-	SET v_crpj_projuscod = cast(f_extrair_parametros(p_crpj_parametros, 8) as unsigned int);
     
-    insert into projetosocial(projtitulo,projdescricao,projpublicoalvo,projjustificativa,projobjetivos,projdatainicio,projdatafinal,projstatus,projuscod) 
-    values(v_crpj_projtitulo,v_crpj_projdescricao,v_crpj_projpublicoalvo,v_crpj_projjustificativa,v_crpj_projobjetivos,v_crpj_projdatainicio,NULL,v_crpj_projstatustinyint,v_crpj_projuscod);
-	select 'Projeto criado no banco de dados' as resposta;
 END$$
 DELIMITER ;
 
-call sp_criar_projeto('Teste,teste,teste,teste,teste,2024-01-02,1,1,');
+-- call sp_criar_projeto('Teste,teste,teste,teste,teste,2024-01-02,1,1,');
+
+-- select * from projetosocial;
 
 -- Stored procedure para definir uma atividade
 DELIMITER $$
@@ -388,18 +407,28 @@ BEGIN
 	SET v_dfat_atdataentrega = cast(f_extrair_parametros(p_dfat_parametros, 3) as date);
 	SET v_dfat_atstatus = f_extrair_parametros(p_dfat_parametros, 4);
 	SET v_dfat_atprojid = cast(f_extrair_parametros(p_dfat_parametros, 5) as unsigned int);
-    if !f_validar_string_status(v_dfat_atstatus) then
-		select 'ERRO: O status informado para a atividade é inválido' as erro;
+    if not f_validar_string_status(v_dfat_atstatus) then
+		select 'ERRO: O status informado para a atividade é inválido.' as erro;
     else 
-		set v_dfat_atstatustinyint = v_crpj_projstatusvarchar(v_dfat_atstatus);
+		set v_dfat_atstatustinyint = f_transformar_string_status(v_dfat_atstatus);
+        if not f_validar_id_projeto(v_dfat_atprojid) then
+			select 'ERRO: O projeto indicado não existe.' as erro;
+		else
+			insert into atividade(attitulo,atdescricao,atdataentrega,atstatus,atprojid) 
+			values(v_dfat_attitulo,v_dfat_atdescricao,v_dfat_atdataentrega,v_dfat_atstatustinyint,v_dfat_atprojid);            
+			if (select count(*) from atividade where attitulo=v_dfat_attitulo and atprojid=v_dfat_atprojid)<1 then
+				select 'ERRO: A Atividade não foi criada no banco de dados.' as erro;
+			else
+				select 'Atividade criada no banco de dados.' as resposta;
+			end if;	
+        end if;
     end if;
-    insert into atividade(attitulo,atdescricao,atdataentrega,atstatus,atprojid) 
-    values(v_dfat_attitulo,v_dfat_atdescricao,v_dfat_atdataentrega,v_dfat_atstatustinyint,v_dfat_atprojid);
-    select 'Atividade criada no banco de dados' as resposta;
 END$$
 DELIMITER ;
 
-call sp_definir_Atividade('teste,teste,2024-07-02,1,1,');
+-- call sp_definir_Atividade('teste,teste,2024-07-02,1,10000,');
+
+-- select * from atividade;
 
 
 -- Stored procedure para alterar a data de uma atividade
@@ -413,15 +442,22 @@ BEGIN
     
     SET v_adta_atid = cast(f_extrair_parametros(p_adta_parametros, 1) as unsigned int);
 	SET v_adta_atdataentrega = cast(f_extrair_parametros(p_adta_parametros, 2) as date);
-    
-    update atividade set atdataentrega=v_adta_atdataentrega where atid=v_adta_atid;
-SELECT 'Data da atividade alterada no banco de dados' AS resposta;
+    if f_validar_atividade_id(v_adta_atid) is true then
+		update atividade set atdataentrega=v_adta_atdataentrega where atid=v_adta_atid;
+        if (select count(*) from atividade where atid=v_asta_atid and atdataentrega=v_adta_atdataentrega)<1 then
+			select 'ERRO: Data de entrega da atividade não atualizada.' as erro;
+		else
+			SELECT 'Data de entrega da atividade alterada no banco de dados.' AS resposta;
+		end if;
+	else
+		select 'ERRO: A atividade indicada não existe.' as erro;
+	end if;
 END$$
 DELIMITER ;
 
-call sp_alterar_data_atividade('1,2024-11-25,');
+-- call sp_alterar_data_atividade('1,2024-11-25,');
 
-select * from atividade
+-- select * from atividade
 
 -- Stored procedure para alterar o status de uma atividade
 
@@ -435,14 +471,21 @@ BEGIN
     
     SET v_asta_atid = cast(f_extrair_parametros(p_asta_parametros, 1) as unsigned int);
 	SET v_asta_atstatus = f_extrair_parametros(p_asta_parametros, 2);
-	if(v_asta_atstatus='1') then
-		set v_asta_atstatustinyint = 1;
-    else
-		set v_asta_atstatustinyint = 0;
-    end if;
-    
-    update atividade set atstatus=v_asta_atstatustinyint where atid=v_asta_atid;
-SELECT 'Status da atividade alterada no banco de dados' AS resposta;
+    if f_validar_atividade_id(v_asta_atid) is true then
+		if !f_validar_string_status(v_dfat_atstatus) then
+			select 'ERRO: O status informado para a atividade é inválido.' as erro;
+		else 
+			set v_dfat_atstatustinyint = f_transforma_string_status(v_dfat_atstatus);
+			update atividade set atstatus=v_asta_atstatustinyint where atid=v_asta_atid;
+            if (select count(*) from atividade where atid=v_asta_atid and atstatus=v_asta_atstatustinyint)<1 then
+				select 'ERRO: Status da atividade não atualizada.' as erro;
+			else
+				SELECT 'Status da atividade alterada no banco de dados.' AS resposta;
+			end if;
+		end if;
+	else
+		select 'ERRO: A atividade indicada não existe.' as erro;
+	end if;
 END$$
 DELIMITER ;
 
@@ -457,14 +500,19 @@ BEGIN
     
     SET v_adesa_atid = cast(f_extrair_parametros(p_adesa_parametros, 1) as unsigned int);
 	SET v_adesa_atdescricao = f_extrair_parametros(p_adesa_parametros, 2);
-    
-    update atividade set atdescricao=v_adesa_atdescricao where atid=v_adesa_atid;
-    if (select count(*) from atividade where atid=v_adesa_id and atdescricao=v_adesa_descricao)<1 then
-		select 'ERRO: Descrição da atividade não atualizada ' as erro;
-    end if;
-SELECT 'Descrição da atividade alterada no banco de dados' AS resposta;
+    if f_validar_atividade_id(v_adesa_atid) is true then
+		update atividade set atdescricao=v_adesa_atdescricao where atid=v_adesa_atid;
+        if (select count(*) from atividade where atid=v_adesa_atid and atdescricao=v_adesa_atdescricao)<1 then
+			select 'ERRO: Descrição da atividade não atualizada.' as erro;
+		else
+			SELECT 'Descrição da atividade alterada no banco de dados.' AS resposta;
+		end if;
+	else
+		select 'ERRO: A atividade indicada não existe.' as erro;
+	end if;
 END$$
 DELIMITER ;
+-- call sp_alterar_descricao_atividade('1000,teste,');
 
 -- Stored procedure pra calendário de atividades pelo Título do Projeto.
 -- Stored procedure para validar usuário pelo username.
