@@ -181,26 +181,27 @@ DELIMITER ;
 
 -- Stored procedure pra calendário de atividades pelo Título do Projeto.
 DELIMITER $$
-CREATE Procedure sp_consultar_atividades_projeto(in p_cp_parametros VARCHAR(1000))
+CREATE Procedure sp_consultar_atividades_projeto(in p_cap_parametros VARCHAR(1000))
 BEGIN
-	DECLARE v_cp_projtitulo VARCHAR(500);
-    declare v_cp_projid int default 0;
-    declare v_cp_ususername varchar(20);
-    SET v_cp_projtitulo = f_extrair_parametros(p_cp_parametros, 1);
-    set v_cp_projid = f_buscar_id_projeto(v_cp_projtitulo);
-    
-    if f_validar_id_projeto(v_cp_projid) is not true then
+	DECLARE v_cap_projtitulo VARCHAR(500);
+    declare v_cap_projid int default 0;
+    SET v_cap_projtitulo = f_extrair_parametros(p_cap_parametros, 1);
+    set v_cap_projid = f_buscar_id_projeto(v_cap_projtitulo);
+    if f_validar_id_projeto(v_cap_projid) is not true then
 		select 'ERRO: O projeto indicado não existe.' as erro;
     else
-		if f_transformar_string_status((select projstatus from projetosocial where projid=v_cp_projid)) = 0 then
-			select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_formata_data(projdatafinal) 'final',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+		if f_contar_ativ_projeto(v_cap_projid)<1 then
+			select 'ERRO: Não existem Atividades cadastradas para esse projeto.' as erro;
         else
-			select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+			select attitulo 'titulo', atdescricao 'descricao', f_formata_data(atdataentrega) 'Entrega',f_gerar_status_string(atstatus) 'Status', f_buscar_titulo_projeto(atprojid) 'Projeto' from atividade where atprojid=v_cap_projid;
         end if;
     end if;
 END$$
 DELIMITER ;
--- Stored procedure para validar usuário pelo username.
+
+-- call sp_consultar_atividades_projeto('Construindo Comunidades,');
+-- select * from projetosocial;
+-- Stored procedure para validar usuário pelo username e senha.
 -- Stored procedures para consultar informações de usuário pelo username.
 
 -- Stored procedure para consultar informações de projeto pelo título do projeto.

@@ -363,4 +363,19 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_username(1);
+-- select f_buscar_username(1);
+
+-- Função para buscar Título de projeto pelo ID do Projeto
+DELIMITER $$
+CREATE FUNCTION f_buscar_titulo_projeto(p_btp_projid int) RETURNS varchar(100)
+BEGIN
+	declare v_btp_titulo varchar(100);
+    if (f_validar_id_projeto(p_btp_projid)) is not true then
+		set v_btp_titulo = 'ERRO: O Projeto indicado não existe';
+    else
+		set v_btp_titulo = (select projtitulo from projetosocial where projid=p_btp_projid);
+    end if;
+    return v_btp_titulo;
+END$$
+DELIMITER ;
+-- select f_buscar_titulo_projeto(1);
