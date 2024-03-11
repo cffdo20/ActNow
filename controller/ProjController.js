@@ -5,7 +5,7 @@ const dados = require('../model/ProjetoSocial.js');
 function criarProjeto(req) {
     /** Criação do novo projeto*/
     projeto.setProjetoSocial(req.body.projNome, req.body.projDescricao, req.body.projPublico,
-        req.body.projJustificativa, req.body.projObjetivos, dataInicioProj, '1', '1');
+        req.body.projJustificativa, req.body.projObjetivos, req.body.projDataInicio, '1', '1');
 
     if (projeto.erro) {
         return {
