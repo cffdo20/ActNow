@@ -12,9 +12,10 @@ const bodyParser = require('body-parser');
 const app = express();
 // Configuração do EJS como view engine
 app.set('view engine', 'ejs');
-// Definição do diretório onde estão os arquivos de visualização (opcional)
-app.set('views', path.join(__dirname, 'ActNow-front-end'));
-app.use(express.static(path.join(__dirname, 'ActNow-front-end')));
+var diretorioDeViews = 'ActNow-front-end';
+// Definição do diretório onde estão os arquivos de visualização
+app.set('views', path.join(__dirname, diretorioDeViews));
+app.use(express.static(path.join(__dirname, diretorioDeViews)));
 // Configurando const app para 'body-parser' que lida com o conteúdo das requisições HTTP 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -24,12 +25,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.post('/criar-projeto', (req, res) => {
     projetoController.criarProjeto(req)
     .then(resposta => {
-        console.log(resposta);
+        //console.log(resposta);
         if(!resposta.erro){
             // Precisa tratar aqui quando não der erro, a ideia é fazer uma consulta e puxar os dados do projeto recém criado para abrir sua página
             res.render('visualizacao-projeto.ejs', { elementos: resposta.resposta, alerta: resposta.resposta});
         }else{
-            res.redirect('/cadastrar-projetoTeste.html?alerta=' + encodeURIComponent(resposta.erro)); // Redireciona de volta para página de cadastro de projeto enviando uma mensagem para um alert
+            // Redireciona de volta para página de cadastro de projeto enviando uma mensagem para um alerta
+            res.redirect('/cadastrar-projetoTeste.html?alerta=' + encodeURIComponent(resposta.erro));
         }
         
         //res.render('visualizacao-projeto.ejs', { elementos: resposta });
