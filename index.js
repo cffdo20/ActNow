@@ -14,30 +14,26 @@ const app = express();
 app.set('view engine', 'ejs');
 // Definição do diretório onde estão os arquivos de visualização (opcional)
 app.set('views', path.join(__dirname, 'ActNow-front-end'));
+app.use(express.static(path.join(__dirname, 'ActNow-front-end')));
 // Configurando const app para 'body-parser' que lida com o conteúdo das requisições HTTP 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 /** Definição das Rotas */
 // Criação de novo projeto
 app.post('/criar-projeto', (req, res) => {
-    let resposta = projetoController.criarProjeto(req);
-    if(resposta.mensagem === 'erro'){
-        //res.send('Erro ao cadastrar projeto');
-        res.redirect('/cadastra-projetoTeste');
-    }else{
-        let data = {
-            Mensagem: 'Projeto criado com sucesso!',
-            idProjeto:resposta.idProjeto,
-            Titulo:resposta.Titulo,
-            Publico:resposta.Publico,
-            Justificativa:resposta.Justificativaustificativa,
-            Status:resposta.Status,
-            Email:resposta.Email,
-            Objetivos: resposta.Objetivos
-        };
-        // Renderiza a página 'visualizacao-projeto.ejs' e envia para o cliente junto com os dados
-        res.render('visualizacao-projeto.ejs', data);
-    }
+    projetoController.criarProjeto(req)
+    .then(resposta => {
+        console.log(resposta);
+        if(!resposta.erro){
+            // Precisa tratar aqui quando não der erro, a ideia é fazer uma consulta e puxar os dados do projeto recém criado para abrir sua página
+            res.render('visualizacao-projeto.ejs', { elementos: resposta.resposta, alerta: resposta.resposta});
+        }else{
+            res.redirect('/cadastrar-projetoTeste.html?alerta=' + encodeURIComponent(resposta.erro)); // Redireciona de volta para página de cadastro de projeto enviando uma mensagem para um alert
+        }
+        
+        //res.render('visualizacao-projeto.ejs', { elementos: resposta });
+    });
 });
 
 /** Inicialização do servidor */
