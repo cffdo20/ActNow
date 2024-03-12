@@ -1,4 +1,4 @@
-use actnow;
+use actnow24;
 set global log_bin_trust_function_creators=1;
 
 
@@ -35,13 +35,13 @@ BEGIN
     DECLARE v_expr_i INT DEFAULT 1;
     DECLARE v_expr_parametro VARCHAR(100);
     IF p_expr_numparametro = 1 THEN
-        SET v_expr_parametro = LEFT(p_expr_parametros, LOCATE(',', p_expr_parametros) - 1);
+        SET v_expr_parametro = LEFT(p_expr_parametros, LOCATE('|', p_expr_parametros) - 1);
     ELSE
         WHILE v_expr_i <= p_expr_numparametro DO
             IF v_expr_i = p_expr_numparametro THEN
-                SET v_expr_parametro = LEFT(p_expr_parametros, LOCATE(',', p_expr_parametros) - 1);
+                SET v_expr_parametro = LEFT(p_expr_parametros, LOCATE('|', p_expr_parametros) - 1);
             ELSE
-                SET p_expr_parametros = SUBSTRING(p_expr_parametros, LOCATE(',', p_expr_parametros) + 1);
+                SET p_expr_parametros = SUBSTRING(p_expr_parametros, LOCATE('|', p_expr_parametros) + 1);
             END IF;
             SET v_expr_i = v_expr_i + 1;
         END WHILE;
@@ -398,4 +398,4 @@ BEGIN
 END$$
 DELIMITER ;
 
-select f_buscar_parametros_nulos(',',1);
+-- select f_buscar_parametros_nulos(',',1);

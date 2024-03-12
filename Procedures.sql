@@ -1,4 +1,4 @@
-use actnow;
+use actnow24;
 set global log_bin_trust_function_creators=1;
 
 -- STORED PROCEDURES -----------------------------
@@ -137,10 +137,10 @@ BEGIN
     SET v_asta_atid = cast(f_extrair_parametros(p_asta_parametros, 1) as unsigned int);
 	SET v_asta_atstatus = f_extrair_parametros(p_asta_parametros, 2);
     if f_validar_atividade_id(v_asta_atid) is true then
-		if !f_validar_string_status(v_dfat_atstatus) then
+		if !f_validar_string_status(v_asta_atstatus) then
 			select 'ERRO: O status informado para a atividade é inválido.' as erro;
 		else 
-			set v_dfat_atstatustinyint = f_transforma_string_status(v_dfat_atstatus);
+			set v_asta_atstatustinyint = f_transforma_string_status(v_asta_atstatus);
 			update atividade set atstatus=v_asta_atstatustinyint where atid=v_asta_atid;
             if (select count(*) from atividade where atid=v_asta_atid and atstatus=v_asta_atstatustinyint)<1 then
 				select 'ERRO: Status da atividade não atualizada.' as erro;
