@@ -379,3 +379,23 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_buscar_titulo_projeto(1);
+
+-- Função para verificar parâmetros nulos.
+DELIMITER $$
+CREATE FUNCTION f_buscar_parametros_nulos(p_parametros varchar(1000), p_qt_parametros int) RETURNS boolean
+BEGIN
+	declare v_resultado boolean default false;
+    declare v_cont int default 1;
+    declare v_conteudo_parametro varchar(500);
+    while v_cont<=p_qt_parametros do
+		set v_conteudo_parametro = f_extrair_parametros(p_parametros,v_cont);
+        if v_conteudo_parametro in('',null,'null','Null','NULL') then
+			set v_resultado = true;
+        end if;
+        set v_cont=v_cont+1;
+	end while;
+    return v_resultado;
+END$$
+DELIMITER ;
+
+select f_buscar_parametros_nulos(',',1);
