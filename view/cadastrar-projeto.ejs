@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -99,15 +100,13 @@
                 <div class="form-group p-2">
                 <span class="bi bi-card-text "></span>
                 <label for="proj-importancia">Justifique a importância do seu projeto</label>
-                <textarea class="form-control input-sm" id="proj-importancia" name="projJustificativa" type="text">
-                </textarea>
+                <textarea class="form-control input-sm" id="proj-importancia" name="projJustificativa" type="text"></textarea>
                 </div>
 
                 <div class="form-group p-2">
                 <span class="bi bi-card-text "></span>
                 <label for="proj-objetivos">Fale sobre os objetivos do Projeto</label>
-                <textarea class="form-control input-sm" id="proj-objetivos" name="projObjetivos" type="text">
-                </textarea>
+                <textarea class="form-control input-sm" id="proj-objetivos" name="projObjetivos" type="text"></textarea>
                 </div>
 
 
@@ -133,16 +132,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-  <script>
-    // Recupera o valor do parâmetro 'alerta' da URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const alerta = urlParams.get('alerta');
-
-    // Se houver uma mensagem de alerta, exibe-a
-    if (alerta) {
-        alert(decodeURIComponent(alerta)); // Exibe o alerta decodificado
-    }
-  </script>
+  <% if (typeof alerta !== 'undefined' && alerta) { %>
+    <script>
+        // JavaScript embutido para exibir o alerta passado do Node.js
+        window.onload = function() {
+            alert("<%= alerta %>");
+        };
+    </script>
+    <% } %>
 
 
 
