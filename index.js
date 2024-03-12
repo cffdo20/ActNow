@@ -12,10 +12,11 @@ const bodyParser = require('body-parser');
 const app = express();
 // Configuração do EJS como view engine
 app.set('view engine', 'ejs');
-const diretorioDeViews = 'ActNow-front-end';
+const diretorioDeViews = 'ActNow-front-end/view';
+const diretorioDoIndexHTML = 'ActNow-front-end';
 // Definição do diretório onde estão os arquivos de visualização
 app.set('views', path.join(__dirname, diretorioDeViews));
-app.use(express.static(path.join(__dirname, diretorioDeViews)));
+app.use(express.static(path.join(__dirname, diretorioDoIndexHTML)));
 // Configurando const app para 'body-parser' que lida com o conteúdo das requisições HTTP 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -23,16 +24,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Criação de novo projeto
 app.post('/criar-projeto', (req, res) => {
     projetoController.criarProjeto(req)
-        .then(resposta => {
-            //console.log(resposta);
-            if (resposta.status === 'SUCESSO') {
-                // Precisa tratar aqui quando não der erro, a ideia é fazer uma consulta e puxar os dados do projeto recém criado para abrir sua página
-                res.render('visualizacao-projeto.ejs', { elementos: resposta.dados, alerta: resposta.mensagem });
-            } else {
-                // Redireciona de volta para página de cadastro de projeto enviando uma mensagem para um alerta
-                res.redirect('/cadastrar-projetoTeste.html?alerta=' + encodeURIComponent(resposta.mensagem));
-            }
-        });
+    .then(resposta => {
+        console.log(resposta);
+        if(!resposta.erro){
+            // Se não retornar erro renderiza a pagina do projeto com a mensagem do banco e os dados do projeto
+            res.render('visualizacao-projeto.ejs', resposta);
+        }else{
+            // Redireciona de volta para página de cadastro de projeto enviando a mensagem de erro do banco como alert
+            res.render('cadastrar-projeto.ejs',{ alerta: resposta.erro });
+        }
+    });
+});
+
+app.get('/projeto', (req, res) => {
+            res.render('cadastrar-projeto.ejs');
 });
 
 /** Inicialização do servidor */
