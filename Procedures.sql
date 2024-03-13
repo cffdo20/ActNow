@@ -7,9 +7,8 @@ set global log_bin_trust_function_creators=1;
 DELIMITER $$
 CREATE Procedure sp_criar_projeto(in p_crpj_parametros VARCHAR(1000))
 BEGIN
-
-	DECLARE v_crpj_projtitulo VARCHAR(500);
-	DECLARE v_crpj_projdescricao VARCHAR(45);
+	DECLARE v_crpj_projtitulo VARCHAR(100);
+	DECLARE v_crpj_projdescricao VARCHAR(500);
 	DECLARE v_crpj_projpublicoalvo VARCHAR(100);
 	DECLARE v_crpj_projjustificativa VARCHAR(100);
 	DECLARE v_crpj_projobjetivos VARCHAR(100);
