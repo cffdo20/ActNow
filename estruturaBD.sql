@@ -6,6 +6,7 @@ create table usuario(
 	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT,
     ususername varchar(20) unique not null,
     usemail varchar(80) not null,
+    ususenha varchar(15) null,
     primary key (uscodigo)
 );
 
