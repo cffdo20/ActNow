@@ -133,3 +133,13 @@ create table projetosocialfuncionamento(
     foreign key (projfunprojid) references projetosocial(projid),
     foreign key (projfunturid) references turnodia(turid)
 );
+
+-- criando tabela de logs
+create table log(
+	logcodigo int unsigned auto_increment not null,
+    logtabela varchar(40) not null default '',
+    logtabcodid int unsigned not null,
+    logalteracoes varchar(1000) null default '',
+    logdatetime datetime not null,
+	primary key(logcodigo)
+);
