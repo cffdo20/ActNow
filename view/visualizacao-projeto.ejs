@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -11,9 +12,9 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="assets/js/script.js" defer></script>
-  <link rel="stylesheet" href="assets/css/index-style.css">
-  <link rel="stylesheet" href="assets/css/login-style.css">
-  <link rel="stylesheet" href="assets/css/visualizar-proj.css">
+  <link rel="stylesheet" href="../assets/css/index-style.css">
+  <link rel="stylesheet" href="../assets/css/login-style.css">
+  <link rel="stylesheet" href="../assets/css/visualizar-proj.css">
 
   <title>Visualizar Projeto</title>
 </head>
@@ -23,7 +24,7 @@
   <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
     <div class="container-fluid">
 
-      <a href="index.html" class="navbar-brand text-light "><img class="img img-fluid me-2" src="assets/img/logo.png"
+      <a href="index.html" class="navbar-brand text-light "><img class="img img-fluid me-2" src="../assets/img/logo.png"
           alt="Logo do ActNow">ActNow</a>
 
       <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
@@ -39,21 +40,11 @@
             <a href="" class="nav-link text-light">Projetos</a>
           </li>
 
-          <!-- <li class="nav-item">
-            <a href="./view/cadastro-voluntario-proj.html" class="nav-link text-light">Seja um Voluntário</a>
-          </li> -->
-
-          <!-- <li class="nav-item me-2">
-            <a href="index.html" class="nav-link text-light">Início</a>
-          </li> -->
+          
 
           <li class="nav-item">
             <a href="" class="btn me-3">Meu perfil</a>
           </li>
-
-          <!-- <li class="nav-item">
-                    <a href="" id = "btn-tema" class="btn me-3">Tema</a>
-                </li> -->
 
         </ul>
       </div>
@@ -68,35 +59,33 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="div">
+            <h2 ><%= Titulo %> </h2>
             <div class="atv-content mb-2">
               <span>Descrição</span>
-              <p class = "lead">O projeto "Conectando Gerações" visa promover o diálogo e a troca de experiências entre diferentes faixas etárias da comunidade local. Por meio de uma série de atividades interativas e eventos, buscamos criar um ambiente inclusivo onde jovens, adultos e idosos possam compartilhar suas histórias de vida, perspectivas e saberes.</p>
+              <p class = "lead"> <%= Descricao %> </p>
             </div>  
             <!-- <button class = "btn"><span class="bi bi-pencil-fill"></s</p> -->
 
               <div class="atv-content">
                 <span>Justificativa</span>
                 <p class="lead">
-                  O envelhecimento populacional é uma realidade crescente em nossa sociedade, e muitas vezes isso pode levar ao isolamento social e à falta de interação entre gerações. Este projeto surge como resposta a essa necessidade, reconhecendo a importância do diálogo intergeracional para a construção de uma comunidade mais coesa e solidária.
+                  <%= Justificativa %> 
                 </p>
               </div>
 
               <ul>
-                <li class = "lead">Facilitar o intercâmbio de conhecimentos e experiências entre diferentes gerações.</li>
-                <li class ="lead">Promover a valorização e o respeito pela diversidade de histórias e perspectivas.</li>
-                <li class = "lead">Combater o isolamento social, especialmente entre idosos, por meio de atividades sociais e educativas.
-                </li>
+                <li class = "lead"> <%= Objetivos %> </li>
               </ul>
 
               <span>Público-Alvo</span>
               <p class="lead">
-                O projeto é destinado a pessoas de todas as idades, incluindo jovens, adultos e idosos da comunidade local. Além disso, também buscamos envolver instituições educacionais, centros comunitários e grupos de apoio para ampliar o alcance e a diversidade de participantes.
+                <%= Publico %>
               </p>
 
               <p>Data de início: 15/03/2024</p>
-              <p>Data de fim: 12/10/2024</p>
           </div>
         </div>
+        <!-- Sem certeza sobre o calendário nessa Sprint. -->
         <div class="col-lg-4">
           <h4 class = "lead">Calendário de Atividades</h4>
           <ul>
@@ -122,6 +111,15 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <% if (typeof alerta !== 'undefined' && alerta) { %>
+    <script>
+        // JavaScript embutido para exibir o alerta passado do Node.js
+        window.onload = function() {
+            alert("<%= alerta %>");
+        };
+    </script>
+    <% } %>
 
 
 

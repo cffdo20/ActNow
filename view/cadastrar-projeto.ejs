@@ -72,18 +72,18 @@
         </div>
 
         <div class="col-12 col-md-6">
-          <form id = "cadastroProjetoForm" action="http://localhost:3000/projetos" method = "POST">
+          <form id = "cadastroProjetoForm" action="http://localhost:3000/criar-projeto" method = "POST">
             <div class="form-group p-2">
               <h5 class="mt-2">Informações Básicas</h5>
               <span class="bi bi-balloon"></span>
               <label for="projeto-nome">Título do Projeto</label>
-              <input class="form-control font-weight-lighter" id="projeto-nome" name="projNome" type="text">
+              <input class="form-control font-weight-lighter" id="projeto-nome" name="projNome" type="text" required>
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-box-seam "></span>
               <label for="proj-descricao">Descrição do Projeto</label>
-              <textarea class="form-control input-sm" id="proj-descricao" name="projDescricao" type="text" placeholder = "O projeto se trata de uma iniciativa para promover aulas de informática..."></textarea>
+              <textarea class="form-control input-sm" id="proj-descricao" name="projDescricao" type="text" placeholder = "O projeto se trata de uma iniciativa para promover aulas de informática..." required></textarea>
               
 
             </div>
@@ -93,35 +93,29 @@
 
                 <span class="bi bi-people"></span>
                 <label for="projeto-publico">Público-Alvo</label>
-                <input class="form-control font-weight-lighter" id="projeto-publico" name="projPublico" type="text" placeholder = "Estudantes da rede de ensino pública">
+                <input class="form-control font-weight-lighter" id="projeto-publico" name="projPublico" type="text" placeholder = "Estudantes da rede de ensino pública" required>
                 </div>
 
                 <div class="form-group p-2">
                 <span class="bi bi-card-text "></span>
                 <label for="proj-importancia">Justifique a importância do seu projeto</label>
-                <textarea class="form-control input-sm" id="proj-importancia" name="projJustificativa" type="text">
-                </textarea>
+                <textarea class="form-control input-sm" id="proj-importancia" name="projJustificativa" type="text" required></textarea>
+                
                 </div>
 
                 <div class="form-group p-2">
                 <span class="bi bi-card-text "></span>
                 <label for="proj-objetivos">Fale sobre os objetivos do Projeto</label>
-                <textarea class="form-control input-sm" id="proj-objetivos" name="projObjetivos" type="text">
-                </textarea>
+                <textarea class="form-control input-sm" id="proj-objetivos" name="projObjetivos" type="text" required></textarea>
+                
                 </div>
 
 
                 <div class="form-group p-2">
                     <h5 class="mt-2">Datas</h5>
                     <label for="projData-inicio">Data de início do Projeto</label>
-                    <input class = "form-control input-sm" id= "projData-inicio" name = "projDataInicio" type="date">    
+                    <input class = "form-control input-sm" id= "projData-inicio" name = "projDataInicio" type="date" required>    
                 </div>
-    
-                  <div class="form-group p-2">
-                    <label for="projData-fim">Data estimada para o fim do Projeto</label>
-                    <input class = "form-control input-sm" id= "projData-fim" name = "proDataFim" type="date">    
-                </div>
-
 
 
             <div class="d-flex justify-content-center">
@@ -139,6 +133,16 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+  <% if (typeof alerta !== 'undefined' && alerta) { %>
+    <script>
+        // JavaScript embutido para exibir o alerta passado do Node.js
+        window.onload = function() {
+            alert("<%= alerta %>");
+        };
+    </script>
+    <% } %>
 
 
 
