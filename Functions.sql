@@ -27,28 +27,6 @@ A fazer:
 
 -- FUNÇÕES -------------------------------------------------
 
--- função para extrair parametros de uma string
-
-DELIMITER $$
-CREATE FUNCTION f_extrair_parametros(p_expr_parametros VARCHAR(1000), p_expr_numparametro INT) RETURNS VARCHAR(500)
-BEGIN
-    DECLARE v_expr_i INT DEFAULT 1;
-    DECLARE v_expr_parametro VARCHAR(100);
-    IF p_expr_numparametro = 1 THEN
-        SET v_expr_parametro = LEFT(p_expr_parametros, LOCATE('|', p_expr_parametros) - 1);
-    ELSE
-        WHILE v_expr_i <= p_expr_numparametro DO
-            IF v_expr_i = p_expr_numparametro THEN
-                SET v_expr_parametro = LEFT(p_expr_parametros, LOCATE('|', p_expr_parametros) - 1);
-            ELSE
-                SET p_expr_parametros = SUBSTRING(p_expr_parametros, LOCATE('|', p_expr_parametros) + 1);
-            END IF;
-            SET v_expr_i = v_expr_i + 1;
-        END WHILE;
-    END IF;
-    RETURN v_expr_parametro;
-END$$
-DELIMITER ;
 
 -- Função para validar string de status.
 DELIMITER $$
@@ -337,17 +315,7 @@ DELIMITER ;
 
 -- select * from atividade where atprojid=1;
 
--- Função para formatar data
-DELIMITER $$
-CREATE FUNCTION f_formata_data(p_data date) RETURNS varchar(10)
-BEGIN
-	declare v_data_resultado varchar(10);
-    set v_data_resultado = concat(reverse(left(reverse(p_data), locate('-', reverse(p_data))-1)),'/', left(right(p_data, (length(p_data)-locate('-', p_data))), locate('-', right(p_data, (length(p_data)-locate('-', p_data))))-1),'/',left(p_data, locate('-', p_data)-1));
-    return v_data_resultado;
-END$$
-DELIMITER ;
 
--- select f_formata_data(projdatainicio) from projetosocial;
 
 -- Função para buscar username por código de usuário
 DELIMITER $$
@@ -379,23 +347,3 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_buscar_titulo_projeto(1);
-
--- Função para verificar parâmetros nulos.
-DELIMITER $$
-CREATE FUNCTION f_buscar_parametros_nulos(p_parametros varchar(1000), p_qt_parametros int) RETURNS boolean
-BEGIN
-	declare v_resultado boolean default false;
-    declare v_cont int default 1;
-    declare v_conteudo_parametro varchar(500);
-    while v_cont<=p_qt_parametros do
-		set v_conteudo_parametro = f_extrair_parametros(p_parametros,v_cont);
-        if v_conteudo_parametro in('',null,'null','Null','NULL') then
-			set v_resultado = true;
-        end if;
-        set v_cont=v_cont+1;
-	end while;
-    return v_resultado;
-END$$
-DELIMITER ;
-
--- select f_buscar_parametros_nulos(',',1);
