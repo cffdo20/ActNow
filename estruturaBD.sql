@@ -6,7 +6,7 @@ create table usuario(
 	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT,
     ususername varchar(20) unique not null,
     usemail varchar(80) not null,
-    ususenha varchar(15) null,
+    ususenha varchar(15) not null,
     primary key (uscodigo)
 );
 
@@ -15,6 +15,7 @@ create table instituicao(
     instuscod int unsigned not null,
     instnomefantasia varchar(100) not null,
     instrazaosocial varchar(100) unique not null,
+    instcidcodigo int not null,
     primary key (instcnpj),
     FOREIGN KEY (instuscod) REFERENCES usuario (uscodigo)
 );

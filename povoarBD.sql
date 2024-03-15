@@ -688,27 +688,27 @@ values ('Palmas', 27),
 		('Ananás', 27);
         
 -- Inserindo dados fictícios de usuário
-insert into usuario(ususername, usemail)
-values ('user123', 'user123@example.com'),
-		('johndoe', 'johndoe@email.com'),
-		('alice22', 'alice22@fakeemail.com'),
-		('bobsmith', 'bobsmith@example.org'),
-		('emily87', 'emily87@mail.com'),
-		('samwilson', 'samwilson@emailprovider.com'),
-		('sarahmiller', 'sarahmiller@example.net'),
-		('davidbrown', 'davidbrown@fakemail.net'),
-		('laurawoods', 'laurawoods@email.org'),
-		('michaelcarter', 'michaelcarter@fakeemail.com'),
-		('juliascott', 'juliascott@example.org'),
-		('ryan98', 'ryan98@mail.com'),
-		('natalieparker', 'natalieparker@emailprovider.com'),
-		('kevinmason', 'kevinmason@example.net'),
-		('amandahill', 'amandahill@fakemail.org'),
-		('chrisgreen', 'chrisgreen@email.com'),
-		('ashleywhite', 'ashleywhite@example.com'),
-		('matthewadams', 'matthewadams@fakeemail.net'),
-		('oliviajones', 'oliviajones@mail.com'),
-		('danielwilson', 'danielwilson@example.net');
+insert into usuario(ususername, usemail, ususenha)
+values ('user123', 'user123@example.com', 'senha'),
+		('johndoe', 'johndoe@email.com', 'senha'),
+		('alice22', 'alice22@fakeemail.com', 'senha'),
+		('bobsmith', 'bobsmith@example.org', 'senha'),
+		('emily87', 'emily87@mail.com', 'senha'),
+		('samwilson', 'samwilson@emailprovider.com', 'senha'),
+		('sarahmiller', 'sarahmiller@example.net', 'senha'),
+		('davidbrown', 'davidbrown@fakemail.net', 'senha'),
+		('laurawoods', 'laurawoods@email.org', 'senha'),
+		('michaelcarter', 'michaelcarter@fakeemail.com', 'senha'),
+		('juliascott', 'juliascott@example.org', 'senha'),
+		('ryan98', 'ryan98@mail.com', 'senha'),
+		('natalieparker', 'natalieparker@emailprovider.com', 'senha'),
+		('kevinmason', 'kevinmason@example.net', 'senha'),
+		('amandahill', 'amandahill@fakemail.org', 'senha'),
+		('chrisgreen', 'chrisgreen@email.com', 'senha'),
+		('ashleywhite', 'ashleywhite@example.com', 'senha'),
+		('matthewadams', 'matthewadams@fakeemail.net', 'senha'),
+		('oliviajones', 'oliviajones@mail.com', 'senha'),
+		('danielwilson', 'danielwilson@example.net', 'senha');
  
 -- inserindo dados de voluntários
 insert into voluntario(volcpf, voluscod, volnome, volnomesocial, volbio, voltelefone, volcidcod)
@@ -724,17 +724,17 @@ values ('12345678910', 17, 'Ana Silva', 'André', 'Ana é uma profissional dedic
 		('44455566677', 7, 'Ana Costa', 'André', 'Ana é uma entusiasta da culinária que adora experimentar novas receitas e compartilhar suas criações com amigos e familiares.', '55533344455', 23); 
 
 -- inseridno instituições
-insert into instituicao(instcnpj, instuscod, instnomefantasia, instrazaosocial)
-values ('12345678910111', 3, 'Tech Solutions', 'Tech Solutions LTDA'),
-		('98765432100123', 15, 'Inovação Digital', 'Inovação Digital S.A.'),
-		('11122233344455', 14, 'Conecta Educação', 'Conecta Educação Ltda.'),
-		('55544433322110', 6, 'BioSaúde', 'BioSaúde Serviços Médicos Ltda.'),
-		('77788899911100', 11, 'FutureTech', 'FutureTech Tecnologia da Informação Eireli'),
-		('22233344455566', 20, 'Global Logistics', 'Global Logistics Transportes Ltda.'),
-		('66677788899000', 13, 'Soluções Inteligentes', 'Soluções Inteligentes Consultoria Ltda.'),
-		('99988877766655', 18, 'EcoFriendly', 'EcoFriendly Sustentabilidade Empresarial Ltda.'),
-		('33322211100044', 1, 'DataDriven', 'DataDriven Tecnologia e Informática Ltda.'),
-		('44455566677788', 2, 'MaxiServ', 'MaxiServ Soluções Empresariais Ltda.');  
+insert into instituicao(instcnpj, instuscod, instnomefantasia, instrazaosocial,instcidcodigo)
+values ('12345678910111', 3, 'Tech Solutions', 'Tech Solutions LTDA',1),
+		('98765432100123', 15, 'Inovação Digital', 'Inovação Digital S.A.',1),
+		('11122233344455', 14, 'Conecta Educação', 'Conecta Educação Ltda.',1),
+		('55544433322110', 6, 'BioSaúde', 'BioSaúde Serviços Médicos Ltda.',1),
+		('77788899911100', 11, 'FutureTech', 'FutureTech Tecnologia da Informação Eireli',1),
+		('22233344455566', 20, 'Global Logistics', 'Global Logistics Transportes Ltda.',1),
+		('66677788899000', 13, 'Soluções Inteligentes', 'Soluções Inteligentes Consultoria Ltda.',1),
+		('99988877766655', 18, 'EcoFriendly', 'EcoFriendly Sustentabilidade Empresarial Ltda.',1),
+		('33322211100044', 1, 'DataDriven', 'DataDriven Tecnologia e Informática Ltda.',1),
+		('44455566677788', 2, 'MaxiServ', 'MaxiServ Soluções Empresariais Ltda.',1);  
 
 -- inserindo habilidades de voiluntários
 insert into voluntariohabilidade(volhabid, volhabcpf)
