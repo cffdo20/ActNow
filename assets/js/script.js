@@ -2,11 +2,9 @@
 
 const btnTema = document.querySelector("#btn-tema"); 
 const body = document.body; 
+const mainImg = document.querySelector("#index-main-img"); 
 
-/* var typed = new Typed(".main-name", {
-    strings: ["Conheça o ActNow", "Meet ActNow"], 
-    typeSpeed: 150, 
-    backSpeed: 150, 
-    loop: true
-}) */
-
+document.addEventListener("DOMContentLoaded", function(){
+    mainImg.classList.remove("team-img")
+    mainImg.classList.add("fade-in")
+})

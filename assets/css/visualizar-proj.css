@@ -1,3 +1,8 @@
+.main-box{
+    border-radius: 2px 20px 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
 .proj-container{   
     border-radius: 50px; 
     padding: 3rem;
@@ -9,4 +14,12 @@
     padding: 1rem; 
     border-radius: 20px 10px 20px 20px; 
     background-color: #EDEFF1;
+}
+
+.recrutar-btn{
+    background-color: #F4D35E;
+}
+
+.recrutar-btn:hover{
+    background-color: #f1cc46;
 }

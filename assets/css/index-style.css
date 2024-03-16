@@ -28,6 +28,16 @@ body{
     background-color: #333333; 
 }
 
+.team-img{
+    opacity: 0; 
+    
+}
+
+.fade-in{
+    transition:  0.5s ease-in-out;
+}
+
+
 
 /* HOVER - NAVBAR */
 .navbar .nav-link:hover{
@@ -113,6 +123,12 @@ body{
     font-weight: lighter;
 }
 
+
+/* card - hover */
+.card:hover{
+    cursor: default;
+    box-shadow: rgba(51, 161, 208, 0.502) 0px 2px 8px 0px;
+}
 
 
 
