@@ -40,7 +40,7 @@ create table voluntario(
     voluscod int unsigned not null,
     volnome varchar(80) not null,
     volnomesocial varchar(100) null,
-    volbio varchar(300),
+    volbio varchar(300)  null,
     voltelefone char(11) not null,
     volcidcod int unsigned not null,
     primary key (volcpf),
@@ -141,7 +141,8 @@ create table log(
 	logcodigo int unsigned auto_increment not null,
     logtabela varchar(40) not null default '',
     logtabcodid int unsigned not null,
-    logalteracoes varchar(1000) null default '',
+    logalteracoes varchar(1500) null default '',
     logdatetime datetime not null,
+    logoperacao varchar(30),
 	primary key(logcodigo)
 );
