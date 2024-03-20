@@ -3,3 +3,17 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     background-color: #f5f5f5;
 }
+
+.habilidades-container{
+    border-top: 1px solid rgba(0, 0, 0, 0.236);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.236);
+
+}
+
+.bi-trash{
+    cursor: pointer;
+}
+
+.bi-trash:hover{
+    color: #EE4238;
+}
