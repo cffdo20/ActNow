@@ -126,6 +126,8 @@ body{
 
 /* card - hover */
 .card:hover{
+    transform: scale(1.1); 
+    transition: transform 300ms ease-in-out;
     cursor: default;
     box-shadow: rgba(51, 161, 208, 0.502) 0px 2px 8px 0px;
 }

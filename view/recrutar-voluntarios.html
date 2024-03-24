@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="../assets/css/index-style.css">
   <link rel="stylesheet" href="../assets/css/login-style.css">
 
-  <title>Cadastrar Projeto Teste</title>
+  <title>Recrutar Voluntários</title>
 </head>
 <body>
 
@@ -67,12 +67,12 @@
 
   <div class="container main-container">
     <h4 class="mt-3 text-center">Recrute voluntários</h4>
-    <p class="text-center lead">Use os filtros para escolher voluntários com as habilidades certas e que tem disponibilidade no horário desejado.</p>
+    <p class="text-center lead">Selecione os voluntários que você deseja recrutar!</p>
 
     <div class="row">
       <div class="col-lg-2 filter-column">
         <form id = "recrutarVoluntarioForm" action="http://localhost:3000/recrutar-voluntario" method = "POST">
-          <div class="d-flex p-1 justify-content-between">
+          <div class="d-flex p-1 justify-content-between mt-2">
             <div class="d-flex">
               <span class="bi bi-funnel pe-2"></span>
               <p>Filtros</p>
@@ -81,83 +81,210 @@
           </div>
 
           <div class="habilidades-container">
-            <div class = "d-flex">
+            <div class = "d-flex mt-2">
               <span class="bi bi-list-check"></span>
               <p class = "lead ms-2">Habilidades</p>
             </div>
             <div class="form-check pb-2 pb-md-1">
-              <input type="checkbox" class="form-check-input" value = "tecnologia" id = "opcao" name = "voluntarioHabilidades">
-              <label for="opcao" class="form-check-label">Tecnologia</label>
-            </div>
-                  
-                  <div class="form-check pb-2 pb-md-1">
-            <input type="checkbox" class="form-check-input" value = "naturais" id = "opcao" name = "voluntarioHabilidades">
-            <label for="opcao" class="form-check-label">Ciências Naturais</label>
-                  </div>
-            
-                  <div class="form-check pb-2 pb-md-1">
-            <input type="checkbox" class="form-check-input" value = "sociais" id = "opcao" name = "voluntarioHabilidades">
-            <label for="opcao" class="form-check-label">Ciências Sociais</label>
-                  </div>
-            
-                  <div class="form-check pb-2 pb-md-1">
-            <input type="checkbox" class="form-check-input" value = "linguagens" id = "opcao" name = "voluntarioHabilidades">
-            <label for="opcao" class="form-check-label">Linguagens</label>
-                  </div>
-            
-                  <div class="form-check pb-2 pb-md-1">
-            <input type="checkbox" class="form-check-input" value = "matematica" id = "opcao" name = "voluntarioHabilidades">
-            <label for="opcao" class="form-check-label">Matemática</label>
-                  </div>
-            
-                  <div class="form-check pb-2 pb-md-1">
-            <input type="checkbox" class="form-check-input" value = "saude" id = "opcao" name = "voluntarioHabilidades">
-            <label for="opcao" class="form-check-label">Saúde</label>
-                  </div>
+              <input type="checkbox" class="form-check-input" value="artesanato" id="artesanato" name="voluntarioHabilidades">
+              <label for="artesanato" class="form-check-label">Artesanato</label>
           </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="marcenaria" id="marcenaria" name="voluntarioHabilidades">
+              <label for="marcenaria" class="form-check-label">Marcenaria</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="costura" id="costura" name="voluntarioHabilidades">
+              <label for="costura" class="form-check-label">Costura</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="ceramica" id="ceramica" name="voluntarioHabilidades">
+              <label for="ceramica" class="form-check-label">Cerâmica</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="pintura" id="pintura" name="voluntarioHabilidades">
+              <label for="pintura" class="form-check-label">Pintura</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="jardinagem" id="jardinagem" name="voluntarioHabilidades">
+              <label for="jardinagem" class="form-check-label">Jardinagem</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="construcao-civil" id="construcaoCivil" name="voluntarioHabilidades">
+              <label for="construcaoCivil" class="form-check-label">Construção Civil</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="encanador" id="encanador" name="voluntarioHabilidades">
+              <label for="encanador" class="form-check-label">Encanador</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="eletricista" id="eletricista" name="voluntarioHabilidades">
+              <label for="eletricista" class="form-check-label">Eletricista</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="esculpir" id="esculpir" name="voluntarioHabilidades">
+              <label for="esculpir" class="form-check-label">Esculpir</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="joalheria" id="joalheria" name="voluntarioHabilidades">
+              <label for="joalheria" class="form-check-label">Joalheria</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="tecelagem" id="tecelagem" name="voluntarioHabilidades">
+              <label for="tecelagem" class="form-check-label">Tecelagem</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="serralheria" id="serralheria" name="voluntarioHabilidades">
+              <label for="serralheria" class="form-check-label">Serralheria</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="bordado" id="bordado" name="voluntarioHabilidades">
+              <label for="bordado" class="form-check-label">Bordado</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="vidraria" id="vidraria" name="voluntarioHabilidades">
+              <label for="vidraria" class="form-check-label">Vidraria</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="encardenacao" id="encardenacao" name="voluntarioHabilidades">
+              <label for="encardenacao" class="form-check-label">Encadernação</label>
+          </div>
+          
+          <div class="form-check pb-2 pb-md-1">
+              <input type="checkbox" class="form-check-input" value="carpintaria" id="carpintaria" name="voluntarioHabilidades">
+              <label for="carpintaria" class="form-check-label">Carpintaria</label>
+          </div>
+        </div>
 
-      <div class = "d-flex">
-        <span class="bi bi-watch"></span>
-        <p class = "lead ms-2">Disponibilidade</p>
-      </div>
-      
+        <div class="disponibilidade-container">
+          <div class = "d-flex mt-2">
+            <span class="bi bi-calendar-date"></span>
+            <p class = "lead ms-2">Dia da semana</p>
+          </div>
+          <select class = "form-select" name="filtroCidade" id="filtroCidade">
+            <option value="domingo">Domingo</option>
+            <option value="segunda" selected>Segunda</option>
+            <option value="terca">Terça</option>
+            <option value="quarta">Quarta</option>
+            <option value="quinta">Quinta</option>
+            <option value="sexta">Sexta</option>
+            <option value="sabado">Sábado</option>
+          </select>
+          
+                <div class = "d-flex mt-2">
+          <span class="bi bi-watch"></span>
+          <p class = "lead ms-2">Turno</p>
+                </div>
+                
+                <div class="form-check pb-2 pb-md-1">
+          <input type="checkbox" name="voluntarioHorario" id="" class="form-check-input" value = "matutino">
+          <label for="">Manhã</label>
+                </div>
+                <div class="form-check pb-2 pb-md-1">
+          <input type="checkbox" name="voluntarioHorario" id="" class="form-check-input" value = "vespertino">
+          <label for="">Tarde</label>
+                </div>
+                <div class="form-check pb-2 pb-md-1">
+          <input type="checkbox" name="voluntarioHorario" id="" class="form-check-input" value = "noturno">
+          <label for="">Noite</label>
+                </div>
+        </div>
 
-      <div class="form-check pb-2 pb-md-1">
-        <input type="checkbox" name="voluntarioHorario" id="" class="form-check-input" value = "matutino">
-        <label for="">Manhã</label>
+      <div class="localizacao-container">
+        <div class = "d-flex mt-2">
+          <span class="bi bi-map"></span>
+          <p class = "lead ms-2">Estado</p>
+        </div>
+        <select class = "form-select" name="filtroEstado" id="filtroEstado" required>
+          <option value="acre">Acre</option>
+          <option value="alagoas">Alagoas</option>
+          <option value="amapa">Amapá</option>
+          <option value="amazonas" selected>Amazonas</option>
+        </select>
+        <div class = "d-flex mt-2">
+          <span class="bi bi-pin-map"></span>
+          <p class = "lead ms-2">Cidade</p>
+        </div>
+        <select class = "form-select" name="filtroCidade" id="filtroCidade" required>
+          <option value="manaus">Manaus</option>
+        </select>
       </div>
-      <div class="form-check pb-2 pb-md-1">
-        <input type="checkbox" name="voluntarioHorario" id="" class="form-check-input" value = "vespertino">
-        <label for="">Tarde</label>
-      </div>
-      <div class="form-check pb-2 pb-md-1">
-        <input type="checkbox" name="voluntarioHorario" id="" class="form-check-input" value = "noturno">
-        <label for="">Noite</label>
-      </div>
-
 
       <div class="d-flex justify-content-center pb-2 mb-2">
         <input type="submit" value="Filtrar" class="mt-3 btn btn-primary">
       </div>
 
-
-
         </form>
       </div>
 
-    
 
       <div class="col-lg-10">
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facere, incidunt voluptatibus. Quasi illum voluptatum similique reprehenderit, sunt labore in excepturi facilis, dicta architecto nemo rerum vero vitae ea sed omnis?</p>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 profile-container">
+
+              <!-- <div class="pfp d-flex justify-content-center mt-2">
+                <div class = "container container-img d-flex justify-content-center">
+                  <img id = "profile-pic" src="../assets/img/bjork.jpg" alt="">
+                </div>
+              </div> -->
+              
+            </div>
+            <div class="col-lg-3 profile-container">
+              <div class = "d-flex">
+                <div class="pfp">
+                  <img class = "profile-pic" src="../assets/img/lorde.jpg" alt="" >
+                </div>
+                  <div class="testando">
+                    <a class = "mt-1" href="" target = "_blank">Lorde</a>
+                    <p class = "habilidades-text">Tecnologia | Ciências Naturais | Twitter </p>
+                  </div>
+              </div>
+              
+              <p class = "descricao-text">RAQUELE CAMPEA BB24 COM 87% DE APROVAÇÃO</p>
+
+            </div>
+            
+
+            <div class="col-lg-3">
+              <div class = "d-flex">
+                <div class="pfp">
+                  <img class = "profile-pic" src="../assets/img/lorde.jpg" alt="" >
+                </div>
+                
+
+                  <div class="testando">
+                    <a class = "mt-1" href="" target = "_blank">Lorde</a>
+                    <p class = "habilidades-text">Tecnologia | Ciências Naturais | Twitter </p>
+                  </div>
+
+              </div>
+              
+              <p class = "descricao-text">RAQUELE CAMPEA BB24 COM 87% DE APROVAÇÃO</p>
+              
+            </div>
+
+          
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  </div>
-
-
-
-
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

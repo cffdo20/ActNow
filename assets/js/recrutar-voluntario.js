@@ -1,7 +1,6 @@
 const cleanFilterBtn = document.querySelector("#trashBtn"); 
 const checkboxes = document.querySelectorAll(".form-check-input"); 
 
-
 cleanFilterBtn.addEventListener("click", () => {
     let inputs = checkboxes.length;
 
@@ -10,3 +9,5 @@ cleanFilterBtn.addEventListener("click", () => {
     }
 
 })
+
+
