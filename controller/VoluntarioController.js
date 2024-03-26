@@ -35,24 +35,24 @@ function filtrarVoluntario(req) {
                     if(resultado === undefined){
                         // Caso nenhum voluntário atendeu aos critérios
                         resolve({erro: 'Nenhum voluntário atendeu aos critérios.\nTente executar um filtro diferente.'});
-                    }
-
-                    dados.getVoluntario(resultado.username)
-                        .then(elemento => {
-                            // Caso um voluntário atendeu aos critérios
-                            var dadosVoluntarios = [{
-                                Nome: elemento.nome,
-                                Bio: elemento.biografia,
-                                Contato: elemento.telefone
-                            }];
-                            resolve({
-                                alerta: resultado.resposta,
-                                Voluntarios: dadosVoluntarios
+                    }else{
+                        dados.getVoluntario(resultado.username)
+                            .then(elemento => {
+                                // Caso um voluntário atendeu aos critérios
+                                var dadosVoluntarios = [{
+                                    Nome: elemento.nome,
+                                    Bio: elemento.biografia,
+                                    Contato: elemento.telefone
+                                }];
+                                resolve({
+                                    alerta: resultado.resposta,
+                                    Voluntarios: dadosVoluntarios
+                                });
+                            })
+                            .catch(error => {
+                                reject(error);
                             });
-                        })
-                        .catch(error => {
-                            reject(error);
-                        });
+                    }
                 }
             })
             .catch(error => {
