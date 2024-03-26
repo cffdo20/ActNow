@@ -1,0 +1,5 @@
+Para configurar corretamente o servidor Node.JS no CMD vá até o diretório main do projeto e execute os seguintes comandos, uma linha de cada vez:
+npm install express
+npm install ejs
+npm install mysql2
+npm install mysql2/promise
