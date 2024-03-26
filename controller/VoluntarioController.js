@@ -15,25 +15,21 @@ function filtrarVoluntario(req) {
 
                     // Caso contrário, busca os dados dos voluntários filtrados e depois envia a resposta e os dados dos voluntários
                     var tamResultado = resultado.length - 1;
-
-                    
-                    /*
-
-                    dados.getVoluntario().then(elementos => {
-                        resolve({
-                            alerta: resultado.resposta,
-                            Titulo: elementos.titulo,
-                            Descricao: elementos.descricao,
-                            Publico: elementos.publico,
-                            Justificativa: elementos.justificativa,
-                            Objetivos: elementos.objetivos,
-                            Inicio: elementos.inicio
-                        });
-                    })*/
+                    var dadosVoluntarios = [];
+                    for (let i = 0; i < tamResultado; i++){
+                        dados.getVoluntario(resultado[0][i]).then(elementos => {
+                            dadosVoluntarios.push({Nome: elementos.nome,
+                                                Bio: elementos.biografia,
+                                                Contato: elementos.telefone});
+                        })
+                    }
+                    resolve({
+                        alerta: resultado.resposta,
+                        Voluntarios: dadosVoluntarios
+                    });
                 }               
             })
             .catch(error => {
-                // Se ocorrer algum erro na promessa anterior, rejeita a promessa atual com o erro
                 reject(error);
             });
     });
