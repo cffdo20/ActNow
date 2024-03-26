@@ -13,8 +13,8 @@ const bodyParser = require('body-parser');
 const app = express();
 // Configuração do EJS como view engine
 app.set('view engine', 'ejs');
-const diretorioDeViews = '/view';
-const diretorioDoIndexHTML = '/';
+const diretorioDeViews = '/view/pages';
+const diretorioDoIndexHTML = '/view';
 // Definição do diretório onde estão os arquivos de visualização
 app.set('views', path.join(__dirname, diretorioDeViews));
 app.use(express.static(path.join(__dirname, diretorioDoIndexHTML)));
