@@ -29,6 +29,4 @@ function criarProjeto(req) {
     });
 }
 
-
-
 module.exports = { criarProjeto };
