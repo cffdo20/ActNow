@@ -8,6 +8,7 @@ Em espera:
     -Validar data de entrega de atividade - Stand by;
     -Validar alteraçõa na data de entrega da atividade - stand by;
     -Validar datas - stand by;
+    -Lidar com voluntários disponíveis em diferentes turnos;
 
 Feito:
 - Terminar de criar as funções - Feito;
@@ -347,3 +348,99 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_buscar_titulo_projeto(1);
+
+-- Função para validar voluntario pelo código de usuário.
+DELIMITER $$
+CREATE FUNCTION f_validar_voluntario_uscodigo(p_vvu_voluscod int) RETURNS boolean
+BEGIN
+    DECLARE v_vvu_status_voluntario boolean default false;
+    
+    set v_vvu_status_voluntario = (select count(*)
+		from voluntario
+        where voluscod=p_vvu_voluscod);
+    
+    RETURN v_vvu_status_voluntario;
+END$$
+DELIMITER ;
+-- função para validar id de dia da semana
+DELIMITER $$
+CREATE FUNCTION f_validar_diasemana_id(p_vdi_dsid int) RETURNS boolean
+BEGIN
+    DECLARE v_vdn_status_diasemana boolean default false;
+    
+    set v_vdn_status_diasemana = (select count(*)
+		from diasemana
+        where dsid=p_vdi_dsid);
+    
+    RETURN v_vdn_status_diasemana;
+END$$
+DELIMITER ;
+-- função para buscar id pela nomeclatura do dia da semana;
+DELIMITER $$
+CREATE FUNCTION f_buscar_diasemana_id(p_bdi_dsnomeclatura varchar(15)) RETURNS boolean
+BEGIN
+    DECLARE v_bdi_id_diasemana int default 0;
+    
+    set v_bdi_id_diasemana = (select dsid
+		from diasemana
+        where dsnomeclatura=p_bdi_dsnomeclatura);
+    
+    RETURN v_bdi_id_diasemana;
+END$$
+DELIMITER ;
+
+-- função para buscar id pelo nome da da habilidade;
+DELIMITER $$
+CREATE FUNCTION f_buscar_habilidade_id(p_bhi_habnome varchar(20)) RETURNS boolean
+BEGIN
+    DECLARE v_bhi_id_habilidade int default 0;
+    
+    set v_bhi_id_habilidade = (select habid
+		from habilidade
+        where habnome=p_bhi_habnome);
+    
+    RETURN v_bhi_id_habilidade;
+END$$
+DELIMITER ;
+
+-- função para validar id de habilidade
+DELIMITER $$
+CREATE FUNCTION f_validar_habilidade_id(p_vhi_habid int) RETURNS boolean
+BEGIN
+    DECLARE v_vdn_status_habilidade boolean default false;
+    
+    set v_vdn_status_habilidade = (select count(*)
+		from habilidade
+        where habid=p_vhi_habid);
+    
+    RETURN v_vdn_status_habilidade;
+END$$
+DELIMITER ;
+
+-- função para buscar codigo pelo nome da da cidade;
+DELIMITER $$
+CREATE FUNCTION f_buscar_cidade_codigo(p_bcc_cidnome varchar(40)) RETURNS boolean
+BEGIN
+    DECLARE v_bcc_codigo_cidade int default 0;
+    
+    set v_bcc_codigo_cidade = (select cidcodigo
+		from cidade
+        where cidnome=p_bcc_cidnome);
+    
+    RETURN v_bcc_codigo_cidade;
+END$$
+DELIMITER ;
+
+-- função para validar codigo de cidade
+DELIMITER $$
+CREATE FUNCTION f_validar_cidade_codigo(p_vcc_cidcodigo int) RETURNS boolean
+BEGIN
+    DECLARE v_vcc_status_cidade boolean default false;
+    
+    set v_vcc_status_cidade = (select count(*)
+		from cidade
+        where cidcodigo=p_vcc_cidcodigo);
+    
+    RETURN v_vcc_status_cidade;
+END$$
+DELIMITER ;

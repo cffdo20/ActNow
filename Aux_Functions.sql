@@ -73,6 +73,8 @@ BEGIN
     return v_resultado;
 END$$
 DELIMITER ;
+select f_buscar_parametros_nulos('teste||',2);
+select f_extrair_parametros('teste||',2);
 
 -- select f_buscar_parametros_nulos(',',1);
 DELIMITER $$
@@ -95,7 +97,7 @@ BEGIN
     RETURN v_cont-1;
 END$$
 DELIMITER ;
-select f_contar_parametros('teste|teste|teste|teste|teste|teste|teste|');
+-- select f_contar_parametros('teste|teste|teste|teste|teste|teste|teste|');
 -- Função para concatenar parametros
 DELIMITER $$
 CREATE FUNCTION f_concatenar_parametros(p_parametros varchar(1000), p_qt_parametros int) RETURNS varchar(1000)
@@ -115,4 +117,4 @@ BEGIN
     return v_resultado;
 END$$
 DELIMITER ;
-select f_concatenar_parametros('teste|teste|teste|',2);
+-- select f_concatenar_parametros('teste|teste|teste|',2);

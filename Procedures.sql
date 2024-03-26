@@ -228,3 +228,155 @@ DELIMITER ;
 -- call sp_consultar_projeto('Construindo Comunidades,');
 
 -- select * from projetosocial;
+
+-- Stored procedures para consultar informações de voluntário pelo username.
+DELIMITER $$
+CREATE Procedure sp_consultar_voluntario(in p_cv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cv_ususername VARCHAR(20);
+    declare v_cv_uscodigo int default 0;
+    SET v_cv_ususername = f_extrair_parametros(p_cv_parametros, 1);
+    set v_cv_uscodigo = f_buscar_codigo_usuario(v_cv_ususername);
+    if f_buscar_parametros_nulos(p_cv_parametros,1) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		
+		if f_validar_codigo_usuario(v_cv_uscodigo) is not true then
+			select 'ERRO: O usuário indicado não existe.' as erro;
+		else
+			if f_validar_voluntario_uscodigo(v_cv_uscodigo) is not true then
+				select 'ERRO: O voluntário indicado não existe.' as erro;
+            else
+				select volcpf as 'cpf',
+						volnome as 'nome',
+						volnomesocial as 'nome Social',
+						volbio as 'biografia',
+						voltelefone as 'telefone',
+						(select cidnome from cidade where cidcodigo=volcidcod) as 'cidade'
+				from voluntario
+				where voluscod = v_cv_uscodigo;
+			end if;
+		end if;
+    end if;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE Procedure sp_filtrar_voluntarios(in p_fv_parametros VARCHAR(1000))
+BEGIN
+	declare v_fv_manha, v_fv_tarde, v_fv_noite boolean default false;
+    declare v_fv_id_diasemana, v_fv_id_habilidade int default 0;
+    SET  v_fv_id_diasemana = f_buscar_diasemana_id(f_extrair_parametros(p_fv_parametros, 1));
+    set v_fv_manha = f_extrair_parametros(p_fv_parametros, 2);
+    set v_fv_tarde = f_extrair_parametros(p_fv_parametros, 3);
+    set v_fv_noite = f_extrair_parametros(p_fv_parametros, 4);
+    set v_fv_id_habilidade = f_buscar_habilidade_id(f_extrair_parametros(p_fv_parametros, 5));
+    
+    if f_buscar_parametros_nulos(p_fv_parametros,5) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_diasemana_id(v_fv_id_diasemana) is not true then
+			select 'ERRO: O dia da semana indicado não existe.' as erro;
+		else
+			if f_validar_habilidade_id(v_fv_id_habilidade) is not true then
+				select 'ERRO: A habilidade indicada não existe.' as erro;
+			else
+				if v_fv_manha is true and v_fv_tarde is true and v_fv_noite is true then
+					select ususername 'username'
+					from usuario
+					join voluntario on uscodigo=voluscod
+					join voluntariohabilidade on volhabcpf=volcpf
+					join habilidade on  volhabid = habid
+					join voluntariodiasemana on voldscpf=volcpf
+					join diasemana on voldsid=dsid
+					join turnodia on voldsturid=turid
+					where dsid=v_fv_id_diasemana and turid in (1,2,3) and habid=v_fv_id_habilidade;
+				else
+					if v_fv_manha is true and v_fv_tarde is true then
+						select ususername 'username'
+						from usuario
+						join voluntario on uscodigo=voluscod
+						join voluntariohabilidade on volhabcpf=volcpf
+						join habilidade on  volhabid = habid
+						join voluntariodiasemana on voldscpf=volcpf
+						join diasemana on voldsid=dsid
+						join turnodia on voldsturid=turid
+						where dsid=v_fv_id_diasemana and turid in (1,2) and habid=v_fv_id_habilidade;
+					else
+						if v_fv_tarde is true and v_fv_noite is true then
+							select ususername 'username'
+							from usuario
+							join voluntario on uscodigo=voluscod
+							join voluntariohabilidade on volhabcpf=volcpf
+							join habilidade on  volhabid = habid
+							join voluntariodiasemana on voldscpf=volcpf
+							join diasemana on voldsid=dsid
+							join turnodia on voldsturid=turid
+							where dsid=v_fv_id_diasemana and turid in (2,3) and habid=v_fv_id_habilidade;
+						else
+							if v_fv_noite is true and v_fv_manha is true then
+								select ususername 'username'
+								from usuario
+								join voluntario on uscodigo=voluscod
+								join voluntariohabilidade on volhabcpf=volcpf
+								join habilidade on  volhabid = habid
+								join voluntariodiasemana on voldscpf=volcpf
+								join diasemana on voldsid=dsid
+								join turnodia on voldsturid=turid
+								where dsid=v_fv_id_diasemana and turid in (1,3) and habid=v_fv_id_habilidade;
+							else
+								if v_fv_manha is true then
+									select ususername 'username'
+									from usuario
+									join voluntario on uscodigo=voluscod
+									join voluntariohabilidade on volhabcpf=volcpf
+									join habilidade on  volhabid = habid
+									join voluntariodiasemana on voldscpf=volcpf
+									join diasemana on voldsid=dsid
+									join turnodia on voldsturid=turid
+									where dsid=v_fv_id_diasemana and turid in (1) and habid=v_fv_id_habilidade;
+								else
+									if v_fv_tarde is true then
+										select ususername 'username'
+										from usuario
+										join voluntario on uscodigo=voluscod
+										join voluntariohabilidade on volhabcpf=volcpf
+										join habilidade on  volhabid = habid
+										join voluntariodiasemana on voldscpf=volcpf
+										join diasemana on voldsid=dsid
+										join turnodia on voldsturid=turid
+										where dsid=v_fv_id_diasemana and turid in (2) and habid=v_fv_id_habilidade;
+									else
+										if v_fv_noite is true then
+											select ususername 'username'
+											from usuario
+											join voluntario on uscodigo=voluscod
+											join voluntariohabilidade on volhabcpf=volcpf
+											join habilidade on  volhabid = habid
+											join voluntariodiasemana on voldscpf=volcpf
+											join diasemana on voldsid=dsid
+											join turnodia on voldsturid=turid
+											where dsid=v_fv_id_diasemana and turid in (3) and habid=v_fv_id_habilidade;
+										else
+												select ususername 'username'
+												from usuario
+												join voluntario on uscodigo=voluscod
+												join voluntariohabilidade on volhabcpf=volcpf
+												join habilidade on  volhabid = habid
+												join voluntariodiasemana on voldscpf=volcpf
+												join diasemana on voldsid=dsid
+												join turnodia on voldsturid=turid
+												where dsid=v_fv_id_diasemana and habid=v_fv_id_habilidade;
+										end if;
+									end if;
+								end if;
+							end if;
+						end if;
+					end if;
+				end if;
+			end if;
+		end if;
+    end if;
+END$$
+DELIMITER ;
+call sp_filtrar_voluntarios('Segunda-feira|0|0|0|Encanador|');
