@@ -1,5 +1,6 @@
 // Importando módulos Controllers
-const projetoController = require('./controller/ProjController.js');
+const projetoController = require('./controller/ProjetoController.js');
+const voluntarioController = require('./controller/VoluntarioController.js');
 
 // Importando 'ejs' para Engine View
 //const ejs = require('ejs');
@@ -21,7 +22,12 @@ app.use(express.static(path.join(__dirname, diretorioDoIndexHTML)));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /** Definição das Rotas */
-// Criação de novo projeto
+// Página: Index
+app.get('/', (req,res) => {
+    res.redirect('index.html');
+});
+
+// Página: Criação de novo projeto
 app.post('/criar-projeto', (req, res) => {
     projetoController.criarProjeto(req)
     .then(resposta => {
@@ -36,9 +42,34 @@ app.post('/criar-projeto', (req, res) => {
     });
 });
 
+// Página: Projeto
+
 app.get('/projeto', (req, res) => {
             res.render('cadastrar-projeto.ejs');
 });
+
+
+// Página: Filtro de Voluntário
+// Acesso
+app.get('/recrutar-voluntario', (req, res) => {
+    res.render('recrutar-voluntarios.ejs');
+});
+// Receber dados formulário
+app.post('/recrutar-voluntario', (req, res) => {
+    console.log(req.body);
+    voluntarioController.filtrarVoluntario(req)
+    .then(resposta => {
+        console.log(resposta);
+        if(!resposta.erro){
+            // Se não retornar erro renderiza a pagina do projeto com a mensagem do banco e os dados do projeto
+            res.render('recrutar-voluntario.ejs', resposta);
+        }else{
+            // Redireciona de volta para página de cadastro de projeto enviando a mensagem de erro do banco como alert
+            res.render('recrutar-voluntario.ejs',{ alerta: resposta.erro });
+        }
+    });
+});
+
 
 /** Inicialização do servidor */
 // Setando a porta a ser usada no localhost
