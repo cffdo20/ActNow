@@ -1,4 +1,4 @@
-// Importando a classe FiltroVoluntario
+m// Importando a classe FiltroVoluntario
 const filtro = require('../model/Voluntario.js');
 const dados = require('../model/Voluntario.js');
 
@@ -9,7 +9,7 @@ function filtrarVoluntario(req) {
             .then(resultado => {
                 if (Array.isArray(resultado)) {
                     // Se for um array, ou seja, tem mais de um voluntário que atende aos critérios do filtro
-                    console.log(resultado);
+                    console.log('É Array: ' + resultado);
                     var promises = resultado.map(item => dados.getVoluntario(item.username));
 
                     Promise.all(promises)
@@ -29,16 +29,22 @@ function filtrarVoluntario(req) {
                             reject(error);
                         });
                 } else {
-                    console.log(resultado);
-                    // Se não for um array, ou seja, somente um voluntário atende aos critérios do filtro
+                    console.log('Não é Array: ' + resultado);
+                    // Se não for um array, ou seja, somente um, ou nenhum, voluntário atende aos critérios do filtro
+                
+                    if(resultado === undefined){
+                        // Caso nenhum voluntário atendeu aos critérios
+                        resolve({alerta: 'Nenhum voluntário atendeu aos critérios.\nTente executar um filtro diferente.'});
+                    }
+
                     dados.getVoluntario(resultado.username)
                         .then(elemento => {
+                            // Caso um voluntário atendeu aos critérios
                             var dadosVoluntarios = [{
                                 Nome: elemento.nome,
                                 Bio: elemento.biografia,
                                 Contato: elemento.telefone
                             }];
-
                             resolve({
                                 alerta: resultado.resposta,
                                 Voluntarios: dadosVoluntarios
