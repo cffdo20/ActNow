@@ -34,7 +34,7 @@ function filtrarVoluntario(req) {
                 
                     if(resultado === undefined){
                         // Caso nenhum voluntário atendeu aos critérios
-                        resolve({alerta: 'Nenhum voluntário atendeu aos critérios.\nTente executar um filtro diferente.'});
+                        resolve({erro: 'Nenhum voluntário atendeu aos critérios.\nTente executar um filtro diferente.'});
                     }
 
                     dados.getVoluntario(resultado.username)
