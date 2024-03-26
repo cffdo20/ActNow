@@ -8,6 +8,7 @@ function filtrarVoluntario(req) {
         filtro.getFiltroVoluntario(req.body.filtroDiaSemana, req.body.voluntarioHorario, req.body.voluntarioHabilidades)
             .then(resultado => {
                 if (Array.isArray(resultado)) {
+                    // Se for um array, ou seja, tem mais de um voluntário que atende aos critérios do filtro
                     console.log(resultado);
                     var promises = resultado.map(item => dados.getVoluntario(item.username));
 
@@ -29,7 +30,7 @@ function filtrarVoluntario(req) {
                         });
                 } else {
                     console.log(resultado);
-                    // Se resultado não for um array, chama dados.getVoluntario com resultado.username
+                    // Se não for um array, ou seja, somente um voluntário atende aos critérios do filtro
                     dados.getVoluntario(resultado.username)
                         .then(elemento => {
                             var dadosVoluntarios = [{
@@ -53,8 +54,4 @@ function filtrarVoluntario(req) {
             });
     });
 }
-
-
-
-
 module.exports = { filtrarVoluntario };
