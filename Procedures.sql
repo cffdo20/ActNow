@@ -379,4 +379,3 @@ BEGIN
     end if;
 END$$
 DELIMITER ;
-call sp_filtrar_voluntarios('Segunda-feira|0|0|0|Encanador|');
