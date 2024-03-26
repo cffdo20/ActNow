@@ -25,9 +25,9 @@ function concatParametros(parametros = []) {
   var i = 0
   do {
     if (i == parametros.length - 1) {
-      conpar = conpar + String(parametros[i]) + ','
+      conpar = conpar + String(parametros[i]) + '|'
     } else {
-      conpar = conpar + String(parametros[i]) + ','
+      conpar = conpar + String(parametros[i]) + '|'
     }
     i++
   } while (i < parametros.length)
