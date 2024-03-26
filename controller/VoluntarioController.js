@@ -7,32 +7,54 @@ function filtrarVoluntario(req) {
         /** Filtro com base nos parâmetros */
         filtro.getFiltroVoluntario(req.body.filtroDiaSemana, req.body.voluntarioHorario, req.body.voluntarioHabilidades)
             .then(resultado => {
-                if (resultado.erro !== undefined) {
-                    // Se houver um erro na resposta, apenas envia a resposta
-                    resolve(resultado);
-                } else {
-                    log.console(resultado);
+                if (Array.isArray(resultado)) {
+                    console.log(resultado);
+                    var promises = resultado.map(item => dados.getVoluntario(item.username));
 
-                    // Caso contrário, busca os dados dos voluntários filtrados e depois envia a resposta e os dados dos voluntários
-                    var tamResultado = resultado.length - 1;
-                    var dadosVoluntarios = [];
-                    for (let i = 0; i < tamResultado; i++){
-                        dados.getVoluntario(resultado[0][i]).then(elementos => {
-                            dadosVoluntarios.push({Nome: elementos.nome,
-                                                Bio: elementos.biografia,
-                                                Contato: elementos.telefone});
+                    Promise.all(promises)
+                        .then(elementos => {
+                            var dadosVoluntarios = elementos.map(elemento => ({
+                                Nome: elemento.nome,
+                                Bio: elemento.biografia,
+                                Contato: elemento.telefone
+                            }));
+
+                            resolve({
+                                alerta: resultado.resposta,
+                                Voluntarios: dadosVoluntarios
+                            });
                         })
-                    }
-                    resolve({
-                        alerta: resultado.resposta,
-                        Voluntarios: dadosVoluntarios
-                    });
-                }               
+                        .catch(error => {
+                            reject(error);
+                        });
+                } else {
+                    console.log(resultado);
+                    // Se resultado não for um array, chama dados.getVoluntario com resultado.username
+                    dados.getVoluntario(resultado.username)
+                        .then(elemento => {
+                            var dadosVoluntarios = [{
+                                Nome: elemento.nome,
+                                Bio: elemento.biografia,
+                                Contato: elemento.telefone
+                            }];
+
+                            resolve({
+                                alerta: resultado.resposta,
+                                Voluntarios: dadosVoluntarios
+                            });
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+                }
             })
             .catch(error => {
                 reject(error);
             });
     });
 }
+
+
+
 
 module.exports = { filtrarVoluntario };
