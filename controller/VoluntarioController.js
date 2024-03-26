@@ -32,7 +32,7 @@ function filtrarVoluntario(req) {
                     console.log('Não é Array: ' + resultado);
                     // Se não for um array, ou seja, somente um, ou nenhum, voluntário atende aos critérios do filtro
                 
-                    if(resultado === undefined){
+                    if(resultado === undefined || resultado.length === 0){
                         // Caso nenhum voluntário atendeu aos critérios
                         resolve({erro: 'Nenhum voluntário atendeu aos critérios.\nTente executar um filtro diferente.'});
                     }else{
