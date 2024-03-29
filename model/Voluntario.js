@@ -1,4 +1,4 @@
-const bd = require('../BD/db.js');
+const bd = require('db.js');
 
 function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabilidades) {
   // Tratar horário

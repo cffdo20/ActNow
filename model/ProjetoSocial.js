@@ -1,4 +1,4 @@
-const bd = require('../BD/db.js');
+const bd = require('db.js');
 
 function setProjetoSocial(tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj, codUsuCriador) {
   // Converter a Data para String
