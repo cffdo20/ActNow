@@ -6,3 +6,5 @@ Para iniciar corretamente o servidor de Banco de Dados, deve-se executar os scri
 	3. Aux_Functions.sql
 	4. Procedures.sql
 	5. Functions.sql
+
+Edite o arquivo 'configuracaoPessoalDB.js' para seu nome de servidor e senha local do MySQL, não fazer commit desse arquivo depois.
