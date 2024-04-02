@@ -265,21 +265,33 @@ DELIMITER $$
 CREATE Procedure sp_filtrar_voluntarios(in p_fv_parametros VARCHAR(1000))
 BEGIN
 	declare v_fv_manha, v_fv_tarde, v_fv_noite boolean default false;
-    declare v_fv_id_diasemana, v_fv_id_habilidade int default 0;
+    declare v_fv_id_diasemana, v_fv_id_habilidade,v_num_habilidades,v_cont,v_cont_usuarios int default 0;
+    declare v_cont_habilidades int default 6;
+    DECLARE v_cursor_usuarios CURSOR FOR select ususername from usuario;
+    declare v_ususername varchar(20) default '';
     SET  v_fv_id_diasemana = f_buscar_diasemana_id(f_extrair_parametros(p_fv_parametros, 1));
     set v_fv_manha = f_extrair_parametros(p_fv_parametros, 2);
     set v_fv_tarde = f_extrair_parametros(p_fv_parametros, 3);
     set v_fv_noite = f_extrair_parametros(p_fv_parametros, 4);
     set v_fv_id_habilidade = f_buscar_habilidade_id(f_extrair_parametros(p_fv_parametros, 5));
-    
+    set v_num_habilidades = f_extrair_parametros(p_fv_parametros, 6);
+    OPEN v_cursor_usuarios;
+	FETCH NEXT FROM v_cursor_usuarios INTO v_ususername;
+	WHILE @@FETCH_STATUS = 0 DO
+		IF f_verificar_habilidades_username(v_ususername, p_fv_parametros, v_num_habilidades) = v_num_habilidades THEN
+			SET v_cont_usuarios = v_cont_usuarios + 1;
+		END IF;
+		FETCH NEXT FROM v_cursor_usuarios INTO v_ususername;
+	END WHILE;
+	CLOSE v_cursor_usuarios;
     if f_buscar_parametros_nulos(p_fv_parametros,5) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_diasemana_id(v_fv_id_diasemana) is not true then
 			select 'ERRO: O dia da semana indicado não existe.' as erro;
 		else
-			if f_validar_habilidade_id(v_fv_id_habilidade) is not true then
-				select 'ERRO: A habilidade indicada não existe.' as erro;
+			if v_cont_usuarios<=0 then
+				select 'ERRO: Não existem usuários com as habilidades solicitadas.' as erro;
 			else
 				if v_fv_manha is true and v_fv_tarde is true and v_fv_noite is true then
 					select ususername 'username'
