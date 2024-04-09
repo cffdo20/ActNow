@@ -1,3 +1,4 @@
+
 .filter-column{
     border-radius: 30px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -22,58 +23,73 @@
     transform: translateY(-1px);
 }
 
-.profile-container{
-    background-color: #faf9f9;
-    border-radius: 10px;
-    /* border: 1px solid rgba(128, 128, 128, 0.156); */
-    margin: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+
+#filtrarBtn{
+    font-weight: 500; 
 }
 
-/* .col-lg-4{
-    padding-right: 0px !important;
-    padding-left: 0px !important;
+.error-container{
+    background-color: #F8D0C7; 
+    border: none; 
+    font-size: 1.2rem; 
+    border-radius: 5px; 
+    padding: 0.75rem; 
+    font-weight: 400; 
+    
+}
+
+.profile-container{
+    border-radius: 10px; 
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    max-width: 500px;
+    margin: 1rem; 
+    padding: 1rem 1.5rem; 
+    margin-bottom: 1rem; 
+}
+
+.user-main-info{
+    display: flex; 
+    align-items: center;
+}
+
+.user-main-info img{
+    width: 3rem; 
+    height: 3rem; 
+    border-radius: 999px; 
+    margin: .5rem; 
+}
+
+.profile-container h3{
+    font-size: 1.5rem; 
+    font-weight: 400; 
+}
+
+/* .profile-container:hover{
+    transform: scale(1.04);
+    transition: transform 330ms ease-in-out; 
+    box-shadow: rgba(60, 102, 171, 0.24) 0px 3px 8px;
+
 } */
 
 
-.testando{
+
+.contacts, .information{
     display: flex; 
-    flex-direction: column;
-    margin-left: 0.9rem;
-    align-items: start;
-
 }
 
-.habilidades-text{
-    color: gray;
-    font-weight: lighter;
-    font-size: 0.7rem; 
+a{
+    text-decoration: none; 
 }
 
-.testando a{
-    color: black;
-    text-decoration: none;
-
-}
-.testando a:hover{
-    color: #2346A6;
-    text-decoration: underline;
+.invite-btn{
+    border: 1px solid #0D6EFD; 
+    color: #0D6EFD;   
+    font-weight: 500;   
 }
 
-.container-img{
-    border-bottom: 1px solid gray;
+.invite-btn:hover{
+    background-color: #0D6EFD;      
+    color: #fff; 
 }
 
-.profile-pic{
-    margin-top: 5px;
-    border-radius: 55px;
-    width: 50px;
-    height: auto;
-}
-
-.descricao-text{
-    font-size: 1rem;
-    font-weight: lighter;
-}
-
-/* checkbox na div da descrição, evento de clique. Ao clicar, div ficará com uma borda indicando o */
