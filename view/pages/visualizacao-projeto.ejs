@@ -98,8 +98,19 @@
               <span class="bi bi-plus-circle"></span>
             </a>
             <a href="">
-              <span class="bi bi-trash"></span>
+              <span id = "trashBtn" class="bi bi-trash"></span>
             </a>
+
+            <!-- teste de popup para EXCLUSÃO do projeto -->
+            <dialog>
+              <div class="meuDialog">
+                <span id = "exclamation-triangle" class="bi bi-exclamation-triangle-fill"></span>
+                <span>Deseja excluir permanentemente o projeto?</span>
+                <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
+                <a href="">Sim, excluir</a>
+                <button id = "returnPopBtn">Manter projeto</button>
+              </div>
+            </dialog>
 
             <a href="/recrutar-voluntario" class = "recruit-btn btn btn-primary">Recrutar voluntários</a>
 
