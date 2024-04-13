@@ -37,6 +37,7 @@
     font-size: 1.25rem; 
     font-weight: 400; 
 }
+
 .proj-container ul li{
     font-size: 1rem;
 }
@@ -107,3 +108,58 @@
 .hidden{
     display: none; 
 } */
+
+dialog::backdrop{
+    background-color: rgb(0 0 0 / .5);
+}
+
+dialog{
+    
+    border: none; 
+    border-radius: 10px; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.meuDialog{
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; 
+}
+
+dialog a{
+    border: 1px solid #AD4646; 
+    padding: 0.3rem 1rem; 
+    color: #AD4646;
+    border-radius: 5px; 
+    color: red; 
+}
+
+dialog #exclamation-triangle{
+    color: red; 
+}
+
+dialog span{
+    font-size: 1.25rem; 
+    font-weight: 500; 
+    color: #32404A; 
+}
+
+dialog #dialog-warning{
+    font-size: 1rem; 
+    color: #959595; 
+}
+
+
+dialog a:hover{
+    color: red; 
+    background-color: #ad464692; 
+    
+}
+
+dialog button{
+    border: none; 
+    background: transparent; 
+    border: 1px solid #626f8654;
+    padding: 0.3rem 1rem; 
+    border-radius: 5px; 
+}
