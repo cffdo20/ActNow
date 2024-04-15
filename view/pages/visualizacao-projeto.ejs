@@ -107,7 +107,11 @@
                 <span id = "exclamation-triangle" class="bi bi-exclamation-triangle-fill"></span>
                 <span>Deseja excluir permanentemente o projeto?</span>
                 <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
-                <a href="">Sim, excluir</a>
+                <!-- Form apenas com submit para exclusão (?) -->
+                <form id = "exclusaoProjetoForm" action="/excluir-projeto" method = "POST" >
+                  <input type="submit" value="Sim, excluir">
+                </form>
+                </form>
                 <button id = "returnPopBtn">Manter projeto</button>
               </div>
             </dialog>
@@ -127,14 +131,6 @@
       </div>
     </div>
 
-  
-      
-      <!-- <div class="d-flex justify-content-center">
-        <a href="/view/cadastro-atividade-projeto.html" class = "btn btn-primary m-3 ps-2">
-          <span class="bi bi-plus-circle me-2"></span>Adicionar atividade</a>
-          
-          <a class = "recrutar-btn btn m-3 ps-2" href="/recrutar-voluntario"><span class="bi bi-people me-2"></span>Recrutar voluntários</a>
-      </div> -->
     </div>
     
     
