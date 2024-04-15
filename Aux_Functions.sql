@@ -73,8 +73,6 @@ BEGIN
     return v_resultado;
 END$$
 DELIMITER ;
-select f_buscar_parametros_nulos('teste||',2);
-select f_extrair_parametros('teste||',2);
 
 -- select f_buscar_parametros_nulos(',',1);
 DELIMITER $$
