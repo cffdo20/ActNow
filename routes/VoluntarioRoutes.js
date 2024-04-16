@@ -15,7 +15,7 @@ router.post('/recrutar-voluntario', (req, res) => {
         console.log(resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do projeto com a mensagem do banco e os dados do projeto
-            res.render('visualizar-voluntarios.ejs', resposta);
+            res.render('recrutar-voluntarios.ejs', resposta);
             //res.render('visualizar-voluntarios.ejs'); 
         }else{
             // Redireciona de volta para página de cadastro de projeto enviando a mensagem de erro do banco como alert

@@ -444,3 +444,17 @@ BEGIN
     RETURN v_vcc_status_cidade;
 END$$
 DELIMITER ;
+
+-- Função para consultar quantos projetos um usuário cadastrou pelo username:
+DELIMITER $$
+CREATE FUNCTION f_verificar_projetos_usuario(p_cpu_uscodigo int) RETURNS boolean
+BEGIN
+    DECLARE v_cpu_status_projetos_usuario boolean default false;
+    
+    set v_cpu_status_projetos_usuario = (select count(*)
+		from projetosocial
+        where projuscod=p_cpu_uscodigo);
+    
+    RETURN v_cpu_status_projetos_usuario;
+END$$
+DELIMITER ;

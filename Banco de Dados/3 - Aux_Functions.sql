@@ -73,8 +73,6 @@ BEGIN
     return v_resultado;
 END$$
 DELIMITER ;
-select f_buscar_parametros_nulos('teste||',2);
-select f_extrair_parametros('teste||',2);
 
 -- select f_buscar_parametros_nulos(',',1);
 DELIMITER $$
@@ -118,3 +116,38 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_concatenar_parametros('teste|teste|teste|',2);
+
+-- Função para verificar se um usuário possui uma habilidade requisitada
+DELIMITER $$
+CREATE FUNCTION f_verificar_habilidade_username(p_vhu_ususername varchar(20), p_vhu_id_habilidade int) RETURNS boolean
+BEGIN
+    declare v_vhu_resultado boolean default false;
+    set v_vhu_resultado= (select count(*)
+						from usuario
+						join voluntario on uscodigo=voluscod
+						join voluntariohabilidade on volhabcpf=volcpf
+						join habilidade on  volhabid = habid
+                        where ususername=p_vhu_ususername and habid=p_vhu_id_habilidade);
+    return v_vhu_resultado;
+END$$
+DELIMITER ;
+
+-- Função para verificar se um usuário possui as habilidades requisitadas
+DELIMITER $$
+CREATE FUNCTION f_verificar_habilidades_username(p_vhsu_ususername varchar(20), p_vhsu_parametros varchar(1000), p_vhsu_qt_habilidades int) RETURNS int
+BEGIN
+    declare v_vhsu_cont int default 0;
+    declare v_vhsu_cont_habilidades int default 7;
+    declare v_vhsu_conteudo_parametro_id int default 0;
+    declare v_vhsu_resultado int default 0;
+    while v_vhsu_cont<=p_vhsu_qt_habilidades do
+		set v_vhsu_conteudo_parametro_id = f_buscar_habilidade_id(f_extrair_parametros(p_vhsu_parametros,v_vhsu_cont_habilidades));
+		if f_verificar_habilidade_username(p_vhsu_ususername,v_vhsu_conteudo_parametro_id) then
+			set v_vhsu_resultado=v_vhsu_resultado+1;
+        end if;
+        set v_vhsu_cont_habilidades=v_vhsu_cont_habilidades+1;
+        set v_vhsu_cont=v_vhsu_cont+1;
+	end while;
+    return v_vhsu_resultado;
+END$$
+DELIMITER ;
