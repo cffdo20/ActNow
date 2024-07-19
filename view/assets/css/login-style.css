@@ -16,17 +16,6 @@
     height: auto; 
 }
 
-/* .img-box{    
-    border-radius: 30px;
-    background-color: #F4D35E;
-}
-
-.img-box img{    
-    border-radius: 30px;
-}
-
- */
-
 main h4{
     font-size: 2rem; 
 }
@@ -44,11 +33,6 @@ main h4{
 
 .form-control{
     font-weight: 400 !important; 
-}
-
-.login-widget{
-    border-radius: 4.25rem; 
-    max-width: 80%; 
 }
 
 
