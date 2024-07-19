@@ -6,15 +6,14 @@
 .proj-container{   
     border-radius: 5px; 
     padding: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     background-color: #fff;
     /* margin: 1rem 10rem 3rem 10rem;  */
 }
 
-.first-container{
-    border-right: 1px solid rgba(128, 128, 128, 0.59); 
+.calendar-title{
+    font-size: 1.25rem; 
 }
-
 .proj-container h2{
     font-size: 1.5rem; 
 }
@@ -23,14 +22,14 @@
     padding: 1rem; 
     border-radius: 20px 10px 20px 20px; 
     background-color: #fff;
-    border-left: 5px solid #F4D35E;
+    /* border-left: 5px solid #F4D35E; */
 }
 
 .atv-content span,
 .publico-alvo{
     font-size: 0.75rem; 
-    color: #626F86; 
-    text-transform: uppercase;
+    color: #3395FF;
+    /* text-transform: uppercase; */
 }
 
 .atv-content p{
@@ -87,7 +86,6 @@
 .recruit-btn{
     padding: 0.2rem 1rem; 
 }
-
 
 
 /* .buttons-container a:nth-child(3){
