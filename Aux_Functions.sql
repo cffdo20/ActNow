@@ -127,7 +127,7 @@ BEGIN
 						join voluntario on uscodigo=voluscod
 						join voluntariohabilidade on volhabcpf=volcpf
 						join habilidade on  volhabid = habid
-                        where ususername=p_vhu_ususername and habid=p_vhu_id_habilidade);
+                        where ususername=p_vhu_ususername and habid=p_vhu_id_habilidade and usstatus=1);
     return v_vhu_resultado;
 END$$
 DELIMITER ;
@@ -149,5 +149,45 @@ BEGIN
         set v_vhsu_cont=v_vhsu_cont+1;
 	end while;
     return v_vhsu_resultado;
+END$$
+DELIMITER ;
+
+-- função para validar email
+DELIMITER $$
+CREATE FUNCTION f_validar_email(p_email VARCHAR(80))
+RETURNS BOOLEAN
+BEGIN
+    DECLARE v_email_regex VARCHAR(255);
+    SET v_email_regex = '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$';
+
+    IF p_email REGEXP v_email_regex THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END; $$
+DELIMITER ;
+-- drop function f_validar_email;
+-- SELECT f_validar_email((select usemail from usuario where uscodigo=1)) AS e_mail_valido;
+
+-- Verifica se o parâmetro contém algum caractere prejudicial
+DELIMITER $$
+CREATE FUNCTION f_buscar_caracteres_prejudiciais(p_parametros VARCHAR(1000), p_qt_parametros INT) RETURNS BOOLEAN
+BEGIN
+    DECLARE v_resultado BOOLEAN DEFAULT FALSE;
+    DECLARE v_cont INT DEFAULT 1;
+    DECLARE v_conteudo_parametro VARCHAR(500);
+    DECLARE v_caracteres_prejudiciais VARCHAR(100) DEFAULT '\'\'";--|\\`&<>()=%+';
+    
+    WHILE v_cont <= p_qt_parametros DO
+        SET v_conteudo_parametro = f_extrair_parametros(p_parametros, v_cont);
+        
+        -- Verifica se o parâmetro contém algum caractere prejudicial
+        IF v_conteudo_parametro REGEXP CONCAT('[', v_caracteres_prejudiciais, ']') THEN
+            SET v_resultado = TRUE;
+        END IF;
+        SET v_cont = v_cont + 1;
+    END WHILE;
+    RETURN v_resultado;
 END$$
 DELIMITER ;

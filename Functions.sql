@@ -87,7 +87,7 @@ BEGIN
     
     set v_bcu_codigo_usuario= (select uscodigo
 		from usuario
-        where ususername=p_bcu_ususername);
+        where ususername=p_bcu_ususername and usstatus=1);
     
     RETURN v_bcu_codigo_usuario;
 END$$
@@ -103,7 +103,7 @@ BEGIN
     
     set v_vcu_status_usuario = (select count(*)
 		from usuario
-        where uscodigo=p_vcu_uscodigo);
+        where uscodigo=p_vcu_uscodigo and usstatus=1);
     
     RETURN v_vcu_status_usuario;
 END$$
@@ -326,7 +326,7 @@ BEGIN
     if (f_validar_codigo_usuario(p_bu_uscodigo)) is not true then
 		set v_bu_ususername = 'ERRO: O usuário indicado não existe';
     else
-		set v_bu_ususername = (select ususername from usuario where uscodigo=p_bu_uscodigo);
+		set v_bu_ususername = (select ususername from usuario where uscodigo=p_bu_uscodigo and usstatus=1);
     end if;
     return v_bu_ususername;
 END$$
@@ -362,6 +362,7 @@ BEGIN
     RETURN v_vvu_status_voluntario;
 END$$
 DELIMITER ;
+
 -- função para validar id de dia da semana
 DELIMITER $$
 CREATE FUNCTION f_validar_diasemana_id(p_vdi_dsid int) RETURNS boolean
@@ -375,6 +376,7 @@ BEGIN
     RETURN v_vdn_status_diasemana;
 END$$
 DELIMITER ;
+
 -- função para buscar id pela nomeclatura do dia da semana;
 DELIMITER $$
 CREATE FUNCTION f_buscar_diasemana_id(p_bdi_dsnomeclatura varchar(15)) RETURNS boolean
@@ -456,5 +458,34 @@ BEGIN
         where projuscod=p_cpu_uscodigo);
     
     RETURN v_cpu_status_projetos_usuario;
+END$$
+DELIMITER ;
+
+-- Função para buvalidar e-mail de um usuario
+DELIMITER $$
+CREATE FUNCTION f_validar_email_usuario(p_beu_usemail varchar(80)) RETURNS int(11)
+BEGIN
+    DECLARE v_beu_email_usuario boolean default false;
+    
+    set v_beu_email_usuario = (select count(*)
+		from usuario
+        where usemail=p_beu_usemail and usstatus=1);
+    
+    RETURN v_beu_email_usuario;
+END$$
+DELIMITER ;
+
+
+-- Função para validar o username de um usuario
+DELIMITER $$
+CREATE FUNCTION f_validar_username_usuario(p_vuu_ususername varchar(20)) RETURNS int(11)
+BEGIN
+    DECLARE v_vuu_ususername_usuario boolean default false;
+    
+    set v_vuu_ususername_usuario= (select count(*)
+		from usuario
+        where ususername=p_vuu_ususername);
+    
+    RETURN v_vuu_ususername_usuario;
 END$$
 DELIMITER ;

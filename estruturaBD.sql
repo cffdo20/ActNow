@@ -7,6 +7,7 @@ create table usuario(
     ususername varchar(20) unique not null,
     usemail varchar(80) not null,
     ususenha varchar(15) not null,
+    usstatus tinyint(1) unsigned not null default 1,
     primary key (uscodigo)
 );
 

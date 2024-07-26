@@ -26,7 +26,7 @@ BEGIN
 	SET v_crpj_projdatainicio = cast(f_extrair_parametros(p_crpj_parametros, 6) as date);
     set v_crpj_projstatusvarchar = f_extrair_parametros(p_crpj_parametros, 7);
 	SET v_crpj_projuscod = cast(f_extrair_parametros(p_crpj_parametros, 8) as unsigned int);
-    if f_buscar_parametros_nulos(p_crpj_parametros,8) then
+    if (f_buscar_parametros_nulos(p_crpj_parametros,8) or f_buscar_caracteres_prejudiciais(p_crpj_parametros,8)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if not f_validar_string_status(v_crpj_projstatusvarchar) then
@@ -70,7 +70,7 @@ BEGIN
 	SET v_dfat_atdataentrega = cast(f_extrair_parametros(p_dfat_parametros, 3) as date);
 	SET v_dfat_atstatus = f_extrair_parametros(p_dfat_parametros, 4);
 	SET v_dfat_atprojid = cast(f_extrair_parametros(p_dfat_parametros, 5) as unsigned int);
-    if f_buscar_parametros_nulos(p_dfat_parametros,5) then
+    if (f_buscar_parametros_nulos(p_dfat_parametros,5) or f_buscar_caracteres_prejudiciais(p_dfat_parametros,5)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if not f_validar_string_status(v_dfat_atstatus) then
@@ -105,7 +105,7 @@ BEGIN
     
     SET v_adta_atid = cast(f_extrair_parametros(p_adta_parametros, 1) as unsigned int);
 	SET v_adta_atdataentrega = cast(f_extrair_parametros(p_adta_parametros, 2) as date);
-    if f_buscar_parametros_nulos(p_adta_parametros,2) then
+    if (f_buscar_parametros_nulos(p_adta_parametros,2) or f_buscar_caracteres_prejudiciais(p_adta_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_atividade_id(v_adta_atid) is true then
@@ -134,7 +134,7 @@ BEGIN
     
     SET v_asta_atid = cast(f_extrair_parametros(p_asta_parametros, 1) as unsigned int);
 	SET v_asta_atstatus = f_extrair_parametros(p_asta_parametros, 2);
-    if f_buscar_parametros_nulos(p_asta_parametros,2) then
+    if (f_buscar_parametros_nulos(p_asta_parametros,2) or f_buscar_caracteres_prejudiciais(p_asta_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_atividade_id(v_asta_atid) is true then
@@ -167,7 +167,7 @@ BEGIN
     
     SET v_adesa_atid = cast(f_extrair_parametros(p_adesa_parametros, 1) as unsigned int);
 	SET v_adesa_atdescricao = f_extrair_parametros(p_adesa_parametros, 2);
-    if f_buscar_parametros_nulos(p_adesa_parametros,2) then
+    if (f_buscar_parametros_nulos(p_adesa_parametros,2) or f_buscar_caracteres_prejudiciais(p_adesa_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_atividade_id(v_adesa_atid) is true then
@@ -192,7 +192,7 @@ BEGIN
     declare v_cap_projid int default 0;
     SET v_cap_projtitulo = f_extrair_parametros(p_cap_parametros, 1);
     set v_cap_projid = f_buscar_id_projeto(v_cap_projtitulo);
-    if f_buscar_parametros_nulos(p_cap_parametros,1) then
+    if (f_buscar_parametros_nulos(p_cap_parametros,1) or f_buscar_caracteres_prejudiciais(p_cap_parametros,1)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_cap_projid) is not true then
@@ -220,7 +220,7 @@ BEGIN
     declare v_cp_ususername varchar(20);
     SET v_cp_projtitulo = f_extrair_parametros(p_cp_parametros, 1);
     set v_cp_projid = f_buscar_id_projeto(v_cp_projtitulo);
-    if f_buscar_parametros_nulos(p_cp_parametros,1) then
+    if (f_buscar_parametros_nulos(p_cp_parametros,1) or f_buscar_caracteres_prejudiciais(p_cp_parametros, 1)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_cp_projid) is not true then
@@ -231,14 +231,15 @@ BEGIN
                 select 'ERRO: O projeto indicado está inativo.' as erro;
 			else
 				if f_transformar_string_status((select projstatus from projetosocial where projid=v_cp_projid)) = 1 then
-					select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid;
+					select projtitulo 'titulo',projdescricao 'descricao',projpublicoalvo 'publico',projjustificativa 'justificativa',projobjetivos 'objetivos',f_formata_data(projdatainicio) 'inicio',f_gerar_status_string(f_transformar_string_status(projstatus)) 'status',f_buscar_username(projuscod) 'criador' from projetosocial where projid=v_cp_projid and projstatus=1;
 				end if;
 			end if;
 		end if;
 	end if;
 END$$
 DELIMITER ;
--- call sp_consultar_projeto('Construindo Comunidades|');
+-- drop procedure sp_consultar_projeto;
+-- call sp_consultar_projeto('Construindo Com"nidades|');
 -- select * from projetosocial;
 
 -- Stored procedures para consultar informações de voluntário pelo username.
@@ -249,7 +250,7 @@ BEGIN
     declare v_cv_uscodigo int default 0;
     SET v_cv_ususername = f_extrair_parametros(p_cv_parametros, 1);
     set v_cv_uscodigo = f_buscar_codigo_usuario(v_cv_ususername);
-    if f_buscar_parametros_nulos(p_cv_parametros,1) then
+    if (f_buscar_parametros_nulos(p_cv_parametros,1) or f_buscar_caracteres_prejudiciais(p_cv_parametros,1)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_codigo_usuario(v_cv_uscodigo) is not true then
@@ -283,7 +284,7 @@ BEGIN
     set v_fv_noite = f_extrair_parametros(p_fv_parametros, 4);
     set v_fv_id_habilidade = f_buscar_habilidade_id(f_extrair_parametros(p_fv_parametros, 5));
     
-    if f_buscar_parametros_nulos(p_fv_parametros,5) then
+    if (f_buscar_parametros_nulos(p_fv_parametros,5) or f_buscar_caracteres_prejudiciais(p_fv_parametros,5)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_diasemana_id(v_fv_id_diasemana) is not true then
@@ -399,7 +400,7 @@ BEGIN
     declare v_cpu_uscodigo int default 0;
     SET v_cpu_ususername = f_extrair_parametros(p_cpu_parametros, 1);
     set v_cpu_uscodigo = f_buscar_codigo_usuario(v_cpu_ususername);
-    if f_buscar_parametros_nulos(p_cpu_parametros,1) then
+    if (f_buscar_parametros_nulos(p_cpu_parametros,1) or f_buscar_caracteres_prejudiciais(p_cpu_parametros,1)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_codigo_usuario(v_cpu_uscodigo) is not true then
@@ -410,7 +411,7 @@ BEGIN
             else
 				select projtitulo 'titulo'
 				from projetosocial 
-				where projuscod=v_cpu_uscodigo;
+				where projuscod=v_cpu_uscodigo and projstatus=1;
 			end if;
 		end if;
     end if;
@@ -425,7 +426,7 @@ BEGIN
     SET v_adp_projtitulo = f_extrair_parametros(p_adp_parametros, 1);
     SET v_adp_projdescricao = f_extrair_parametros(p_adp_parametros, 2);
     set v_adp_projid = f_buscar_id_projeto(v_adp_projtitulo);
-    if f_buscar_parametros_nulos(p_adp_parametros,2) then
+    if (f_buscar_parametros_nulos(p_adp_parametros,2) or f_buscar_caracteres_prejudiciais(p_adp_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_adp_projid) is not true then
@@ -455,7 +456,7 @@ BEGIN
     SET v_app_projtitulo = f_extrair_parametros(p_app_parametros, 1);
     SET v_app_projpublicoalvo = f_extrair_parametros(p_app_parametros, 2);
     set v_app_projid = f_buscar_id_projeto(v_app_projtitulo);
-    if f_buscar_parametros_nulos(p_app_parametros,2) then
+    if (f_buscar_parametros_nulos(p_app_parametros,2) or f_buscar_caracteres_prejudiciais(p_app_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_app_projid) is not true then
@@ -485,7 +486,7 @@ BEGIN
     SET v_ajp_projtitulo = f_extrair_parametros(p_ajp_parametros, 1);
     SET v_ajp_projjustificativa = f_extrair_parametros(p_ajp_parametros, 2);
     set v_ajp_projid = f_buscar_id_projeto(v_ajp_projtitulo);
-    if f_buscar_parametros_nulos(p_ajp_parametros,2) then
+    if (f_buscar_parametros_nulos(p_ajp_parametros,2) or f_buscar_caracteres_prejudiciais(p_ajp_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_ajp_projid) is not true then
@@ -515,7 +516,7 @@ BEGIN
     SET v_aop_projtitulo = f_extrair_parametros(p_aop_parametros, 1);
     SET v_aop_projobjetivos = f_extrair_parametros(p_aop_parametros, 2);
     set v_aop_projid = f_buscar_id_projeto(v_aop_projtitulo);
-    if f_buscar_parametros_nulos(p_aop_parametros,2) then
+    if (f_buscar_parametros_nulos(p_aop_parametros,2) or f_buscar_caracteres_prejudiciais(p_aop_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_aop_projid) is not true then
@@ -543,7 +544,7 @@ BEGIN
     declare v_ip_projid int default 0;
     SET v_ip_projtitulo = f_extrair_parametros(p_ip_parametros, 1);
     set v_ip_projid = f_buscar_id_projeto(v_ip_projtitulo);
-    if f_buscar_parametros_nulos(p_ip_parametros,1) then
+    if (f_buscar_parametros_nulos(p_ip_parametros,1) or f_buscar_caracteres_prejudiciais(p_ip_parametros,1)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_id_projeto(v_ip_projid) is not true then
@@ -563,3 +564,43 @@ END$$
 DELIMITER ;
 -- call sp_inativar_projeto('Construindo Comunidades|');
 -- select * from projetosocial;
+
+-- Stored Procedure pra criar um usuário
+DELIMITER $$
+CREATE Procedure sp_criar_usuario(in p_crus_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_crus_ususername VARCHAR(20);
+	DECLARE v_crus_ususenha VARCHAR(15);
+	DECLARE v_crus_usemail VARCHAR(80);
+    
+	SET v_crus_ususername = f_extrair_parametros(p_crpj_parametros, 1);
+	SET v_crus_ususenha = f_extrair_parametros(p_crpj_parametros, 2);
+	SET v_crus_usemail = f_extrair_parametros(p_crpj_parametros, 3);
+    if (f_buscar_parametros_nulos(p_crus_parametros,3) or f_buscar_caracteres_prejudiciais(p_crus_parametros,3)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_username_usuario(v_crus_ususername)>0 then
+			select 'ERRO: Um usuário com esse username já existe.' as erro;
+		else
+			if f_validar_email_usuario(v_crus_usemail) then
+				select 'ERRO: Este usuário não existe.' as erro;
+			else
+				insert into usuario(ususername,ususenha,usemail) 
+				values(v_crus_ususername,v_crus_ususenha,v_crus_usemail);
+				if (select count(*) from usuario where ususername=v_crus_ususername and usemail=v_crus_usemail and ususenha=v_crus_ususenha)<1 then
+					select 'ERRO: O projeto não foi criado no banco de dados.' as erro;
+				else
+					select 'Projeto criado com sucesso.' as resposta;
+				end if;
+			end if;
+		end if;
+    end if;
+END$$
+DELIMITER ;
+-- Store procedure para inativar um usuário
+
+-- stored procedure para alterar a senha de um usuário.
+
+-- stored procedure para alterar o e-mail de um usuário.alter
+
+-- stored procedure para validar um usuário pelo username, ou email, e a senha
