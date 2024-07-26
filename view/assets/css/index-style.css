@@ -1,6 +1,6 @@
 body{
     font-family: 'Inter', sans-serif !important; 
-    --webkit-font-smoothing: antialised; 
+    -webkit-font-smoothing: antialised; 
 }
 
 .name-logo,
@@ -29,7 +29,7 @@ body{
 }
 
 .img{
-    max-width: 20%;  
+    max-width: 17%;  
     height: auto; 
     
 }
@@ -64,6 +64,9 @@ body{
 
 
 /* MAIN SECTION */
+.main-content{
+    min-height: 100vh; 
+}
 
 .main-btn{
     background-color: #3395FF;
@@ -79,6 +82,10 @@ body{
     font-weight: 600; 
 }
 
+.register-text{
+    font-size: 1.06rem; 
+    color: #747479; 
+}
 
 /* HOVER - MAIN SECTION */
 .main-btn:hover,
