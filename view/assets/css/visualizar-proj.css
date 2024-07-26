@@ -11,11 +11,17 @@
     /* margin: 1rem 10rem 3rem 10rem;  */
 }
 
+.proj-titulo{
+    font-size: 1.875rem;
+    font-weight: 600; 
+}
+
+.create-activity-button{
+
+}
+
 .calendar-title{
     font-size: 1.25rem; 
-}
-.proj-container h2{
-    font-size: 1.5rem; 
 }
 
 .atv-content{
@@ -28,7 +34,7 @@
 .atv-content span,
 .publico-alvo{
     font-size: 0.75rem; 
-    color: #3395FF;
+    color: #989090;
     /* text-transform: uppercase; */
 }
 
@@ -71,9 +77,9 @@
     text-decoration: none; 
 }
 
-.buttons-container .bi{
-    font-size: 1.25rem;
-    color: #626F86;
+.buttons-container .fa{
+    font-size: 1.2rem;
+    color: #44546F; 
     padding: 0.5rem; 
     border-radius: 20px;
     font-weight: bold; 
@@ -82,9 +88,26 @@
 .buttons-container .bi:hover{
     background-color: #F1F2F4;
 }
-
 .recruit-btn{
+    border: 1px solid; 
+    border-radius: 10px; 
+    transition: .2s; 
+}
+
+.recruit-btn:hover{
+    border: 1px solid transparent;  
+    background-color: #0B5ED7; 
+    color: #fff; 
+}
+
+.recruit-btn,
+.create-activity-button{
     padding: 0.2rem 1rem; 
+}
+
+.recruit-btn span, 
+.create-activity-button span{
+    margin-right: 0.2rem;
 }
 
 
@@ -199,3 +222,18 @@ dialog button{
     
 }
 
+
+.activities-calendar{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.activities-calendar h4{
+    padding-bottom: 0.75rem; 
+}
+
+.activity-item{
+    padding-bottom: 0.75rem; 
+}
