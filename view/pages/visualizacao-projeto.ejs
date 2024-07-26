@@ -56,7 +56,7 @@
           <li class="nav-item">
             <a href="" class="btn me-3">
               <span class="fa-solid fa-user"></span>
-              Meu perfil</a>
+              Perfil</a>
           </li>
 
         </ul>
@@ -72,8 +72,14 @@
       <div class="row">
         <div class="col-lg-8 first-container">
           <div class="div">
-            <h2 ><%= Titulo %> </h2>
+            <div class="proj-header d-flex justify-content-between align-items-center">
+              <h2 class = "proj-titulo"><%= Titulo %> </h2>
+              <a class = "create-activity-button btn btn-primary" href="">
+                <span class="fa-solid fa-plus"></span>
+                Cadastrar Atividade</a>
+            </div>
             <div class="atv-content mb-2">
+              <!-- <p>Data de início: 15/03/2024</p> -->
               <span>Descrição</span>
               <p class = "lead"> <%= Descricao %> </p>
             </div>  
@@ -95,7 +101,7 @@
                 <%= Publico %>
               </p>
 
-              <p>Data de início: 15/03/2024</p>
+              
 
               
           </div>
@@ -106,7 +112,7 @@
             <div class="line"></div>
             
             <a href="/editar-projeto" class = "pencil-icon">
-              <span class="fa-solid fa-pen-to-square"></span>
+              <span class="fa fa-solid fa-pen-to-square"></span>
               <span class="tooltiptext">Editar</span>
             </a>
             <!-- <a href="" class = "circle-icon">
@@ -114,7 +120,7 @@
               <span class="tooltiptext"> Adicionar atividade</span>
             </a> -->
             <a href="" class = "trash-icon">
-              <span id = "trashBtn" class="fa-solid fa-trash"></span>
+              <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
               <span class="tooltiptext">Excluir projeto</span>
             </a>
 
@@ -133,19 +139,21 @@
               </div>
             </dialog>
 
-            <a href="/recrutar-voluntario" class = "recruit-btn btn btn-primary">
+            <a href="/recrutar-voluntario" class = "recruit-btn">
               <span class="fa-solid fa-users"></span>
-              Recrutar voluntários</a>
+              Recrutar</a>
 
             
             
           </div>
-          <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
-          <ul>
-            <li>01/04/2023 - </li>
-            <li></li>
-            <li></li>
-          </ul>
+          <div class="activities-calendar">
+            <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
+            <ul>
+              <li class = "activity-item">01/04/2024 - Visita ao local </li>
+              <li class = "activity-item">04/04/2024 - Conversar com gestor</li>
+              <li class = "activity-item">10/04/2024 - Verificar disponibilidade do local</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
