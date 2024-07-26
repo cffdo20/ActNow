@@ -69,4 +69,8 @@ main h4{
     .form-container{
         width: 90%; 
     }
+
+    .btn{
+        width: 100%;
+    }
 }
