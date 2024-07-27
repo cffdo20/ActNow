@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="../assets/css/login-style.css">
   <link rel="stylesheet" href="../assets/css/visualizar-proj.css">
 
-  <title>Visualizar Projeto</title>
+  <title>Actnow - Visualizar Projeto</title>
 </head>
 
 <body>
@@ -74,85 +74,206 @@
           <div class="div">
             <div class="proj-header d-flex justify-content-between align-items-center">
               <h2 class = "proj-titulo"><%= Titulo %> </h2>
-              <a class = "create-activity-button btn btn-primary" href="">
+              <button id = "new-activity-button" class = "create-activity-button btn btn-primary" href="">
                 <span class="fa-solid fa-plus"></span>
-                Cadastrar Atividade</a>
+                Cadastrar Atividade</button>
             </div>
-            <div class="atv-content mb-2">
+            <div class="atv-content mb-3" id = "description-container">
               <!-- <p>Data de início: 15/03/2024</p> -->
-              <span>Descrição</span>
+              <span class = "d-flex align-items-center">Descrição <button class = "hidden" id = "description-container-button"><span class = "fa-solid fa-pen-to-square"></span></button></span>
               <p class = "lead"> <%= Descricao %> </p>
             </div>  
             <!-- <button class = "btn"><span class="bi bi-pencil-fill"></s</p> -->
 
-              <div class="atv-content">
+              <div class="atv-content mb-3" id = "justify-container">
                 <span>Justificativa</span>
                 <p class="lead">
                   <%= Justificativa %> 
                 </p>
               </div>
 
-              <ul class = "pt-4">
-                <li class = ""> <%= Objetivos %> </li>
-              </ul>
+              <div class="atv-content mb-3" id = "goals-container">
+                <ul class = "pt-4">
+                  <li class = ""> <%= Objetivos %> </li>
+                </ul>
+              </div>
 
-              <span class = "publico-alvo">Público-Alvo</span>
-              <p class="lead">
-                <%= Publico %>
-              </p>
+              <div class="atv-content mb-3" id = "audience-container">
+                <span class = "publico-alvo">Público-Alvo</span>
+                <p class="lead">
+                  <%= Publico %>
+                </p>
+              </div>
 
-              
-
+            
               
           </div>
         </div>
-        <!-- Sem certeza sobre o calendário nessa Sprint. -->
+        
+
         <div class="col-lg-4">
           <div class="buttons-container">
             <div class="line"></div>
             
-            <a href="/editar-projeto" class = "pencil-icon">
+            <!-- <a href="/editar-projeto" class = "pencil-icon">
               <span class="fa fa-solid fa-pen-to-square"></span>
               <span class="tooltiptext">Editar</span>
-            </a>
+            </a> -->
             <!-- <a href="" class = "circle-icon">
               <span class="fa-solid fa-circle-plus"></span>
               <span class="tooltiptext"> Adicionar atividade</span>
             </a> -->
+
             <a href="" class = "trash-icon">
               <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
               <span class="tooltiptext">Excluir projeto</span>
             </a>
 
-            <!-- teste de popup para EXCLUSÃO do projeto -->
+            <!-- Modal para EXCLUSÃO do projeto -->
             <dialog>
-              <div class="meuDialog">
+              <div class="dialogExclusao">
                 <span id = "exclamation-triangle" class="bi bi-exclamation-triangle-fill"></span>
                 <span>Deseja excluir permanentemente o projeto?</span>
                 <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
                 <!-- Form apenas com submit para exclusão (?) -->
                 <form id = "exclusaoProjetoForm" action="/excluir-projeto" method = "POST" >
-                  <input type="submit" value="Sim, excluir">
-                </form>
+                  <!-- input oculto para relacionar edição a projeto específico  -->
+                  <input type="hidden" name="" value="<%=  %>">
+                  
+                  <input id = "delete-project-button" name = "" type="submit" value="Sim, excluir">
                 </form>
                 <button id = "returnPopBtn">Manter projeto</button>
+              </div>
+            </dialog>
+
+            <!-- Modal para editar descrição do projeto -->
+            <dialog id = "edit-description-dialog" class = "edit-field-dialog">
+              <div class="meuDialog">
+                
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  <span>Editar Descrição do Projeto</span>
+                  <button id = "close-description-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-descricao" method = "POST" >
+                  <!-- input oculto para relacionar edição a projeto específico. Pode ser o ID do projeto (!?) -->
+                  <input type="hidden" name="" value="<%=  %>">
+
+                  <textarea class = "input-field-dialog form-control" name = "" type="text" placeholder = "Nova descrição..."></textarea>
+                  <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+                </form>
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+              </div>
+            </dialog>
+
+            <!-- Modal para editar justificativa do projeto -->
+            <dialog id = "edit-justify-dialog" class = "edit-field-dialog">
+              <div class="meuDialog">
+                
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  <span>Editar Justificativa do Projeto</span>
+                  <button id = "close-justify-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-justificativa" method = "POST" >
+                  <!-- input oculto para relacionar edição a projeto específico  -->
+                  <input type="hidden" name="" value="<%=  %>">
+
+                  <textarea class = "input-field-dialog form-control" type="text" name = "" placeholder = "Nova justificativa..."></textarea>
+                  <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+  
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+              </div>
+            </dialog>
+
+            <!-- Modal para editar objetivos do projeto -->
+            <dialog id = "edit-goals-dialog" class = "edit-field-dialog">
+              <div class="meuDialog">
+                
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  <span>Editar Objetivos do Projeto</span>
+                  <button id = "close-goals-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-objetivos" method = "POST" >
+                  <!-- input oculto para relacionar edição a projeto específico  -->
+                  <input type="hidden" name="" value="<%=  %>">
+
+                  <textarea class = "input-field-dialog form-control" name = "" type="text" placeholder = "Novos objetivos..."></textarea>
+                  <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+                </form>
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+              </div>
+            </dialog>
+
+            <!-- Modal para editar público-alvo do projeto -->
+            <dialog id = "edit-audience-dialog" class = "edit-field-dialog">
+              <div class="meuDialog">
+                
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  <span>Editar Público-Alvo do Projeto</span>
+                  <button id = "close-audience-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-publico" method = "POST" >
+                  <!-- input oculto para relacionar edição a projeto específico  -->
+                  <input type="hidden" name="" value="<%=  %>">
+
+                  <input class = "input-field-dialog form-control" type="text" placeholder = "Novo público-alvo...">
+                  <input type="submit" value="Salvar" name = "" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+                
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+              </div>
+            </dialog>
+
+
+            <!-- modal para cadastrar nova atividade ao projeto -->
+            <dialog id = "create-new-activity" class = "edit-field-dialog">
+              <div class="meuDialog">
+                
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  
+                  <span></span>Cadastrar nova Atividade</span>
+                  <button id = "close-activity-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+
+                <!-- form para cadastrar atividade -->
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/cadastrar-atividade" method = "POST" >
+                  <!-- input oculto enviando algum dado único do projeto para garantir que a atividade esteja relacionado a um projeto específico  -->
+                  <input type="hidden" name="" value="<%=  %>">
+
+                  <input class = "input-field-dialog form-control" type="text" name = "atvNome" placeholder = "Atividade"></input>
+
+                  <input class = "input-field-dialog form-control" type="date" name = "atvData" placeholder = "Data da atividade...">
+
+                  <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+          
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
               </div>
             </dialog>
 
             <a href="/recrutar-voluntario" class = "recruit-btn">
               <span class="fa-solid fa-users"></span>
               Recrutar</a>
-
-            
-            
           </div>
+
+          <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->
           <div class="activities-calendar">
             <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
-            <ul>
-              <li class = "activity-item">01/04/2024 - Visita ao local </li>
-              <li class = "activity-item">04/04/2024 - Conversar com gestor</li>
-              <li class = "activity-item">10/04/2024 - Verificar disponibilidade do local</li>
-            </ul>
+            <div class="activity-container mb-2">
+              <span>01/04/2024 - Visita ao local</span>
+            </div>
+            <div class="activity-container mb-2">
+              <span>01/04/2024 - Visita ao local</span>
+            </div>
+            <div class="activity-container mb-2">
+              <span>01/04/2024 - Visita ao local</span>
+            </div>
           </div>
         </div>
       </div>
