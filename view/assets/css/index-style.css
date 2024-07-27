@@ -1,13 +1,21 @@
-
 body{
-    font-family: 'Rubik', sans-serif !important; 
+    font-family: 'Inter', sans-serif !important; 
+    -webkit-font-smoothing: antialised; 
+}
+
+.name-logo,
+.name-logo:hover{
+    font-size: 1.5rem; 
+    text-decoration: none;
+    color: #000; 
 }
 
 
 /* NAVBAR */
+
 .navbar{
-    background-color: #2346A6; 
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #fff; 
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
 }
 
 .navbar a{
@@ -15,13 +23,15 @@ body{
 }
 
 .navbar .btn{
-    border-radius: 50px; 
-    background-color: #F4D35E; 
+    background-color: #3395FF; 
+    border-radius: 10px; 
+    color: #fff;  
 }
 
 .img{
-    max-width: 45px; 
+    max-width: 17%;  
     height: auto; 
+    
 }
 
 #actnow-name{
@@ -47,33 +57,41 @@ body{
 /* HOVER - NAVBAR */
 .navbar .nav-link:hover{
     text-decoration: underline; 
-    text-decoration-color: #fff; 
-    text-decoration-thickness: 2px;
+    text-decoration-color: #000; 
+    text-decoration-thickness: 1px;
 
 }
 
-.navbar .btn:hover{
-    transform: scale(1.1); 
-    transition: transform 0.3s ease-in-out; 
-
-}
 
 /* MAIN SECTION */
-.main-btn{
-    background-color: #158CBA; 
-    color: #fff; 
-    border-radius: 50px; 
-    padding: 0.3rem 2rem 0.3rem 2rem; 
+.main-content{
+    min-height: 100vh; 
 }
 
+.main-btn{
+    background-color: #3395FF;
+    color: #fff; 
+    border-radius: 10px; 
+    padding: 0.3rem 2.5rem 0.3rem 2.5rem; 
+    animation: 0.2s; 
+    font-size: 1rem; 
+}
 
+.main-paragraph{
+    font-size: 2.5rem; 
+    font-weight: 600; 
+}
+
+.register-text{
+    font-size: 1.06rem; 
+    color: #747479; 
+}
 
 /* HOVER - MAIN SECTION */
-.main-btn:hover{
-    transform: scale(1.1); 
-    transition: transform 0.3s ease-in-out;
+.main-btn:hover,
+.navbar .btn:hover{
+    background-color: #137EA7;
     color: #fff;  
-    border: 0.3px solid rgba(0, 0, 0, 0.177); 
 }
 
 .login-btn:hover{
@@ -82,10 +100,8 @@ body{
 }
 
 
-
-
 /* AREAS SECTION */
-.areas-container{
+.areas-container{ 
     background-color: #fff; 
     
 }
@@ -124,7 +140,7 @@ body{
 }
 
 .card-text{
-    font-weight: lighter;
+    font-weight: 400;
 }
 
 

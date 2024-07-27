@@ -6,31 +6,36 @@
 .proj-container{   
     border-radius: 5px; 
     padding: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     background-color: #fff;
     /* margin: 1rem 10rem 3rem 10rem;  */
 }
 
-.first-container{
-    border-right: 1px solid rgba(128, 128, 128, 0.59); 
+.proj-titulo{
+    font-size: 1.875rem;
+    font-weight: 600; 
 }
 
-.proj-container h2{
-    font-size: 1.5rem; 
+.create-activity-button{
+
+}
+
+.calendar-title{
+    font-size: 1.25rem; 
 }
 
 .atv-content{
     padding: 1rem; 
     border-radius: 20px 10px 20px 20px; 
     background-color: #fff;
-    border-left: 5px solid #F4D35E;
+    /* border-left: 5px solid #F4D35E; */
 }
 
 .atv-content span,
 .publico-alvo{
     font-size: 0.75rem; 
-    color: #626F86; 
-    text-transform: uppercase;
+    color: #989090;
+    /* text-transform: uppercase; */
 }
 
 .atv-content p{
@@ -72,21 +77,38 @@
     text-decoration: none; 
 }
 
-.buttons-container .bi{
-    font-size: 1.25rem;
-    color: #626F86;
+.buttons-container .fa{
+    font-size: 1.2rem;
+    color: #44546F; 
     padding: 0.5rem; 
     border-radius: 20px;
+    font-weight: bold; 
 }
 
 .buttons-container .bi:hover{
     background-color: #F1F2F4;
 }
-
 .recruit-btn{
+    border: 1px solid; 
+    border-radius: 10px; 
+    transition: .2s; 
+}
+
+.recruit-btn:hover{
+    border: 1px solid transparent;  
+    background-color: #0B5ED7; 
+    color: #fff; 
+}
+
+.recruit-btn,
+.create-activity-button{
     padding: 0.2rem 1rem; 
 }
 
+.recruit-btn span, 
+.create-activity-button span{
+    margin-right: 0.2rem;
+}
 
 
 /* .buttons-container a:nth-child(3){
@@ -126,7 +148,7 @@ dialog{
     gap: 1rem; 
 }
 
-dialog a{
+dialog input[type = submit]{
     border: 1px solid #AD4646; 
     padding: 0.3rem 1rem; 
     color: #AD4646;
@@ -150,7 +172,7 @@ dialog #dialog-warning{
 }
 
 
-dialog a:hover{
+dialog input[type = submit]:hover{
     color: red; 
     background-color: #ad464692; 
     
@@ -162,4 +184,56 @@ dialog button{
     border: 1px solid #626f8654;
     padding: 0.3rem 1rem; 
     border-radius: 5px; 
+}
+
+.pencil-icon,
+.circle-icon,
+.trash-icon{
+    position: relative; 
+    display: inline-block; 
+}
+
+
+
+.pencil-icon .tooltiptext,
+.circle-icon .tooltiptext,
+.trash-icon .tooltiptext{
+    visibility: hidden; 
+    width: 120px; 
+    background-color: #44546F;
+    color: #fff; 
+    text-align: center;
+    padding: 5px 0; 
+    border-radius: 6px; 
+    bottom: 100%; 
+    left: 50%; 
+    margin-left: -60px; 
+    font-size: 0.75rem; 
+    position: absolute; 
+    z-index: 1; 
+}
+
+
+
+.pencil-icon:hover .tooltiptext,
+.circle-icon:hover .tooltiptext,
+.trash-icon:hover .tooltiptext{
+    visibility: visible;
+    
+}
+
+
+.activities-calendar{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.activities-calendar h4{
+    padding-bottom: 0.75rem; 
+}
+
+.activity-item{
+    padding-bottom: 0.75rem; 
 }

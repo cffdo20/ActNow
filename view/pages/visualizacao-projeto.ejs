@@ -4,13 +4,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https:/use.fontawesome.com/releases/v5.15.4/css/solid.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css"
+    />
+
   <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="../assets/js/visualizar-projeto.js" defer></script>
   <link rel="stylesheet" href="../assets/css/index-style.css">
   <link rel="stylesheet" href="../assets/css/login-style.css">
@@ -24,8 +37,7 @@
   <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
     <div class="container-fluid">
 
-      <a href="/" class="navbar-brand text-light "><img class="img img-fluid me-2" src="../assets/img/logo.png"
-          alt="Logo do ActNow">ActNow</a>
+      <a href="/" class="name-logo fw-bold "><img class="img img-fluid me-2" src="../assets/img/blue-actnow-logo.png" alt="Logo do ActNow">ActNow</a>
 
       <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -37,13 +49,14 @@
         <ul class="navbar-nav ms-auto">
 
           <li class="nav-item">
-            <a href="" class="nav-link text-light">Projetos</a>
+            <!-- visualização dos projetos pode ser aqui - por enquanto (?) -->
+            <a href="/listar-projetos" class="nav-link text-dark">Projetos</a>
           </li>
 
-          
-
           <li class="nav-item">
-            <a href="" class="btn me-3">Meu perfil</a>
+            <a href="" class="btn me-3">
+              <span class="fa-solid fa-user"></span>
+              Perfil</a>
           </li>
 
         </ul>
@@ -59,8 +72,14 @@
       <div class="row">
         <div class="col-lg-8 first-container">
           <div class="div">
-            <h2 ><%= Titulo %> </h2>
+            <div class="proj-header d-flex justify-content-between align-items-center">
+              <h2 class = "proj-titulo"><%= Titulo %> </h2>
+              <a class = "create-activity-button btn btn-primary" href="">
+                <span class="fa-solid fa-plus"></span>
+                Cadastrar Atividade</a>
+            </div>
             <div class="atv-content mb-2">
+              <!-- <p>Data de início: 15/03/2024</p> -->
               <span>Descrição</span>
               <p class = "lead"> <%= Descricao %> </p>
             </div>  
@@ -82,7 +101,7 @@
                 <%= Publico %>
               </p>
 
-              <p>Data de início: 15/03/2024</p>
+              
 
               
           </div>
@@ -90,15 +109,19 @@
         <!-- Sem certeza sobre o calendário nessa Sprint. -->
         <div class="col-lg-4">
           <div class="buttons-container">
+            <div class="line"></div>
             
-            <a href="">
-              <span class="bi bi-pencil"></span>
+            <a href="/editar-projeto" class = "pencil-icon">
+              <span class="fa fa-solid fa-pen-to-square"></span>
+              <span class="tooltiptext">Editar</span>
             </a>
-            <a href="">
-              <span class="bi bi-plus-circle"></span>
-            </a>
-            <a href="">
-              <span id = "trashBtn" class="bi bi-trash"></span>
+            <!-- <a href="" class = "circle-icon">
+              <span class="fa-solid fa-circle-plus"></span>
+              <span class="tooltiptext"> Adicionar atividade</span>
+            </a> -->
+            <a href="" class = "trash-icon">
+              <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
+              <span class="tooltiptext">Excluir projeto</span>
             </a>
 
             <!-- teste de popup para EXCLUSÃO do projeto -->
@@ -116,17 +139,21 @@
               </div>
             </dialog>
 
-            <a href="/recrutar-voluntario" class = "recruit-btn btn btn-primary">Recrutar voluntários</a>
+            <a href="/recrutar-voluntario" class = "recruit-btn">
+              <span class="fa-solid fa-users"></span>
+              Recrutar</a>
 
             
             
           </div>
-          <h4 class = "lead mt-4">Calendário de Atividades</h4>
-          <ul>
-            <li>01/04/2023 - </li>
-            <li></li>
-            <li></li>
-          </ul>
+          <div class="activities-calendar">
+            <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
+            <ul>
+              <li class = "activity-item">01/04/2024 - Visita ao local </li>
+              <li class = "activity-item">04/04/2024 - Conversar com gestor</li>
+              <li class = "activity-item">10/04/2024 - Verificar disponibilidade do local</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -140,14 +167,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-  <% if (typeof alerta !== 'undefined' && alerta) { %>
+  <!-- <% if (typeof alerta !== 'undefined' && alerta) { %>
     <script>
         // JavaScript embutido para exibir o alerta passado do Node.js
         window.onload = function() {
             alert("<%= alerta %>");
         };
     </script>
-    <% } %>
+    <% } %> -->
 
 
 
