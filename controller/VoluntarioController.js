@@ -52,12 +52,12 @@ function filtrarVoluntario(req) {
                             .catch(error => {
                                 reject(error);
                             });
+                        }
                     }
-                }
-            })
-            .catch(error => {
-                reject(error);
-            });
+                })
+                .catch(error => {
+                    reject(error);
+                });
     });
 }
 module.exports = { filtrarVoluntario };

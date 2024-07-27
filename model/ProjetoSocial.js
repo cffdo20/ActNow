@@ -1,3 +1,4 @@
+const { editarProjeto } = require('../controller/ProjetoController.js');
 const bd = require('./db.js');
 
 function setProjetoSocial(tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj, codUsuCriador) {
@@ -20,4 +21,23 @@ function getProjetoSocial(tituloProj){
   })
 };
 
-module.exports = { setProjetoSocial , getProjetoSocial };
+function listProjetoSocial(userName){
+  let parametros = [userName];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_consultar_projetos_usuario', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+}
+
+function updateProjetoSocial(tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj){
+   // Converter a Data para String
+   const data = new Date();
+   const dataInicio = data.toISOString(dataInicioProj).split('T')[0];
+  let parametros = [tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicio];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_editar_projeto', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+};
+
+module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjetoSocial};
