@@ -157,7 +157,7 @@
 
                 <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-descricao" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico. Pode ser o ID do projeto (!?) -->
-                  <input type="hidden" name="" value="<%=  %>">
+                  <input type="hidden" name="descricaoProj" value="<%=  %>">
 
                   <textarea class = "input-field-dialog form-control" name = "" type="text" placeholder = "Nova descrição..."></textarea>
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
@@ -180,7 +180,7 @@
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="" value="<%=  %>">
 
-                  <textarea class = "input-field-dialog form-control" type="text" name = "" placeholder = "Nova justificativa..."></textarea>
+                  <textarea class = "input-field-dialog form-control" type="text" name = "justificativaProj" placeholder = "Nova justificativa..."></textarea>
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
   
@@ -201,7 +201,7 @@
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="" value="<%=  %>">
 
-                  <textarea class = "input-field-dialog form-control" name = "" type="text" placeholder = "Novos objetivos..."></textarea>
+                  <textarea class = "input-field-dialog form-control" name = "publicoAlvoProj" type="text" placeholder = "Novos objetivos..."></textarea>
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
                 </form>
@@ -220,7 +220,7 @@
 
                 <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-publico" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
-                  <input type="hidden" name="" value="<%=  %>">
+                  <input type="hidden" name="objetivosProj" value="<%=  %>">
 
                   <input class = "input-field-dialog form-control" type="text" placeholder = "Novo público-alvo...">
                   <input type="submit" value="Salvar" name = "" class = "submit-field-dialog btn btn-primary text-light">
