@@ -793,3 +793,5 @@ DELIMITER ;
 -- stored procedure para adicionar um voluntário a um projeto
 
 -- stored procedure para cadastrar disponibilidade de voluntário
+
+
