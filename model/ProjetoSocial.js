@@ -29,15 +29,36 @@ function listProjetoSocial(userName){
   })
 }
 
-function updateProjetoSocial(tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj){
-   // Converter a Data para String
-   const data = new Date();
-   const dataInicio = data.toISOString(dataInicioProj).split('T')[0];
-  let parametros = [tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicio];
+function updateProjeto_descricao(tituloProj, descricaoProj){
+  let parametros = [tituloProj, descricaoProj];
   // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_editar_projeto', parametros).then(consulta => {
+  return bd.callProcedureWithParameter('sp_alterar_descricao_projeto', parametros).then(consulta => {
     return consulta[0][0];
   })
 };
 
-module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjetoSocial};
+function updateProjeto_publico(tituloProj, publicoAlvoProj){
+  let parametros = [tituloProj, publicoAlvoProj];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_alterar_publico_projeto', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+};
+
+function updateProjeto_justificativa(tituloProj, justificativaProj){
+  let parametros = [tituloProj, justificativaProj];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_alterar_justificativa_projeto', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+};
+
+function updateProjeto_justificativa(tituloProj, justificativaProj){
+  let parametros = [tituloProj, justificativaProj];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_alterar_justificativa_projeto', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+};
+
+module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjeto_descricao, updateProjeto_publico, updateProjeto_justificativa};

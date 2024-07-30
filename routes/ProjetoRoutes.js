@@ -12,12 +12,12 @@ const projetoController = require('../controller/ProjetoController.js');
 
 */
 
-// Acesso
+// Direcionar para Formulário de Criação de Projeto
 router.get('/criar-projeto', (req, res) => {
     res.render('cadastrar-projeto.ejs');
 });
 
-// Receber dados formulário e dar resposta
+// Tratar Dados enviados do Formulário de Criação de Projeto
 router.post('/criar-projeto', (req, res) => {
     projetoController.criarProjeto(req)
     .then(resposta => {
@@ -42,8 +42,8 @@ router.post('/criar-projeto', (req, res) => {
 #   #     # # # #   #     #     # # #
 
 */
-/** Página: Listar projetos do usuário  */
-// Rota para Página com lista dos projetos do usuário 
+
+// Listar os projetos do Usuário
 router.get('/projetos', (req, res) => {
     projetoController.listarProjetos(req) // Depois trocar pelo usuário ativo
     .then(resposta => {
@@ -58,6 +58,7 @@ router.get('/projetos', (req, res) => {
     });
 });
 
+// Abrir um projeto pelo nome
 router.post('/visualizar-projeto',(req, res) =>{
     projetoController.exibirProjeto(req)
     .then(resposta => {
@@ -72,16 +73,24 @@ router.post('/visualizar-projeto',(req, res) =>{
     });
 })
 
+/*
 
-/** Página: Editar o projeto */
+#     #    # # #     # # #       # # #    # # # # #    # # # #
+#     #    #     #   #     #    #     #       #        #
+#     #    # # #     #     #    # # # #       #        # # #
+#     #    #         #     #    #     #       #        #
+ # # #     #         # # #      #     #       #        # # # #
+
+*/
+
 // Acesso
 router.get('/editar-projeto', (req, res) => {
     res.render('editar-projeto.ejs', req);
 });
 
-// Receber dados formulário e dar resposta
-router.post('/projeto-editado', (req, res) => {
-    projetoController.editarProjeto(req)
+// Editar a Descrição
+router.post('/editar-descricao', (req, res) => {
+    projetoController.editarDescProjeto(req)
     .then(resposta => {
         console.log(resposta);
         if(!resposta.erro){
@@ -89,7 +98,7 @@ router.post('/projeto-editado', (req, res) => {
             res.render('visualizacao-projeto.ejs', resposta);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
-            res.render('editar-projeto.ejs',{req, alerta: resposta.erro });
+            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
         }
     });
 });
