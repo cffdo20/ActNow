@@ -53,12 +53,20 @@ function updateProjeto_justificativa(tituloProj, justificativaProj){
   })
 };
 
-function updateProjeto_justificativa(tituloProj, justificativaProj){
-  let parametros = [tituloProj, justificativaProj];
+function updateProjeto_objetivos(tituloProj, objetivosProj){
+  let parametros = [tituloProj, objetivosProj];
   // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_alterar_justificativa_projeto', parametros).then(consulta => {
+  return bd.callProcedureWithParameter('sp_alterar_objetivos_projeto', parametros).then(consulta => {
     return consulta[0][0];
   })
 };
 
-module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjeto_descricao, updateProjeto_publico, updateProjeto_justificativa};
+function deleteProjeto(tituloProj){
+  let parametros = [tituloProj];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_inativar_projeto', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+};
+
+module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjeto_descricao, updateProjeto_publico, updateProjeto_justificativa, updateProjeto_objetivos, deleteProjeto};

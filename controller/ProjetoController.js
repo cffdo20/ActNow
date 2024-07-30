@@ -59,7 +59,57 @@ function editarDescProjeto(req){
 function editarPublProjeto(req){
     return new Promise((resolve, reject) => {
         /** Editar um projeto*/
-        projeto.updateProjeto_publico(req.body.projNome, req.body.projDescricao)
+        projeto.updateProjeto_publico(req.body.projNome, req.body.projPublico)
+            .then(resultado => {
+                if (resultado.erro !== undefined) {
+                    // Se houver um erro na resposta, apenas envia a resposta.
+                    resolve(resultado);
+                } else {
+                    dados.getProjetoSocial(req.body.projNome).then(elementos => {
+                        console.log(req.body.projNome);
+                        resolve({
+                            Titulo: elementos.titulo,
+                            Descricao: elementos.descricao,
+                            Publico: elementos.publico,
+                            Justificativa: elementos.justificativa,
+                            Objetivos: elementos.objetivos,
+                            Inicio: elementos.inicio
+                        });
+                    })
+                }               
+            })
+    });
+}
+
+function editarJustProjeto(req){
+    return new Promise((resolve, reject) => {
+        /** Editar um projeto*/
+        projeto.updateProjeto_justificativa(req.body.projNome, req.body.projJustificativa)
+            .then(resultado => {
+                if (resultado.erro !== undefined) {
+                    // Se houver um erro na resposta, apenas envia a resposta.
+                    resolve(resultado);
+                } else {
+                    dados.getProjetoSocial(req.body.projNome).then(elementos => {
+                        console.log(req.body.projNome);
+                        resolve({
+                            Titulo: elementos.titulo,
+                            Descricao: elementos.descricao,
+                            Publico: elementos.publico,
+                            Justificativa: elementos.justificativa,
+                            Objetivos: elementos.objetivos,
+                            Inicio: elementos.inicio
+                        });
+                    })
+                }               
+            })
+    });
+}
+
+function editarObjeProjeto(req){
+    return new Promise((resolve, reject) => {
+        /** Editar um projeto*/
+        projeto.updateProjeto_objetivos(req.body.projNome, req.body.projObjetivos)
             .then(resultado => {
                 if (resultado.erro !== undefined) {
                     // Se houver um erro na resposta, apenas envia a resposta.
@@ -165,6 +215,14 @@ function exibirProjeto(req) {
     });
 }
 
+function inativarProjeto(req){
+    return new Promise((resolve, reject) => {
+        /** Editar um projeto*/
+        projeto.deleteProjeto(req.body.projNome)
+            .then(resultado => {
+                    resolve(resultado);              
+            })
+    });
+}
 
-
-module.exports = { criarProjeto , listarProjetos, editarDescProjeto, exibirProjeto, editarPublProjeto};
+module.exports = { criarProjeto , listarProjetos, editarDescProjeto, exibirProjeto, editarPublProjeto, editarJustProjeto, editarObjeProjeto, inativarProjeto};
