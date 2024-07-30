@@ -157,9 +157,9 @@
 
                 <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-descricao" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico. Pode ser o ID do projeto (!?) -->
-                  <input type="hidden" name="projDescricao" value="<%= Descricao %>">
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <textarea class = "input-field-dialog form-control" name = "projNovoDescricao" type="text" placeholder = "Nova descrição..."></textarea>
+                  <textarea class = "input-field-dialog form-control" name = "projDescricao" type="text" placeholder = "Nova descrição..."></textarea>
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
               
@@ -178,9 +178,9 @@
 
                 <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-justificativa" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
-                  <input type="hidden" name="projJustificativa" value="<%= Justificativa %>">
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <textarea class = "input-field-dialog form-control" type="text" name = "projNovoJustificativa" placeholder = "Nova justificativa..."></textarea>
+                  <textarea class = "input-field-dialog form-control" type="text" name = "projJustificativa" placeholder = "Nova justificativa..."></textarea>
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
   
@@ -199,9 +199,9 @@
 
                 <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-objetivos" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
-                  <input type="hidden" name="projObjetivos" value="<%= Objetivos %>">
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <textarea class = "input-field-dialog form-control" name = "projNovoObjetivos" type="text" placeholder = "Novos objetivos..."></textarea>
+                  <textarea class = "input-field-dialog form-control" name = "projObjetivos" type="text" placeholder = "Novos objetivos..."></textarea>
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
                 </form>
@@ -220,9 +220,9 @@
 
                 <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-publico" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
-                  <input type="hidden" name="projPublico" value="<%= Publico %>">
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <input class = "input-field-dialog form-control" type="text" name = "projNovoPublico" placeholder = "Novo público-alvo...">
+                  <input class = "input-field-dialog form-control" type="text" name = "projPublico" placeholder = "Novo público-alvo...">
                   <input type="submit" value="Salvar" name = "" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
                 
