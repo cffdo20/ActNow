@@ -84,13 +84,17 @@ BEGIN
 			if not f_validar_id_projeto(v_dfat_atprojid) then
 				select 'ERRO: O projeto indicado não existe.' as erro;
 			else
-				insert into atividade(attitulo,atdescricao,atdataentrega,atstatus,atprojid) 
-				values(v_dfat_attitulo,v_dfat_atdescricao,v_dfat_atdataentrega,v_dfat_atstatustinyint,v_dfat_atprojid);            
-				if (select count(*) from atividade where attitulo=v_dfat_attitulo and atprojid=v_dfat_atprojid)<1 then
-					select 'ERRO: A Atividade não foi criada no banco de dados.' as erro;
-				else
-					select 'Atividade criada no banco de dados.' as resposta;
-				end if;	
+				if f_buscar_ativ_atid_attitulo_projeto(v_dfat_atprojid,v_dfat_attitulo) > 0 then
+					select 'ERRO: Uma atividade com esse título já foi criada nesse projeto.' as erro;
+                else
+					insert into atividade(attitulo,atdescricao,atdataentrega,atstatus,atprojid) 
+					values(v_dfat_attitulo,v_dfat_atdescricao,v_dfat_atdataentrega,v_dfat_atstatustinyint,v_dfat_atprojid);            
+					if (select count(*) from atividade where attitulo=v_dfat_attitulo and atprojid=v_dfat_atprojid)<1 then
+						select 'ERRO: A Atividade não foi criada no banco de dados.' as erro;
+					else
+						select 'Atividade criada no banco de dados.' as resposta;
+					end if;
+				end if;
 			end if;
 		end if;
 	end if;
@@ -783,3 +787,9 @@ DELIMITER ;
 -- stored procedure para mudar telefone do voluntario
 
 -- stored procedure para mudar cidade do voluntario
+
+-- stored procedure para buscar os títulos projetos ligados a um voluntário
+
+-- stored procedure para adicionar um voluntário a um projeto
+
+-- stored procedure para cadastrar disponibilidade de voluntário

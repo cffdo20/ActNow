@@ -524,3 +524,5 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_validar_cpf_voluntario('12345678910');
+
+-- Função para cadastrar habilidades para um voluntario
