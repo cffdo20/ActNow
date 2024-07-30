@@ -266,12 +266,13 @@ BEGIN
 						voltelefone as 'telefone',
 						(select cidnome from cidade where cidcodigo=volcidcod) as 'cidade'
 				from voluntario
-				where voluscod = v_cv_uscodigo;
+				where voluscod = v_cv_uscodigo and volstatus=1;
 			end if;
 		end if;
     end if;
 END$$
 DELIMITER ;
+
 
 DELIMITER $$
 CREATE Procedure sp_filtrar_voluntarios(in p_fv_parametros VARCHAR(1000))
@@ -584,7 +585,7 @@ BEGIN
 			select 'ERRO: Um usuário com esse username já existe.' as erro;
 		else
 			if f_validar_email_usuario(v_crus_usemail) then
-				select 'ERRO: Este usuário não existe.' as erro;
+				select 'ERRO: Um usuário com esse e-mail já existe.' as erro;
 			else
 				insert into usuario(ususername,ususenha,usemail) 
 				values(v_crus_ususername,v_crus_ususenha,v_crus_usemail);
@@ -600,10 +601,147 @@ END$$
 DELIMITER ;
 -- drop procedure sp_criar_usuario;
 -- call sp_criar_usuario('testes|teste|teste|');
--- Store procedure para inativar um usuário
+-- select * from usuario;
+
+-- Store procedure para buscar um usuário pelo username
+DELIMITER $$
+CREATE Procedure sp_consultar_usuario(in p_cnus_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cnus_ususername VARCHAR(20);
+    declare v_cnus_uscodigo int default 0;
+    SET v_cnus_ususername = f_extrair_parametros(p_cnus_parametros, 1);
+    set v_cnus_uscodigo = f_buscar_codigo_usuario(v_cnus_ususername);
+    if (f_buscar_parametros_nulos(p_cnus_parametros,1) or f_buscar_caracteres_prejudiciais(p_cnus_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_cnus_uscodigo) is not true then
+			select 'ERRO: O usuário indicado não existe.' as erro;
+		else
+			select ususername as 'username',
+					usemail as 'e-mail',
+                    ususenha as 'senha'
+			from usuario
+            where uscodigo=v_cnus_uscodigo;
+		end if;
+    end if;
+END$$
+DELIMITER ;
+-- drop procedure sp_consultar_usuario;
+-- call sp_consultar_usuario('testes|');
+
+-- Store procedure para inativar um usuário pelo username
+DELIMITER $$
+CREATE Procedure sp_inativar_usuario(in p_iu_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_iu_username VARCHAR(20);
+    declare v_iu_uscodigo int default 0;
+    SET v_iu_username = f_extrair_parametros(p_iu_parametros, 1);
+    set v_iu_uscodigo = f_buscar_codigo_usuario(v_iu_username);
+    if (f_buscar_parametros_nulos(p_iu_parametros,1) or f_buscar_caracteres_prejudiciais(p_iu_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_iu_uscodigo) is not true then
+			select 'ERRO: O usuário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select usstatus from usuario where uscodigo=v_iu_uscodigo)) = 0 then
+                select 'ERRO: O usuário indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select usstatus from usuario where uscodigo=v_iu_uscodigo)) = 1 then
+					update usuario set usstatus=0 where uscodigo=v_iu_uscodigo;
+                    if f_validar_voluntario_uscodigo(v_iu_uscodigo) is not true then
+						select 'Usuário inativado.' as resposta;
+					else
+						update voluntario set volstatus=0 where voluscod=v_iu_uscodigo;
+                    end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+-- drop procedure sp_inativar_usuario;
+-- call sp_inativar_usuario('bobsmith|');
+-- select * from usuario;
+-- select * from voluntario;
 
 -- stored procedure para alterar a senha de um usuário.
+DELIMITER $$
+CREATE Procedure sp_alterar_senha_usuario(in p_asu_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_asu_ususername, v_asu_ususenha VARCHAR(500);
+    declare v_asu_uscodigo int default 0;
+    SET v_asu_ususername = f_extrair_parametros(p_asu_parametros, 1);
+    SET v_asu_ususenha = f_extrair_parametros(p_asu_parametros, 2);
+    set v_asu_uscodigo = f_buscar_codigo_usuario(v_asu_ususername);
+    if (f_buscar_parametros_nulos(p_asu_parametros,2) or f_buscar_caracteres_prejudiciais(p_asu_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_asu_uscodigo) is not true then
+			select 'ERRO: O usuario indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select usstatus from usuario where uscodigo=v_asu_uscodigo)) = 0 then
+                select 'ERRO: O usuário indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select usstatus from usuario where uscodigo=v_asu_uscodigo)) = 1 then
+					update usuario set ususenha=v_asu_ususenha where uscodigo=v_asu_uscodigo;
+                    select 'Senha do usuário alterada com sucesso!' as resposta;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+-- drop Procedure sp_alterar_senha_usuario;
+-- select * from usuario;
+-- call sp_alterar_senha_usuario('user123|teste|');
 
--- stored procedure para alterar o e-mail de um usuário.alter
+-- stored procedure para alterar o e-mail de um usuário
+DELIMITER $$
+CREATE Procedure sp_alterar_email_usuario(in p_aeu_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_aeu_ususername, v_aeu_usemail VARCHAR(500);
+    declare v_aeu_uscodigo int default 0;
+    SET v_aeu_ususername = f_extrair_parametros(p_aeu_parametros, 1);
+    SET v_aeu_usemail = f_extrair_parametros(p_aeu_parametros, 2);
+    set v_aeu_uscodigo = f_buscar_codigo_usuario(v_aeu_ususername);
+    if (f_buscar_parametros_nulos(p_aeu_parametros,2) or f_buscar_caracteres_prejudiciais(p_aeu_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_aeu_uscodigo) is not true then
+			select 'ERRO: O usuario indicado não existe.' as erro;
+		else
+			if f_validar_email_usuario(v_aeu_usemail) then
+				select 'ERRO: Um usuário com esse e-mail já existe.' as erro;
+            else
+				if f_transformar_string_status((select usstatus from usuario where uscodigo=v_aeu_uscodigo)) = 0 then
+					select 'ERRO: O usuário indicado está inativo.' as erro;
+				else
+					if f_transformar_string_status((select usstatus from usuario where uscodigo=v_aeu_uscodigo)) = 1 then
+						update usuario set usemail=v_aeu_usemail where uscodigo=v_aeu_uscodigo;
+						select 'E-mail do usuário alterado com sucesso!' as resposta;
+					end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+-- drop Procedure sp_alterar_email_usuario;
+-- select * from usuario;
+-- call sp_alterar_email_usuario('user123|johndoe@email.com|');
 
 -- stored procedure para validar um usuário pelo username, ou email, e a senha
+
+-- stored procedure para criar voluntário
+
+-- stored procedure para buscar voluntario pelo cpf
+
+-- stored procedure para inativar voluntário pelo username
+
+-- stored procedure para alterar nomesocial do voluntário
+
+-- stored procedure para mudar biografia do voluntario
+
+-- stored procedure para mudar telefone do voluntario
+
+-- stored procedure para mudar cidade do voluntario

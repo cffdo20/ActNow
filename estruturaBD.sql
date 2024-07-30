@@ -34,6 +34,7 @@ create table voluntario(
     volbio varchar(300)  null,
     voltelefone char(11) not null,
     volcidcod int unsigned not null,
+    volstatus tinyint unsigned not null default 1,
     primary key (volcpf),
     foreign key (voluscod) references usuario(uscodigo),
     foreign key (volcidcod) references cidade(cidcodigo)
@@ -48,7 +49,7 @@ create table projetosocial(
     projobjetivos varchar(100) not null,
     projdatainicio date not null,
     projdatafinal date null,
-    projstatus tinyint not null,
+    projstatus tinyint not null default 1,
     projuscod int unsigned not null,
     primary key(projid),
     foreign key (projuscod) references usuario (uscodigo)

@@ -118,7 +118,7 @@ BEGIN
     DECLARE v_cpu_qt_projeto tinyint default 0;
     set v_cpu_qt_projeto=(select count(*)
 							from projetosocial
-							where projuscod=p_cpu_uscodigo);
+							where projuscod=p_cpu_uscodigo and projstatus=1);
     
 	return v_cpu_qt_projeto;
 END$$
@@ -184,7 +184,7 @@ BEGIN
     
     set v_bip_id_projeto= (select projid
 		from projetosocial
-        where projtitulo=p_bip_projtitulo);
+        where projtitulo=p_bip_projtitulo and projstatus=1);
     
     RETURN v_bip_id_projeto;
 END$$
@@ -342,7 +342,7 @@ BEGIN
     if (f_validar_id_projeto(p_btp_projid)) is not true then
 		set v_btp_titulo = 'ERRO: O Projeto indicado não existe';
     else
-		set v_btp_titulo = (select projtitulo from projetosocial where projid=p_btp_projid);
+		set v_btp_titulo = (select projtitulo from projetosocial where projid=p_btp_projid and projstatus=1);
     end if;
     return v_btp_titulo;
 END$$
@@ -357,7 +357,7 @@ BEGIN
     
     set v_vvu_status_voluntario = (select count(*)
 		from voluntario
-        where voluscod=p_vvu_voluscod);
+        where voluscod=p_vvu_voluscod and volstatus=1);
     
     RETURN v_vvu_status_voluntario;
 END$$
@@ -455,23 +455,23 @@ BEGIN
     
     set v_cpu_status_projetos_usuario = (select count(*)
 		from projetosocial
-        where projuscod=p_cpu_uscodigo);
+        where projuscod=p_cpu_uscodigo and projstatus=1);
     
     RETURN v_cpu_status_projetos_usuario;
 END$$
 DELIMITER ;
 
--- Função para buvalidar e-mail de um usuario
+-- Função para validar e-mail de um usuario
 DELIMITER $$
-CREATE FUNCTION f_validar_email_usuario(p_beu_usemail varchar(80)) RETURNS int(11)
+CREATE FUNCTION f_validar_email_usuario(p_veu_usemail varchar(80)) RETURNS int(11)
 BEGIN
-    DECLARE v_beu_email_usuario boolean default false;
+    DECLARE v_veu_email_usuario boolean default false;
     
-    set v_beu_email_usuario = (select count(*)
+    set v_veu_email_usuario = (select count(*)
 		from usuario
-        where usemail=p_beu_usemail and usstatus=1);
+        where usemail=p_veu_usemail and usstatus=1);
     
-    RETURN v_beu_email_usuario;
+    RETURN v_veu_email_usuario;
 END$$
 DELIMITER ;
 
@@ -484,7 +484,7 @@ BEGIN
     
     set v_vuu_ususername_usuario= (select count(*)
 		from usuario
-        where ususername=p_vuu_ususername);
+        where ususername=p_vuu_ususername and usstatus=1);
     
     RETURN v_vuu_ususername_usuario;
 END$$
