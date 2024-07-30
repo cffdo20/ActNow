@@ -588,9 +588,9 @@ BEGIN
 				insert into usuario(ususername,ususenha,usemail) 
 				values(v_crus_ususername,v_crus_ususenha,v_crus_usemail);
 				if (select count(*) from usuario where ususername=v_crus_ususername and usemail=v_crus_usemail and ususenha=v_crus_ususenha)<1 then
-					select 'ERRO: O projeto não foi criado no banco de dados.' as erro;
+					select 'ERRO: O Usuário não foi criado no banco de dados.' as erro;
 				else
-					select 'Projeto criado com sucesso.' as resposta;
+					select 'Usuário criado com sucesso.' as resposta;
 				end if;
 			end if;
 		end if;
