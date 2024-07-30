@@ -16,7 +16,8 @@ BEGIN
     DECLARE v_crpj_projdatafinal VARCHAR(10);
 	DECLARE v_crpj_projstatusvarchar VARCHAR(1);
     DECLARE v_crpj_projstatustinyint tinyint;
-	DECLARE v_crpj_projuscod VARCHAR(2);
+	DECLARE v_crpj_projuscod int default 0;
+    declare v_crpj_ususername varchar (20);
     
 	SET v_crpj_projtitulo = f_extrair_parametros(p_crpj_parametros, 1);
 	SET v_crpj_projdescricao = f_extrair_parametros(p_crpj_parametros, 2);
@@ -25,7 +26,8 @@ BEGIN
 	SET v_crpj_projobjetivos = f_extrair_parametros(p_crpj_parametros, 5);
 	SET v_crpj_projdatainicio = cast(f_extrair_parametros(p_crpj_parametros, 6) as date);
     set v_crpj_projstatusvarchar = f_extrair_parametros(p_crpj_parametros, 7);
-	SET v_crpj_projuscod = cast(f_extrair_parametros(p_crpj_parametros, 8) as unsigned int);
+	SET v_crpj_ususername = f_extrair_parametros(p_crpj_parametros, 8);
+    set v_crpj_projuscod = f_buscar_codigo_usuario(v_crpj_ususername);
     if (f_buscar_parametros_nulos(p_crpj_parametros,8) or f_buscar_caracteres_prejudiciais(p_crpj_parametros,8)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
@@ -62,6 +64,7 @@ BEGIN
 	DECLARE v_dfat_atdescricao VARCHAR(200);
 	DECLARE v_dfat_atdataentrega date;
 	DECLARE v_dfat_atstatus VARCHAR(1);
+    DECLARE v_dfat_atprojtitulo varchar(500);
     DECLARE v_dfat_atprojid int unsigned;
     DECLARE v_dfat_atstatustinyint tinyint(1) unsigned;
     
@@ -69,7 +72,8 @@ BEGIN
 	SET v_dfat_atdescricao = f_extrair_parametros(p_dfat_parametros, 2);
 	SET v_dfat_atdataentrega = cast(f_extrair_parametros(p_dfat_parametros, 3) as date);
 	SET v_dfat_atstatus = f_extrair_parametros(p_dfat_parametros, 4);
-	SET v_dfat_atprojid = cast(f_extrair_parametros(p_dfat_parametros, 5) as unsigned int);
+	SET v_dfat_atprojtitulo = f_extrair_parametros(p_dfat_parametros, 5);
+    set v_dfat_atprojid= f_buscar_id_projeto(v_dfat_atprojtitulo);
     if (f_buscar_parametros_nulos(p_dfat_parametros,5) or f_buscar_caracteres_prejudiciais(p_dfat_parametros,5)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
@@ -99,13 +103,17 @@ DELIMITER ;
 DELIMITER $$
 CREATE Procedure sp_alterar_data_atividade(in p_adta_parametros VARCHAR(1000))
 BEGIN
-
+	
+    declare v_adta_attitulo varchar(100);
+    declare v_adta_projtitulo varchar(100);
 	DECLARE v_adta_atid int unsigned;
 	DECLARE v_adta_atdataentrega date;
     
-    SET v_adta_atid = cast(f_extrair_parametros(p_adta_parametros, 1) as unsigned int);
-	SET v_adta_atdataentrega = cast(f_extrair_parametros(p_adta_parametros, 2) as date);
-    if (f_buscar_parametros_nulos(p_adta_parametros,2) or f_buscar_caracteres_prejudiciais(p_adta_parametros,2)) then
+    SET v_adta_attitulo = f_extrair_parametros(p_adta_parametros, 1);
+    SET v_adta_projtitulo = f_extrair_parametros(p_adta_parametros, 2);
+	SET v_adta_atdataentrega = cast(f_extrair_parametros(p_adta_parametros, 3) as date);
+    set v_adta_atid = f_buscar_ativ_atid_attitulo_projeto(f_buscar_id_projeto(v_adta_projtitulo),v_adta_attitulo);
+    if (f_buscar_parametros_nulos(p_adta_parametros,3) or f_buscar_caracteres_prejudiciais(p_adta_parametros,3)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_atividade_id(v_adta_atid) is true then
@@ -128,13 +136,17 @@ DELIMITER $$
 CREATE Procedure sp_alterar_status_atividade(in p_asta_parametros VARCHAR(1000))
 BEGIN
 
+	declare v_asta_attitulo varchar(100);
+    declare v_asta_projtitulo varchar(100);
 	DECLARE v_asta_atid int unsigned;
 	DECLARE v_asta_atstatus VARCHAR(1);
     DECLARE v_asta_atstatustinyint tinyint(1) unsigned;
     
-    SET v_asta_atid = cast(f_extrair_parametros(p_asta_parametros, 1) as unsigned int);
-	SET v_asta_atstatus = f_extrair_parametros(p_asta_parametros, 2);
-    if (f_buscar_parametros_nulos(p_asta_parametros,2) or f_buscar_caracteres_prejudiciais(p_asta_parametros,2)) then
+    SET v_asta_attitulo = f_extrair_parametros(p_asta_parametros, 1);
+    SET v_asta_projtitulo = f_extrair_parametros(p_asta_parametros, 2);
+	SET v_asta_atstatus = f_extrair_parametros(p_asta_parametros, 3);
+    set v_asta_atid = f_buscar_ativ_atid_attitulo_projeto(f_buscar_id_projeto(v_asta_projtitulo),v_asta_attitulo);
+    if (f_buscar_parametros_nulos(p_asta_parametros,3) or f_buscar_caracteres_prejudiciais(p_asta_parametros,3)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
 		if f_validar_atividade_id(v_asta_atid) is true then
@@ -162,11 +174,15 @@ DELIMITER $$
 CREATE Procedure sp_alterar_descricao_atividade(in p_adesa_parametros VARCHAR(1000))
 BEGIN
 
+	declare v_adesa_attitulo varchar(100);
+    declare v_adesa_projtitulo varchar(100);
 	DECLARE v_adesa_atid int unsigned;
 	DECLARE v_adesa_atdescricao VARCHAR(200);
     
-    SET v_adesa_atid = cast(f_extrair_parametros(p_adesa_parametros, 1) as unsigned int);
-	SET v_adesa_atdescricao = f_extrair_parametros(p_adesa_parametros, 2);
+    SET v_adesa_attitulo = f_extrair_parametros(p_adesa_parametros, 1);
+    SET v_adesa_projtitulo = f_extrair_parametros(p_adesa_parametros, 2);
+	SET v_adesa_atdescricao = f_extrair_parametros(p_adesa_parametros, 3);
+    set v_adesa_atid = f_buscar_ativ_atid_attitulo_projeto(f_buscar_id_projeto(v_adesa_projtitulo),v_adesa_attitulo);
     if (f_buscar_parametros_nulos(p_adesa_parametros,2) or f_buscar_caracteres_prejudiciais(p_adesa_parametros,2)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
@@ -207,9 +223,6 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
-
--- Stored procedure para validar usuário pelo username e senha.
--- Stored procedures para consultar informações de usuário pelo username.
 
 -- Stored procedure para consultar informações de projeto pelo título do projeto.
 DELIMITER $$
@@ -743,8 +756,8 @@ CREATE Procedure sp_inativar_voluntario(in p_iv_parametros VARCHAR(1000))
 BEGIN
 	DECLARE v_iv_username VARCHAR(20);
     declare v_iv_volcpf int default 0;
-    SET v_iu_username = f_extrair_parametros(p_iv_parametros, 1);
-    set v_iv_volcpf = f_buscar_cpf_voluntario(v_iu_username);
+    SET v_iv_username = f_extrair_parametros(p_iv_parametros, 1);
+    set v_iv_volcpf = f_buscar_cpf_voluntario(v_iv_username);
     if (f_buscar_parametros_nulos(p_iv_parametros,1) or f_buscar_caracteres_prejudiciais(p_iv_parametros,1)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
