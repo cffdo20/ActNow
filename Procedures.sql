@@ -239,7 +239,7 @@ BEGIN
 END$$
 DELIMITER ;
 -- drop procedure sp_consultar_projeto;
--- call sp_consultar_projeto('Construindo Com"nidades|');
+-- call sp_consultar_projeto('Construindo Comunidades|');
 -- select * from projetosocial;
 
 -- Stored procedures para consultar informações de voluntário pelo username.
@@ -417,6 +417,7 @@ BEGIN
     end if;
 END$$
 DELIMITER ;
+call 
 -- Procedure para alterar a descrição de um projeto
 DELIMITER $$
 CREATE Procedure sp_alterar_descricao_projeto(in p_adp_parametros VARCHAR(1000))
@@ -573,9 +574,9 @@ BEGIN
 	DECLARE v_crus_ususenha VARCHAR(15);
 	DECLARE v_crus_usemail VARCHAR(80);
     
-	SET v_crus_ususername = f_extrair_parametros(p_crpj_parametros, 1);
-	SET v_crus_ususenha = f_extrair_parametros(p_crpj_parametros, 2);
-	SET v_crus_usemail = f_extrair_parametros(p_crpj_parametros, 3);
+	SET v_crus_ususername = f_extrair_parametros(p_crus_parametros, 1);
+	SET v_crus_ususenha = f_extrair_parametros(p_crus_parametros, 2);
+	SET v_crus_usemail = f_extrair_parametros(p_crus_parametros, 3);
     if (f_buscar_parametros_nulos(p_crus_parametros,3) or f_buscar_caracteres_prejudiciais(p_crus_parametros,3)) then
 		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
 	else
@@ -597,6 +598,8 @@ BEGIN
     end if;
 END$$
 DELIMITER ;
+-- drop procedure sp_criar_usuario;
+-- call sp_criar_usuario('testes|teste|teste|');
 -- Store procedure para inativar um usuário
 
 -- stored procedure para alterar a senha de um usuário.

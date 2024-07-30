@@ -480,7 +480,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE FUNCTION f_validar_username_usuario(p_vuu_ususername varchar(20)) RETURNS int(11)
 BEGIN
-    DECLARE v_vuu_ususername_usuario boolean default false;
+    DECLARE v_vuu_ususername_usuario int default 0;
     
     set v_vuu_ususername_usuario= (select count(*)
 		from usuario
