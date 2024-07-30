@@ -652,6 +652,7 @@ BEGIN
 						select 'Usuário inativado.' as resposta;
 					else
 						update voluntario set volstatus=0 where voluscod=v_iu_uscodigo;
+                        select 'Usuário inativado.' as resposta;
                     end if;
 				end if;
 			end if;
@@ -737,6 +738,30 @@ DELIMITER ;
 -- stored procedure para buscar voluntario pelo cpf
 
 -- stored procedure para inativar voluntário pelo username
+DELIMITER $$
+CREATE Procedure sp_inativar_voluntario(in p_iv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_iv_username VARCHAR(20);
+    declare v_iv_volcpf int default 0;
+    SET v_iu_username = f_extrair_parametros(p_iv_parametros, 1);
+    set v_iv_volcpf = f_buscar_cpf_voluntario(v_iu_username);
+    if (f_buscar_parametros_nulos(p_iv_parametros,1) or f_buscar_caracteres_prejudiciais(p_iv_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_iv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select volstatus from voluntario where volcpf=v_iv_volcpf)) = 0 then
+                select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_iv_volcpf)) = 1 then
+					update voluntario set volstatus=0 where volcpf=v_iv_volcpf;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 
 -- stored procedure para alterar nomesocial do voluntário
 

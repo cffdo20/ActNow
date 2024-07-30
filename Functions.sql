@@ -489,3 +489,38 @@ BEGIN
     RETURN v_vuu_ususername_usuario;
 END$$
 DELIMITER ;
+
+-- Função para buscar cpf de voluntário pelo username de usuário
+DELIMITER $$
+CREATE FUNCTION f_buscar_cpf_voluntario(p_bcv_ususername varchar(20)) RETURNS char(11)
+BEGIN
+    DECLARE v_bcv_volcpf char(11);
+    declare v_bcv_uscodigo int default 0;
+    
+    set v_bcv_uscodigo = f_buscar_codigo_usuario(p_bcv_ususername);
+    
+    set v_bcv_volcpf = (select volcpf
+		from voluntario
+        where voluscod=v_bcv_uscodigo and volstatus=1);
+    
+    RETURN v_bcv_volcpf;
+END$$
+DELIMITER ;
+-- select f_buscar_cpf_voluntario('ashleywhite');
+-- select * from voluntario;
+-- select * from usuario;
+
+-- Função para validar CPF de um voluntário
+DELIMITER $$
+CREATE FUNCTION f_validar_cpf_voluntario(p_vcv_volcpf char(11)) RETURNS boolean
+BEGIN
+    DECLARE v_vcv_volcpf_status boolean default false;
+    
+    set v_vcv_volcpf_status = (select count(*)
+		from voluntario
+        where volcpf=p_vcv_volcpf and volstatus=1);
+    
+    RETURN v_vcv_volcpf_status;
+END$$
+DELIMITER ;
+-- select f_validar_cpf_voluntario('12345678910');
