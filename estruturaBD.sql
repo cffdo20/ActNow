@@ -11,16 +11,6 @@ create table usuario(
     primary key (uscodigo)
 );
 
-create table instituicao(
-	instcnpj char(14) not null,
-    instuscod int unsigned not null,
-    instnomefantasia varchar(100) not null,
-    instrazaosocial varchar(100) unique not null,
-    instcidcodigo int not null,
-    primary key (instcnpj),
-    FOREIGN KEY (instuscod) REFERENCES usuario (uscodigo)
-);
-
 create table estado(
 	estcodigo int unsigned not null auto_increment,
     estsigla char(2) unique not null,
@@ -117,14 +107,6 @@ create table voluntarioprojeto(
     primary key(volprojid, volprojcpf),
     foreign key (volprojid) references projetosocial(projid),
     foreign key (volprojcpf) references voluntario(volcpf)
-);
-
-create table instituicaoprojeto(
-	instprojid int unsigned not null,
-    instprojcnpj char(14) not null,
-    primary key(instprojid, instprojcnpj),
-    foreign key (instprojid) references projetosocial(projid),
-    foreign key (instprojcnpj) references instituicao(instcnpj)
 );
 
 create table projetosocialfuncionamento(
