@@ -84,9 +84,15 @@
                        <span class="bi bi-kanban me-2"></span> 
                       <a href = "/visualizar-projeto"><%= projeto.Titulo %></a>
                     </div>
-                    <div class="information">
-                      <p class="lead"><%= projeto.Descricao %></p>
-                    </div>
+                    <div class="d-flex gap-2">
+                      <div class="information">
+                        <p class="lead"><%= projeto.Descricao %></p>
+                      </div>
+                      <form action="/visualizar-projeto" method = "POST">
+                        <input type="hidden" name = "projTitulo" value = "<%= projeto.Titulo %>">
+                        <input type="submit" class = "btn btn-primary" value="Visualizar">
+                      </form>
+                    </div> 
                   </div>
                 </div>
               <% }); %>
