@@ -29,6 +29,10 @@
     cursor: pointer; 
 }
 
+.atv-content:hover{
+    background-color: #E9EAEE;
+}
+
 .atv-content span,
 .publico-alvo{
     font-size: 0.75rem; 
