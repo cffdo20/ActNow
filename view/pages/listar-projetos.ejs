@@ -82,11 +82,16 @@
                   <div class="project-container">
                     <div class="project-main-info d-flex">
                        <span class="bi bi-kanban me-2"></span> 
-                      <h3><%= projeto.Titulo %></h3>
+                      <a href = "/visualizar-projeto"><%= projeto.Titulo %></a>
                     </div>
                     <div class="information">
                       <p class="lead"><%= projeto.Descricao %></p>
                     </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <a href = "/criar-projeto" class = "main-btn btn mt-2">
+                      Criar novo Projeto
+                                    </a>
                   </div>
                 </div>
               <% }); %>
