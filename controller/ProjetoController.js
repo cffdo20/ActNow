@@ -61,6 +61,7 @@ function listarProjetos(req){
         /** Listar projeto do usuario atual*/
         projeto.listProjetoSocial('ashleywhite') // Depois tem que trocar pelo username de usuário da sessão
             .then(resultado => {
+                console.log(resultado);
                 if (Array.isArray(resultado)) {
                     // Se for um array, ou seja, o usuario é gestor de mais de um projeto
                     console.log('É Array: ' + resultado);
@@ -106,7 +107,7 @@ function listarProjetos(req){
                                 }];
                                 resolve({
                                     alerta: resultado.resposta,
-                                    Voluntarios: dadosProjetos
+                                    Projetos: dadosProjetos
                                 });
                             })
                             .catch(error => {
@@ -121,4 +122,23 @@ function listarProjetos(req){
     });
 }
 
-module.exports = { criarProjeto , listarProjetos, editarProjeto};
+function exibirProjeto(req) {
+    return new Promise((resolve, reject) => {
+                    // Caso contrário, busca os dados do projeto recém-criado e depois envia a resposta e os dados do projeto
+                    dados.getProjetoSocial(req.body.projNome).then(elementos => {
+                        console.log(req.body.projNome);
+                        resolve({
+                            Titulo: elementos.titulo,
+                            Descricao: elementos.descricao,
+                            Publico: elementos.publico,
+                            Justificativa: elementos.justificativa,
+                            Objetivos: elementos.objetivos,
+                            Inicio: elementos.inicio
+                        });
+                    })
+    });
+}
+
+
+
+module.exports = { criarProjeto , listarProjetos, editarProjeto, exibirProjeto};

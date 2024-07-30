@@ -25,7 +25,7 @@ function listProjetoSocial(userName){
   let parametros = [userName];
   // Retorna a promessa gerada pela função callProcedureWithParameter
   return bd.callProcedureWithParameter('sp_consultar_projetos_usuario', parametros).then(consulta => {
-    return consulta[0][0];
+    return consulta[0];
   })
 }
 
