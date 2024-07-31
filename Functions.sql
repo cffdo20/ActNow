@@ -526,3 +526,43 @@ DELIMITER ;
 -- select f_validar_cpf_voluntario('12345678910');
 
 -- Função para cadastrar habilidades para um voluntario
+
+-- Função para verificar cadastro de voluntario em projeto
+DELIMITER $$
+CREATE FUNCTION f_validar_voluntario_projeto(p_vvp_volcpf char(11), p_vvp_projid int) RETURNS boolean
+BEGIN
+    DECLARE v_vvp_volproj_status boolean default false;
+    
+    set v_vvp_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojcpf=p_vvp_volcpf and volprojid=p_vvp_projid );
+    
+    RETURN v_vvp_volproj_status;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE FUNCTION f_voluntarios_projeto(p_vp_projid int) RETURNS boolean
+BEGIN
+    DECLARE v_vp_volproj_status boolean default false;
+    
+    set v_vp_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojid=p_vp_projid);
+    
+    RETURN v_vp_volproj_status;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE FUNCTION f_projetos_voluntario(p_vp_volcpf char(11)) RETURNS boolean
+BEGIN
+    DECLARE v_pv_volproj_status boolean default false;
+    
+    set v_pv_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojcpf=p_vp_volcpf);
+    
+    RETURN v_pv_volproj_status;
+END$$
+DELIMITER ;

@@ -759,7 +759,7 @@ DELIMITER $$
 CREATE Procedure sp_inativar_voluntario(in p_iv_parametros VARCHAR(1000))
 BEGIN
 	DECLARE v_iv_username VARCHAR(20);
-    declare v_iv_volcpf int default 0;
+    declare v_iv_volcpf char(11);
     SET v_iv_username = f_extrair_parametros(p_iv_parametros, 1);
     set v_iv_volcpf = f_buscar_cpf_voluntario(v_iv_username);
     if (f_buscar_parametros_nulos(p_iv_parametros,1) or f_buscar_caracteres_prejudiciais(p_iv_parametros,1)) then
@@ -781,17 +781,208 @@ END$$
 DELIMITER ;
 
 -- stored procedure para alterar nomesocial do voluntário
+DELIMITER $$
+CREATE Procedure sp_alterar_nomesocial_voluntario(in p_anv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_anv_username VARCHAR(20);
+    declare v_anv_volnomesocial varchar(100);
+    declare v_anv_volcpf char(11);
+    SET v_anv_username = f_extrair_parametros(p_anv_parametros, 1);
+    SET v_anv_volnomesocial = f_extrair_parametros(p_anv_parametros, 2);
+    set v_anv_volcpf = f_buscar_cpf_voluntario(v_anv_username);
+    if (f_buscar_parametros_nulos(p_anv_parametros,2) or f_buscar_caracteres_prejudiciais(p_anv_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_anv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select volstatus from voluntario where volcpf=v_anv_volcpf)) = 0 then
+                select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_anv_volcpf)) = 1 then
+					update voluntario set volnomesocial=v_anv_volnomesocial where volcpf=v_anv_volcpf;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 
 -- stored procedure para mudar biografia do voluntario
+DELIMITER $$
+CREATE Procedure sp_alterar_bio_voluntario(in p_abv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_abv_username VARCHAR(20);
+    declare v_abv_volbio varchar(300);
+    declare v_abv_volcpf char(11);
+    SET v_abv_username = f_extrair_parametros(p_abv_parametros, 1);
+    SET v_abv_volbio = f_extrair_parametros(p_abv_parametros, 2);
+    set v_abv_volcpf = f_buscar_cpf_voluntario(v_abv_username);
+    if (f_buscar_parametros_nulos(p_abv_parametros,2) or f_buscar_caracteres_prejudiciais(p_abv_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_abv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select volstatus from voluntario where volcpf=v_abv_volcpf)) = 0 then
+                select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_abv_volcpf)) = 1 then
+					update voluntario set volbio=v_abv_volbio where volcpf=v_abv_volcpf;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 
 -- stored procedure para mudar telefone do voluntario
-
+DELIMITER $$
+CREATE Procedure sp_alterar_telefone_voluntario(in p_atv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_atv_username VARCHAR(20);
+    declare v_atv_voltelefone char(11);
+    declare v_atv_volcpf char(11);
+    SET v_atv_username = f_extrair_parametros(p_atv_parametros, 1);
+    SET v_atv_voltelefone = f_extrair_parametros(p_atv_parametros, 2);
+    set v_atv_volcpf = f_buscar_cpf_voluntario(v_atv_username);
+    if (f_buscar_parametros_nulos(p_atv_parametros,2) or f_buscar_caracteres_prejudiciais(p_atv_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_atv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select volstatus from voluntario where volcpf=v_atv_volcpf)) = 0 then
+                select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_atv_volcpf)) = 1 then
+					update voluntario set voltelefone=v_atv_voltelefone where volcpf=v_atv_volcpf;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+drop procedure sp_alterar_telefone_voluntario;
+call sp_alterar_telefone_voluntario('bobsmith|12345678910|');
+select * from voluntario;
 -- stored procedure para mudar cidade do voluntario
 
--- stored procedure para buscar os títulos projetos ligados a um voluntário
+
 
 -- stored procedure para adicionar um voluntário a um projeto
+DELIMITER $$
+CREATE Procedure sp_adicionar_voluntario_projeto(in p_avp_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_avp_ususername VARCHAR(20);
+    declare v_avp_volcpf char(11);
+    DECLARE v_avp_projtitulo VARCHAR(500);
+    declare v_avp_projid int default 0;
+    SET v_avp_ususername = f_extrair_parametros(p_avp_parametros, 1);
+    SET v_avp_projtitulo = f_extrair_parametros(p_avp_parametros, 2);
+    set v_avp_volcpf = f_buscar_cpf_voluntario(v_avp_ususername);
+    set v_avp_projid = f_buscar_id_projeto(v_avp_projtitulo);
+    if (f_buscar_parametros_nulos(p_avp_parametros,1) or f_buscar_caracteres_prejudiciais(p_avp_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_id_projeto(v_avp_projid) is not true then
+			select 'ERRO: O projeto indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select projstatus from projetosocial where projid=v_avp_projid)) = 0 then
+                select 'ERRO: O projeto indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select projstatus from projetosocial where projid=v_avp_projid)) = 1 then
+					if f_validar_cpf_voluntario(v_avp_volcpf) is not true then
+						select 'ERRO: O voluntário indicado não existe.' as erro;
+					else
+						if f_transformar_string_status((select volstatus from voluntario where volcpf=v_avp_volcpf)) = 0 then
+							select 'ERRO: O voluntario indicado está inativo.' as erro;
+						else
+							if f_transformar_string_status((select volstatus from voluntario where volcpf=v_avp_volcpf)) = 1 then
+								if f_validar_voluntario_projeto(v_avp_volcpf,v_avp_projid) then
+									select 'ERRO: O voluntário já esta registrado nesse projeto' as erro;
+                                else
+									insert into voluntarioprojeto values(v_avp_projid,v_avp_volcpf);
+                                    select 'Voluntário registrado no projeto!' as resposta;
+                                end if;
+							end if;
+						end if;
+					end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 
+-- procedure para ver voluntarios ligados a um projeto
+DELIMITER $$
+CREATE Procedure sp_voluntarios_projeto(in p_vp_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_vp_projtitulo VARCHAR(500);
+    declare v_vp_projid int default 0;
+    SET v_vp_projtitulo = f_extrair_parametros(p_vp_parametros, 1);
+    set v_vp_projid = f_buscar_id_projeto(v_vp_projtitulo);
+    if (f_buscar_parametros_nulos(p_vp_parametros,1) or f_buscar_caracteres_prejudiciais(p_vp_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_id_projeto(v_vp_projid) is not true then
+			select 'ERRO: O projeto indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select projstatus from projetosocial where projid=v_vp_projid)) = 0 then
+                select 'ERRO: O projeto indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select projstatus from projetosocial where projid=v_vp_projid)) = 1 then
+					if f_voluntarios_projeto(v_vp_projid) is true then
+						select ususername as 'username'
+						from usuario
+						inner join voluntario on uscodigo=voluscod
+						inner join voluntarioprojeto on volcpf=volprojcpf
+						inner join projetosocial on projid=volprojid
+						where projid=v_vp_projid
+						group by ususername;
+				else
+					select 'ERRO: Não há nenhum voluntário cadastrado nesse projeto.' as erro;
+                end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+
+-- stored procedure para buscar os títulos projetos ligados a um voluntário - em desenvolvimento
+DELIMITER $$
+CREATE Procedure sp_projetos_voluntario(in p_pv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_pv_username VARCHAR(20);
+    declare v_pv_volcpf char(11);
+    SET v_pv_username = f_extrair_parametros(p_pv_parametros, 1);
+    set v_pv_volcpf = f_buscar_cpf_voluntario(v_pv_username);
+    if (f_buscar_parametros_nulos(p_pv_parametros,1) or f_buscar_caracteres_prejudiciais(p_pv_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_pv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select volstatus from voluntario where volcpf=v_pv_volcpf)) = 0 then
+                select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_pv_volcpf)) = 1 then
+					if f_projetos_voluntario(v_pv_volcpf) is not true then
+						select 'ERRO: O voluntario indicado não está participando de nenhum projeto.' as erro;
+                    else
+						select projtitulo as 'titulo' 
+                        from voluntario
+						inner join voluntarioprojeto on volcpf=volprojcpf
+						inner join projetosocial on projid=volprojid
+						where volcpf=v_pv_volcpf
+						group by projtitulo;
+                    end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 -- stored procedure para cadastrar disponibilidade de voluntário
-
-
