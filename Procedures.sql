@@ -748,11 +748,96 @@ DELIMITER ;
 -- select * from usuario;
 -- call sp_alterar_email_usuario('user123|johndoe@email.com|');
 
--- stored procedure para validar um usuário pelo username, ou email, e a senha
-
 -- stored procedure para criar voluntário
+DELIMITER $$
+CREATE Procedure sp_criar_voluntario(in p_crvol_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_crvol_volcpf CHAR(11);
+    declare v_crvol_ususername varchar(20);
+	DECLARE v_crvol_volnome VARCHAR(80);
+	DECLARE v_crvol_volnomesocial VARCHAR(80);
+	DECLARE v_crvol_volbio varchar(300);
+    DECLARE v_crvol_voltelefone char(11);
+    DECLARE v_crvol_volcidcod, v_crvol_voluscod int;
+    declare v_crvol_volcidnome varchar(40);
+    
+	SET v_crvol_ususername = f_extrair_parametros(p_crvol_parametros, 1);
+    SET v_crvol_volcpf = f_extrair_parametros(p_crvol_parametros, 2);
+	SET v_crvol_volnome = f_extrair_parametros(p_crvol_parametros, 3);
+	SET v_crvol_volnomesocial = f_extrair_parametros(p_crvol_parametros, 4);
+    SET v_crvol_volbio = f_extrair_parametros(p_crvol_parametros, 5);
+    SET v_crvol_voltelefone = f_extrair_parametros(p_crvol_parametros, 6);
+    SET v_crvol_volcidnome = f_extrair_parametros(p_crvol_parametros, 7);
+    set v_crvol_volcidcod = f_buscar_cidade_codigo(v_crvol_volcidnome);
+    set v_crvol_voluscod = f_buscar_codigo_usuario(v_crvol_ususername);
+    if (f_buscar_parametros_nulos(p_crvol_parametros,3) or f_buscar_caracteres_prejudiciais(p_crvol_parametros,3)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_crvol_voluscod) is not true then
+			select 'ERRO: O usuário indicado não existe.';
+        else
+			if f_buscar_cpf_voluntario(v_crvol_ususername) is not null then
+				select 'ERRO: Esse usuário já esta cadastrado como voluntário.' as erro;
+			else
+				if f_validar_cpf_voluntario(v_crvol_volcpf) is true then
+					select 'ERRO: Um Voluntário com esse CPF já existe.' as erro;
+				else
+					if f_validar_cidade_codigo(v_crvol_volcidcod) is null then
+						select 'ERRO: A Cidade indicada não existe' as erro;
+					else
+						insert into voluntario(volcpf, voluscod, volnome, volnomesocial, volbio, voltelefone, volcidcod)
+						values(v_crvol_volcpf, v_crvol_voluscod, v_crvol_volnome, v_crvol_volnomesocial, v_crvol_volbio, v_crvol_voltelefone, v_crvol_volcidcod);
+						if (select count(*) from voluntario where volcpf=v_crvol_volcpf and volstatus=1)<1 then
+							select 'ERRO: O Usuário não foi criado no banco de dados.' as erro;
+						else
+							select 'Voluntário criado com sucesso.' as resposta;
+						end if;
+					end if;
+				end if;
+			end if;
+		end if;
+    end if;
+END$$
+DELIMITER ;
+/* 
+drop Procedure sp_criar_voluntario;
+call sp_criar_voluntario('user123|12345767889|TESTER|BETATESTER|TESTANDO ISSO AQUI!|11111111111|MANAUS|');
+select * from usuario;
+select * from voluntario;
+*/
 
 -- stored procedure para buscar voluntario pelo cpf
+DELIMITER $$
+CREATE Procedure sp_consultar_voluntario_cpf(in p_cvc_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cvc_ususername VARCHAR(20);
+    declare v_cvc_volcpf int default 0;
+    SET v_cvc_ususername = f_extrair_parametros(p_cvc_parametros, 1);
+    set v_cvc_volcpf = f_buscar_cpf_voluntario(v_cvc_username);
+    if (f_buscar_parametros_nulos(p_cvc_parametros,1) or f_buscar_caracteres_prejudiciais(p_cvc_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_cvc_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select volstatus from voluntario where volcpf=v_cvc_volcpf)) = 0 then
+				select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_cvc_volcpf)) = 1 then
+					select volcpf as 'cpf',
+							volnome as 'nome',
+							volnomesocial as 'nome Social',
+							volbio as 'biografia',
+							voltelefone as 'telefone',
+							(select cidnome from cidade where cidcodigo=volcidcod) as 'cidade'
+					from voluntario
+					where volcpf = v_cvc_volcpf and volstatus=1;
+				end if;
+			end if;
+		end if;
+    end if;
+END$$
+DELIMITER ;
 
 -- stored procedure para inativar voluntário pelo username
 DELIMITER $$
@@ -863,11 +948,40 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
-drop procedure sp_alterar_telefone_voluntario;
-call sp_alterar_telefone_voluntario('bobsmith|12345678910|');
-select * from voluntario;
--- stored procedure para mudar cidade do voluntario
 
+-- stored procedure para mudar cidade do voluntario
+DELIMITER $$
+CREATE Procedure sp_alterar_cidade_voluntario(in p_acv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_acv_username VARCHAR(20);
+    declare v_acv_volcidnome varchar(40);
+    declare v_acv_volcpf char(11);
+    declare v_acv_volcidcod int;
+    SET v_acv_username = f_extrair_parametros(p_acv_parametros, 1);
+    SET v_acv_volcidnome = f_extrair_parametros(p_acv_parametros, 2);
+    set v_acv_volcpf = f_buscar_cpf_voluntario(v_acv_username);
+    set v_acv_volcidcod = f_buscar_cidade_codigo(v_acv_volcidnome);
+    if (f_buscar_parametros_nulos(p_acv_parametros,2) or f_buscar_caracteres_prejudiciais(p_acv_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_acv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_validar_cidade_codigo(v_acv_volcidcod) is null then
+				select 'ERRO: A Cidade indicada não existe' as erro;
+            else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_acv_volcpf)) = 0 then
+					select 'ERRO: O voluntario indicado está inativo.' as erro;
+				else
+					if f_transformar_string_status((select volstatus from voluntario where volcpf=v_acv_volcpf)) = 1 then
+						update voluntario set volcidcod=v_acv_volcidcod where volcpf=v_acv_volcpf;
+					end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 
 
 -- stored procedure para adicionar um voluntário a um projeto
@@ -985,4 +1099,102 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
+
+-- stored procedure para cadastrar habilidades de um voluntário
+DELIMITER $$
+CREATE Procedure sp_habilidades_voluntario(in p_hv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_hv_username VARCHAR(20);
+    DECLARE v_hv_habqtde int;
+    declare v_hv_volcpf char(11);
+    SET v_hv_username = f_extrair_parametros(p_hv_parametros, 1);
+    SET v_hv_habqtde = f_extrair_parametros(p_hv_parametros, 2);
+    set v_hv_volcpf = f_buscar_cpf_voluntario(v_hv_username);
+    if (f_buscar_parametros_nulos(p_hv_parametros,(2+v_hv_habqtde)) or f_buscar_caracteres_prejudiciais(p_hv_parametros,(2+v_hv_habqtde))) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_hv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if f_transfomar_string_status((select volstatus from voluntario where volcpf=v_hv_volcpf)) = 0 then
+                select 'ERRO: O voluntario indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_hv_volcpf)) = 1 then
+					if f_definir_habilidades_voluntario(v_hv_volcpf, v_hv_habqtde, p_hv_parametros) is not true then
+						select 'ERRO: Há um erro no cadastro das habilidades.' as erro;
+                    else
+						select 'Habilidades do voluntário cadastradas!' as resposta;
+                    end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 -- stored procedure para cadastrar disponibilidade de voluntário
+DELIMITER $$
+CREATE Procedure sp_disponibilidade_voluntario(in p_dv_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_dv_username VARCHAR(20);
+    Declare v_dv_dsnomeclatura varchar(15);
+    DECLARE v_dv_voldsid int;
+    declare v_dv_manha, v_dv_tarde, v_dv_noite int default 0;
+    declare v_dv_volcpf char(11);
+    SET v_dv_username = f_extrair_parametros(p_dv_parametros, 1);
+    SET v_dv_dsnomeclatura = f_extrair_parametros(p_dv_parametros, 2);
+    SET v_dv_manha = f_extrair_parametros(p_dv_parametros, 3);
+    SET v_dv_tarde = f_extrair_parametros(p_dv_parametros, 4);
+    SET v_dv_noite = f_extrair_parametros(p_dv_parametros, 5);
+    set v_dv_voldsid = f_buscar_diasemana_id(v_dv_dsnomeclatura);
+    set v_dv_volcpf = f_buscar_cpf_voluntario(v_dv_username);
+    if ((f_buscar_parametros_nulos(p_dv_parametros,5) or f_buscar_caracteres_prejudiciais(p_dv_parametros,5)) or (v_dv_manha=0 and v_dv_tarde=0 and v_dv_noite=0)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_cpf_voluntario(v_dv_volcpf) is not true then
+			select 'ERRO: O voluntário indicado não existe.' as erro;
+		else
+			if v_dv_voldsid is not true then
+				select 'ERRO: O dia da semana indicado  não existe.' as erro;
+            else
+				if (select volstatus from voluntario where volcpf=v_dv_volcpf) = '0' then
+					select 'ERRO: O voluntario indicado está inativo.' as erro;
+				else
+					if (select volstatus from voluntario where volcpf=v_dv_volcpf) = '1' then
+						if v_dv_manha is true then
+							insert into voluntariodiasemana(voldsid, voldscpf, voldsturid)
+                            values (v_dv_voldsid, v_dv_volcpf, 1);
+						end if;
+                        if v_dv_tarde is true then
+							insert into voluntariodiasemana(voldsid, voldscpf, voldsturid)
+                            values (v_dv_voldsid, v_dv_volcpf, 2);
+						end if;
+                        if v_dv_noite is true then
+							insert into voluntariodiasemana(voldsid, voldscpf, voldsturid)
+                            values (v_dv_voldsid, v_dv_volcpf, 3);
+						end if;
+					end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+/*
+drop procedure sp_disponibilidade_voluntario;
+call sp_disponibilidade_voluntario('user123|Segunda-Feira|1|1|1|');
+select * from voluntariodiasemana where voldscpf='12345767889';
+select * from voluntario;
+*/
+
+-- stored procedure para consultar as habilidades cadastradas no banco
+DELIMITER $$
+CREATE PROCEDURE sp_colsultar_habilidades()
+BEGIN
+	select habnome from habilidade;
+END$$
+DELIMITER ;
+select habnome from habilidade;
+
+-- stored procedure de login por username e senha
+
+-- stored procedure de login por e-mail e senha

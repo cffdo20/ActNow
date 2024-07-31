@@ -1,31 +1,6 @@
 use actnow24;
 set global log_bin_trust_function_creators=1;
 
-
-/* 
-Em espera:
-    -Validar data de inicio do projeto - stand by;
-    -Validar data de entrega de atividade - Stand by;
-    -Validar alteraçõa na data de entrega da atividade - stand by;
-    -Validar datas - stand by;
-    -Lidar com voluntários disponíveis em diferentes turnos;
-
-Feito:
-- Terminar de criar as funções - Feito;
-- Implementar o uso das funções utilizáveis nas SPs existentes - Feito;
-- Gerar validações nas SPs exitentes:
-	-Validar títulos de projetos - Feito;
-    -Validar código do usuário do projeto - Feito;
-    -Validar criação de projeto - Feito;
-    -Validar id do projeto na atividade - Feito;
-    -Validar definição de atividade - Feito;
-    -Validar alteração no status da atividade - feito;
-    -Validar alteração na descrição da atividade - feito;
-    
-A fazer:
-- Terminar de criar as SPs necessárias par a sprint atual;
-*/
-
 -- FUNÇÕES -------------------------------------------------
 
 
@@ -527,6 +502,7 @@ DELIMITER ;
 
 -- Função para cadastrar habilidades para um voluntario
 
+
 -- Função para verificar cadastro de voluntario em projeto
 DELIMITER $$
 CREATE FUNCTION f_validar_voluntario_projeto(p_vvp_volcpf char(11), p_vvp_projid int) RETURNS boolean
@@ -555,14 +531,99 @@ END$$
 DELIMITER ;
 
 DELIMITER $$
-CREATE FUNCTION f_projetos_voluntario(p_vp_volcpf char(11)) RETURNS boolean
+CREATE FUNCTION f_projetos_voluntario(p_pv_volcpf char(11)) RETURNS boolean
 BEGIN
     DECLARE v_pv_volproj_status boolean default false;
     
     set v_pv_volproj_status = (select count(*)
 		from voluntarioprojeto
-        where volprojcpf=p_vp_volcpf);
+        where volprojcpf=p_pv_volcpf);
     
     RETURN v_pv_volproj_status;
+END$$
+DELIMITER ;
+
+
+-- Função para verificar se um usuário possui as habilidades requisitadas
+DELIMITER $$
+CREATE FUNCTION f_verificar_habilidades_username(p_vhsu_ususername varchar(20), p_vhsu_parametros varchar(1000), p_vhsu_qt_habilidades int) RETURNS int
+BEGIN
+    declare v_vhsu_cont int default 0;
+    declare v_vhsu_cont_habilidades int default 7;
+    declare v_vhsu_conteudo_parametro_id int default 0;
+    declare v_vhsu_resultado int default 0;
+    while v_vhsu_cont<=p_vhsu_qt_habilidades do
+		set v_vhsu_conteudo_parametro_id = f_buscar_habilidade_id(f_extrair_parametros(p_vhsu_parametros,v_vhsu_cont_habilidades));
+        -- erro crasso aqui
+		if f_verificar_habilidade_username(p_vhsu_ususername,v_vhsu_conteudo_parametro_id) then
+			set v_vhsu_resultado=v_vhsu_resultado+1;
+        end if;
+        set v_vhsu_cont_habilidades=v_vhsu_cont_habilidades+1;
+        set v_vhsu_cont=v_vhsu_cont+1;
+	end while;
+    return v_vhsu_resultado;
+END$$
+DELIMITER ;
+
+-- Função para definir habilidadesde um voluntario
+DELIMITER $$
+CREATE FUNCTION f_definir_habilidades_voluntario(p_dhv_volcpf char(11), p_dhv_qt_habilidades int, p_dhv_parametros varchar(1000)) RETURNS boolean
+BEGIN
+    declare v_dhv_cont int default 0;
+    declare v_dhv_cont_habilidades int default 3;
+    declare v_dhv_conteudo_parametro_id int default 0;
+    declare v_dhv_cont_resultado int default 0;
+    declare v_dhv_resultado boolean default false;
+    declare v_dhv_habilidade varchar(20) default '';
+    while v_dhv_cont<=p_dhv_qt_habilidades do
+		set v_dhv_habilidade=f_extrair_parametros(p_dhv_parametros,v_dhv_cont_habilidades);
+        if f_buscar_habilidade_id(v_dhv_habilidade) is null then
+			set v_dhv_resultado = false;
+		else
+			set v_dhv_conteudo_parametro_id = f_buscar_habilidade_id(v_dhv_habilidade);
+			if f_verificar_habilidade_voluntario(p_dhv_volcpf,v_dhv_conteudo_parametro_id) is true then
+				set v_dhv_resultado = false;
+            else
+				insert into voluntariohabilidade(volhabid,volhabcpf) values(v_dhv_conteudo_parametro_id,p_dhv_volcpf);
+                if f_verificar_habilidade_voluntario(p_dhv_volcpf,v_dhv_conteudo_parametro_id) is not true then
+					set v_dhv_resultado = false;
+				else
+					set v_dhv_cont_resultado=v_dhv_cont_resultado+1;
+				end if;
+			end if;
+        end if;
+        set v_dhv_cont_habilidades=v_dhv_cont_habilidades+1;
+        set v_dhv_cont=v_dhv_cont+1;
+	end while;
+    if v_dhv_cont_resultado=p_dhv_qt_habilidades then
+		set v_dhv_resultado=true;
+    else
+		set v_dhv_resultado=false;
+    end if;
+    return v_dhv_resultado;
+END$$
+DELIMITER ;
+
+/*
+drop FUNCTION f_definir_habilidades_voluntario;
+select f_definir_habilidades_voluntario('11122233344',2,'bobsmith|2|Costura|Marcenaria|');
+
+select * from voluntario;
+select * from voluntariohabilidade;
+select * from voluntariohabilidade where volhabcpf='11122233344';
+select * from habilidade;
+*/
+
+-- função para verificar se há uma habilidade cadastrada de um voluntário
+DELIMITER $$
+CREATE FUNCTION f_verificar_habilidade_voluntario(p_vhv_volcpf char(11), p_vhv_habid int) RETURNS boolean
+BEGIN
+    DECLARE vhv_volhab_status boolean default false;
+    
+    set vhv_volhab_status = (select count(*)
+		from voluntariohabilidade
+        where volhabid=p_vhv_habid and volhabcpf=p_vhv_volcpf);
+    
+    RETURN vhv_volhab_status;
 END$$
 DELIMITER ;

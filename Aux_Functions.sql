@@ -57,6 +57,7 @@ END$$
 DELIMITER ;
 -- select f_formata_data(projdatainicio) from projetosocial;
 -- Função para verificar parâmetros nulos.
+
 DELIMITER $$
 CREATE FUNCTION f_buscar_parametros_nulos(p_parametros varchar(1000), p_qt_parametros int) RETURNS boolean
 BEGIN
@@ -96,6 +97,7 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_contar_parametros('teste|teste|teste|teste|teste|teste|teste|');
+
 -- Função para concatenar parametros
 DELIMITER $$
 CREATE FUNCTION f_concatenar_parametros(p_parametros varchar(1000), p_qt_parametros int) RETURNS varchar(1000)
@@ -132,25 +134,7 @@ BEGIN
 END$$
 DELIMITER ;
 
--- Função para verificar se um usuário possui as habilidades requisitadas
-DELIMITER $$
-CREATE FUNCTION f_verificar_habilidades_username(p_vhsu_ususername varchar(20), p_vhsu_parametros varchar(1000), p_vhsu_qt_habilidades int) RETURNS int
-BEGIN
-    declare v_vhsu_cont int default 0;
-    declare v_vhsu_cont_habilidades int default 7;
-    declare v_vhsu_conteudo_parametro_id int default 0;
-    declare v_vhsu_resultado int default 0;
-    while v_vhsu_cont<=p_vhsu_qt_habilidades do
-		set v_vhsu_conteudo_parametro_id = f_buscar_habilidade_id(f_extrair_parametros(p_vhsu_parametros,v_vhsu_cont_habilidades));
-		if f_verificar_habilidade_username(p_vhsu_ususername,v_vhsu_conteudo_parametro_id) then
-			set v_vhsu_resultado=v_vhsu_resultado+1;
-        end if;
-        set v_vhsu_cont_habilidades=v_vhsu_cont_habilidades+1;
-        set v_vhsu_cont=v_vhsu_cont+1;
-	end while;
-    return v_vhsu_resultado;
-END$$
-DELIMITER ;
+
 
 -- função para validar email
 DELIMITER $$
