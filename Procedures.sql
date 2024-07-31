@@ -320,7 +320,7 @@ BEGIN
 					join voluntariodiasemana on voldscpf=volcpf
 					join diasemana on voldsid=dsid
 					join turnodia on voldsturid=turid
-					where dsid=v_fv_id_diasemana and turid in (1,2,3) and habid=v_fv_id_habilidade;
+					where dsid=v_fv_id_diasemana and turid in (1,2,3) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 				else
 					if v_fv_manha is true and v_fv_tarde is true then
 						select ususername 'username'
@@ -331,7 +331,7 @@ BEGIN
 						join voluntariodiasemana on voldscpf=volcpf
 						join diasemana on voldsid=dsid
 						join turnodia on voldsturid=turid
-						where dsid=v_fv_id_diasemana and turid in (1,2) and habid=v_fv_id_habilidade;
+						where dsid=v_fv_id_diasemana and turid in (1,2) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 					else
 						if v_fv_tarde is true and v_fv_noite is true then
 							select ususername 'username'
@@ -342,7 +342,7 @@ BEGIN
 							join voluntariodiasemana on voldscpf=volcpf
 							join diasemana on voldsid=dsid
 							join turnodia on voldsturid=turid
-							where dsid=v_fv_id_diasemana and turid in (2,3) and habid=v_fv_id_habilidade;
+							where dsid=v_fv_id_diasemana and turid in (2,3) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 						else
 							if v_fv_noite is true and v_fv_manha is true then
 								select ususername 'username'
@@ -353,7 +353,7 @@ BEGIN
 								join voluntariodiasemana on voldscpf=volcpf
 								join diasemana on voldsid=dsid
 								join turnodia on voldsturid=turid
-								where dsid=v_fv_id_diasemana and turid in (1,3) and habid=v_fv_id_habilidade;
+								where dsid=v_fv_id_diasemana and turid in (1,3) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 							else
 								if v_fv_manha is true then
 									select ususername 'username'
@@ -364,7 +364,7 @@ BEGIN
 									join voluntariodiasemana on voldscpf=volcpf
 									join diasemana on voldsid=dsid
 									join turnodia on voldsturid=turid
-									where dsid=v_fv_id_diasemana and turid in (1) and habid=v_fv_id_habilidade;
+									where dsid=v_fv_id_diasemana and turid in (1) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 								else
 									if v_fv_tarde is true then
 										select ususername 'username'
@@ -375,7 +375,7 @@ BEGIN
 										join voluntariodiasemana on voldscpf=volcpf
 										join diasemana on voldsid=dsid
 										join turnodia on voldsturid=turid
-										where dsid=v_fv_id_diasemana and turid in (2) and habid=v_fv_id_habilidade;
+										where dsid=v_fv_id_diasemana and turid in (2) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 									else
 										if v_fv_noite is true then
 											select ususername 'username'
@@ -386,7 +386,7 @@ BEGIN
 											join voluntariodiasemana on voldscpf=volcpf
 											join diasemana on voldsid=dsid
 											join turnodia on voldsturid=turid
-											where dsid=v_fv_id_diasemana and turid in (3) and habid=v_fv_id_habilidade;
+											where dsid=v_fv_id_diasemana and turid in (3) and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 										else
 												select ususername 'username'
 												from usuario
@@ -396,7 +396,7 @@ BEGIN
 												join voluntariodiasemana on voldscpf=volcpf
 												join diasemana on voldsid=dsid
 												join turnodia on voldsturid=turid
-												where dsid=v_fv_id_diasemana and habid=v_fv_id_habilidade;
+												where dsid=v_fv_id_diasemana and habid=v_fv_id_habilidade and volstatus=1 and volstatusdisponibilidade=0;
 										end if;
 									end if;
 								end if;
@@ -1013,12 +1013,16 @@ BEGIN
 							select 'ERRO: O voluntario indicado está inativo.' as erro;
 						else
 							if f_transformar_string_status((select volstatus from voluntario where volcpf=v_avp_volcpf)) = 1 then
-								if f_validar_voluntario_projeto(v_avp_volcpf,v_avp_projid) then
-									select 'ERRO: O voluntário já esta registrado nesse projeto' as erro;
-                                else
-									insert into voluntarioprojeto values(v_avp_projid,v_avp_volcpf);
-                                    select 'Voluntário registrado no projeto!' as resposta;
-                                end if;
+								if (select volstatusdisponibilidade from voluntario where volcpf=v_avp_volcpf) = 1 then 
+									select 'ERRO: O voluntário já esta registrado num projeto' as erro;
+								else
+									if f_validar_voluntario_projeto(v_avp_volcpf,v_avp_projid) then
+										select 'ERRO: O voluntário já esta registrado nesse projeto' as erro;
+									else
+										insert into voluntarioprojeto values(v_avp_projid,v_avp_volcpf);
+										select 'Voluntário registrado no projeto!' as resposta;
+									end if;
+								end if;
 							end if;
 						end if;
 					end if;
@@ -1028,7 +1032,11 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
-
+/*drop Procedure sp_adicionar_voluntario_projeto;
+call sp_adicionar_voluntario_projeto('user123|Construindo Comunidades|');
+select * from voluntario;
+select * from projetosocial;
+*/
 -- procedure para ver voluntarios ligados a um projeto
 DELIMITER $$
 CREATE Procedure sp_voluntarios_projeto(in p_vp_parametros VARCHAR(1000))
@@ -1053,7 +1061,7 @@ BEGIN
 						inner join voluntario on uscodigo=voluscod
 						inner join voluntarioprojeto on volcpf=volprojcpf
 						inner join projetosocial on projid=volprojid
-						where projid=v_vp_projid
+						where projid=v_vp_projid and volstatus=1
 						group by ususername;
 				else
 					select 'ERRO: Não há nenhum voluntário cadastrado nesse projeto.' as erro;
@@ -1116,10 +1124,10 @@ BEGIN
 		if f_validar_cpf_voluntario(v_hv_volcpf) is not true then
 			select 'ERRO: O voluntário indicado não existe.' as erro;
 		else
-			if f_transfomar_string_status((select volstatus from voluntario where volcpf=v_hv_volcpf)) = 0 then
+			if (select volstatus from voluntario where volcpf=v_hv_volcpf) = 0 then
                 select 'ERRO: O voluntario indicado está inativo.' as erro;
 			else
-				if f_transformar_string_status((select volstatus from voluntario where volcpf=v_hv_volcpf)) = 1 then
+				if (select volstatus from voluntario where volcpf=v_hv_volcpf) = 1 then
 					if f_definir_habilidades_voluntario(v_hv_volcpf, v_hv_habqtde, p_hv_parametros) is not true then
 						select 'ERRO: Há um erro no cadastro das habilidades.' as erro;
                     else
@@ -1131,6 +1139,10 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
+/*
+drop Procedure sp_habilidades_voluntario;
+call sp_habilidades_voluntario('user123|1|Costura|');
+*/
 -- stored procedure para cadastrar disponibilidade de voluntário
 DELIMITER $$
 CREATE Procedure sp_disponibilidade_voluntario(in p_dv_parametros VARCHAR(1000))
@@ -1193,8 +1205,13 @@ BEGIN
 	select habnome from habilidade;
 END$$
 DELIMITER ;
-select habnome from habilidade;
+-- select habnome from habilidade;
+
+-- stored procedure para o voluntario sair de um projeto
+
+-- stored procedure para o projeto retirar um voluntario
 
 -- stored procedure de login por username e senha
 
 -- stored procedure de login por e-mail e senha
+

@@ -35,6 +35,7 @@ create table voluntario(
     voltelefone char(11) not null,
     volcidcod int unsigned not null,
     volstatus tinyint unsigned not null default 1,
+    volstatusdisponibilidade tinyint unsigned not null default 0,
     primary key (volcpf),
     foreign key (voluscod) references usuario(uscodigo),
     foreign key (volcidcod) references cidade(cidcodigo)

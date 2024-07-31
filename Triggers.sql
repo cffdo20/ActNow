@@ -158,62 +158,6 @@ BEGIN
 END; ##
 DELIMITER ;
 
--- Triggers de LOG para instituicao
-
--- log para insert
-DELIMITER ##
-CREATE TRIGGER tg_log_insert_instituicao AFTER INSERT ON instituicao
-FOR EACH ROW
-BEGIN
-    declare v_nome_tabela varchar(40) default '';
-    set v_nome_tabela = 'instituicao';
-    insert into log(logtabela,logtabcodid,logdatetime) values (v_nome_tabela,new.instuscod,current_timestamp(),'insert');
-END; ##
-DELIMITER ;
-
--- log para update
-DELIMITER ##
-CREATE TRIGGER tg_log_update_instituicao AFTER UPDATE ON instituicao
-FOR EACH ROW
-BEGIN
-    declare v_nome_tabela varchar(40) default '';
-    declare v_alteracoes_tabela varchar(1000) default '';
-    declare v_status_instnomefantasia, v_status_instrazaosocial, v_status_instcidcodigo boolean default false;
-    set v_nome_tabela = 'instituicao';
-    if not new.instnomefantasia=old.instnomefantasia then set v_status_instnomefantasia=true; end if;
-    if not new.instrazaosocial=old.instrazaosocial then set v_status_instrazaosocial=true; end if;
-    if not new.instcidcodigo=old.instcidcodigo then set v_status_instcidcodigo=true; end if;
-    if v_status_instnomefantasia then
-		set v_alteracoes_tabela = concat(v_alteracoes_tabela,'instnomefantasia,',old.instnomefantasia,'|');
-    end if;
-    if v_status_instrazaosocial then
-		set v_alteracoes_tabela = concat(v_alteracoes_tabela,"instrazaosocial,",old.instrazaosocial,'|');
-    end if;
-    if v_status_instcidcodigo then
-		set v_alteracoes_tabela = concat(v_alteracoes_tabela,'instcidcodigo,',old.instcidcodigo,'|');
-    end if;
-    insert into log(logtabela,logtabcodid,logalteracoes,logdatetime,logoperacao) values (v_nome_tabela,new.instuscod,v_alteracoes_tabela,current_timestamp(),'update');
-END; ##
-DELIMITER ;
-
--- Log para delete
-DELIMITER ##
-CREATE TRIGGER tg_log_delete_instituicao AFTER DELETE ON instituicao
-FOR EACH ROW
-BEGIN
-    declare v_nome_tabela varchar(40) default '';
-    declare v_alteracoes_tabela varchar(1500) default '';
-    declare v_alteracao_1, v_alteracao_2, v_alteracao_3, v_alteracao_4, v_alteracao_5 varchar(500) default '';
-    set v_nome_tabela = 'instituicao';
-    set v_alteracao_1 = concat('instcnpj,',old.instcnpj,'|');
-    set v_alteracao_2 = concat('instuscod,',old.instuscod,'|');
-    set v_alteracao_3 = concat('instnomefantasia,',old.instnomefantasia,'|');
-    set v_alteracao_4 = concat("instrazaosocial,",old.instrazaosocial,'|');
-    set v_alteracao_5 = concat('instcidcodigo,',old.instcidcodigo,'|');
-    set v_alteracoes_tabela = concat(v_alteracao_1, v_alteracao_2, v_alteracao_3, v_alteracao_4, v_alteracao_5);
-    insert into log(logtabela,logtabcodid,logalteracoes,logdatetime,logoperacao) values (v_nome_tabela,old.instuscod,v_alteracoes_tabela,current_timestamp(),'delete');
-END; ##
-DELIMITER ;
 
 -- Triggers de LOG para usuario
 
@@ -268,5 +212,22 @@ BEGIN
     set v_alteracao_4 = concat('ususenha,',old.ususenha,'|');
     set v_alteracoes_tabela = concat(v_alteracao_1, v_alteracao_2, v_alteracao_3, v_alteracao_4);
     insert into log(logtabela,logtabcodid,logalteracoes,logdatetime,logoperacao) values (v_nome_tabela,old.uscodigo,v_alteracoes_tabela,current_timestamp(),'delete');
+END; ##
+DELIMITER ;
+
+-- Trigger para mudar disponibilidade de voluntário insert
+DELIMITER ##
+CREATE TRIGGER tg_disponibilidade_voluntario AFTER insert ON voluntarioprojeto
+FOR EACH ROW
+BEGIN
+    update voluntario set volstatusdisponibilidade=1 where volcpf=new.volprojcpf;
+END; ##
+DELIMITER ;
+-- Trigger para mudar disponibilidade de voluntário delete
+DELIMITER ##
+CREATE TRIGGER tg_ddisponibilidade_voluntario AFTER delete ON voluntarioprojeto
+FOR EACH ROW
+BEGIN
+    update voluntario set volstatusdisponibilidade=0 where volcpf=old.volprojcpf;
 END; ##
 DELIMITER ;
