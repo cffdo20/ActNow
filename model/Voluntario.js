@@ -1,4 +1,4 @@
-const bd = require('../BD/db.js');
+const bd = require('./db.js');
 
 function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabilidades) {
   // Tratar horário
@@ -31,13 +31,45 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
     }
   }
 
-  var parametros = [filtroDiaSemana, matutino, vespertino, noturno, voluntarioHabilidades];
   console.log(parametros);
-  // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
-    console.log(consulta);
-    return consulta[0][0];
-  })
+  if(Array.isArray(voluntarioHabilidades)){
+    var parametrosBase = [filtroDiaSemana, matutino, vespertino, noturno];
+    var respostasUnicas = new Set(); // Conjunto para armazenar respostas únicas
+
+    // Mapeia cada habilidade do voluntário para uma promessa de consulta
+    var promessasConsulta = voluntarioHabilidades.map(habilidade => {
+        // Cria uma cópia dos parâmetros base e adiciona a habilidade atual
+        var parametros = parametrosBase.slice(); // Copia os parâmetros base
+        parametros.push(habilidade); // Adiciona a habilidade atual
+
+        // Retorna a promessa gerada pela função callProcedureWithParameter
+        return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
+            var resposta = consulta[0][0];
+            // Verifica se a resposta não está vazia e se não está presente no conjunto de respostas únicas
+            if (resposta && !respostasUnicas.has(JSON.stringify(resposta))) {
+                respostasUnicas.add(JSON.stringify(resposta)); // Adiciona a resposta ao conjunto de respostas únicas
+                return resposta;
+            } else {
+                // Se a resposta estiver vazia ou repetida, retorna undefined para que não seja adicionada ao array de respostas
+                return undefined;
+            }
+        });
+    });
+
+    // Retorna uma promessa que será resolvida quando todas as consultas forem concluídas
+    return Promise.all(promessasConsulta).then(respostas => {
+        // Filtra as respostas para remover os elementos undefined
+        var respostasValidas = respostas.filter(resposta => resposta !== undefined);
+        // Retorna as respostas válidas como um array
+        return respostasValidas;
+    });
+  }else{
+    var parametros = [filtroDiaSemana, matutino, vespertino, noturno, voluntarioHabilidades];
+    // Retorna a promessa gerada pela função callProcedureWithParameter
+    return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
+      return consulta[0][0];
+    })
+  }
 }
 
 function getVoluntario(userName){

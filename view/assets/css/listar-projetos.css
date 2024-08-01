@@ -1,0 +1,20 @@
+.project-container{
+    width: 100%;
+    border: 1px solid rgba(128, 128, 128, 0.381); 
+    border-radius: 5px; 
+    padding: 0.5rem; 
+}
+
+
+.project-main-info h3{
+    font-size: 1.3rem; 
+}
+
+.information p{
+    font-size: 1rem; 
+    font-weight: 400;
+}
+
+.bi-kanban{
+    color: #77DD66; 
+}
