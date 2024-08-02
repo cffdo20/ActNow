@@ -544,6 +544,20 @@ END$$
 DELIMITER ;
 
 
+-- Função para  verificar se um projeto está ligado a um voluntário
+DELIMITER $$
+CREATE FUNCTION f_verificar_voluntario_projeto(p_vvp_projid int, p_vvp_volcpf char(11)) RETURNS boolean
+BEGIN
+    DECLARE v_vvp_volproj_status boolean default false;
+    
+    set v_vvp_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojid=p_vvp_projid and volprojcpf=p_vvp_volcpf);
+    
+    RETURN v_vvp_volproj_status;
+END$$
+DELIMITER ;
+
 -- Função para verificar se um usuário possui as habilidades requisitadas
 DELIMITER $$
 CREATE FUNCTION f_verificar_habilidades_username(p_vhsu_ususername varchar(20), p_vhsu_parametros varchar(1000), p_vhsu_qt_habilidades int) RETURNS int
