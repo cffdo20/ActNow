@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="../assets/css/index-style.css">
   <link rel="stylesheet" href="../assets/css/login-style.css">
 
-  <title>ActNow - Login</title>
+  <title>ActNow - Criar Conta</title>
 </head>
 
 <body>
@@ -81,8 +81,8 @@
     <div class="img-container">
       <img class = "logo-img" src="../assets/img/blue-actnow-logo.png" alt="">
     </div>
-    <h4 class="mt-3 text-center fw-bold  ">Login</h4>
-    <p class="text-center register-text">Olá, entre com suas informações para acessar sua conta</p>
+    <h4 class="mt-3 text-center fw-bold  ">Crie sua conta</h4>
+    <p class="text-center register-text">Preencha os campos para criar sua conta</p>
 
     <div class="form-container container mx-4 mx-md-auto mt-2 mb-5">
 
@@ -90,11 +90,20 @@
 
         <div class="main-form-container">
           <form id = "cadastroProjetoForm" action="/criar-projeto" method = "POST">
+
+            <div class="form-group p-2">
+              <span class="bi bi-person"></span>
+              <label for="user-name">Usuário</label>
+              <input class="form-control font-weight-lighter input-sm" id="user-name" name="userName" type="text" placeholder="@" required>
+            </div>
+
+            
             <div class="form-group p-2">
               <span class="bi bi-envelope"></span>
               <label for="user-email">E-mail</label>
               <input class="form-control font-weight-lighter input-sm" id="user-email" name="userEmail" type="text" placeholder="email@email.com" required>
             </div>
+
 
             <div class="form-group p-2">
               <span class="bi bi-lock"></span>
@@ -102,17 +111,9 @@
               <input class="form-control input-sm" id="user-senha" name="userSenha" type="password" placeholder="********" required></input>
             </div>
 
-            <a href="">Esqueceu sua senha</a>
 
             <div class="d-flex justify-content-center">
-              <input type="submit" value="Entrar" class="m-2 btn btn-primary">
-            </div>
-
-            <div>
-              <p> Não tem uma conta?
-                <a href="
-                ">Crie agora</a>
-              </p>
+              <input type="submit" value="Cadastrar" class="m-2 btn btn-primary">
             </div>
 
           </form>
