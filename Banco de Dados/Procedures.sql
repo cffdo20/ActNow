@@ -1258,7 +1258,66 @@ select * from voluntarioprojeto;
 select * from usuario;
 select * from projetosocial;
 */
--- stored procedure de login por username e senha
 
--- stored procedure de login por e-mail e senha
+-- stored procedure de buscar username por email
+DELIMITER $$
+CREATE Procedure sp_buscar_username_usuario(in p_buu_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_buu_ususername, v_buu_usemail VARCHAR(500);
+    declare v_buu_uscodigo int default 0;
+    SET v_buu_usemail = f_extrair_parametros(p_buu_parametros, 1);
+    set v_buu_ususername = f_buscar_username_email(v_buu_usemail);
+    set v_buu_uscodigo = f_buscar_codigo_usuario(v_buu_ususername);
+    if (f_buscar_parametros_nulos(p_buu_parametros,1) or f_buscar_caracteres_prejudiciais(p_buu_parametros,1)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_buu_uscodigo) is not true then
+			select 'ERRO: O usuario indicado não existe.' as erro;
+		else
+			if f_validar_email_usuario(v_buu_usemail) is not true then
+				select 'ERRO: Não existe um usuário com esse e-mail.' as erro;
+            else
+				if f_transformar_string_status((select usstatus from usuario where uscodigo=v_buu_uscodigo)) = 0 then
+					select 'ERRO: O usuário indicado está inativo.' as erro;
+				else
+					if f_transformar_string_status((select usstatus from usuario where uscodigo=v_buu_uscodigo)) = 1 then
+						select v_buu_ususername as resposta;
+					end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+
+-- stored procedure de login por username e senha
+DELIMITER $$
+CREATE Procedure sp_validar_senha_usuario(in p_vsu_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_vsu_ususername, v_vsu_ususenha VARCHAR(500);
+    declare v_vsu_uscodigo int default 0;
+    SET v_vsu_ususername = f_extrair_parametros(p_vsu_parametros, 1);
+    SET v_vsu_ususenha = f_extrair_parametros(p_vsu_parametros, 2);
+    set v_vsu_uscodigo = f_buscar_codigo_usuario(v_vsu_ususername);
+    if (f_buscar_parametros_nulos(p_vsu_parametros,2) or f_buscar_caracteres_prejudiciais(p_vsu_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_codigo_usuario(v_vsu_uscodigo) is not true then
+			select 'ERRO: O usuario indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select usstatus from usuario where uscodigo=v_vsu_uscodigo)) = 0 then
+                select 'ERRO: O usuário indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select usstatus from usuario where uscodigo=v_vsu_uscodigo)) = 1 then
+					if f_validar_senha_usuario(v_vsu_ususenha,v_vsu_uscodigo) is not true then
+						select "ERRO: Senha incorreta!" as erro;
+                    else
+						select "Senha correta!" as resposta;
+                    end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
 

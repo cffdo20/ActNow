@@ -641,3 +641,32 @@ BEGIN
     RETURN vhv_volhab_status;
 END$$
 DELIMITER ;
+
+-- função para verificar usuário e senha
+DELIMITER $$
+CREATE FUNCTION f_validar_senha_usuario(p_vsu_ususenha varchar(15), p_vsu_uscodigo int) RETURNS boolean 
+BEGIN
+    DECLARE v_vsu_ususenha_status boolean default false;
+    
+    set v_vsu_ususenha_status = (select count(*)
+		from usuario
+        where uscodigo=p_vsu_uscodigo and ususenha=p_vsu_ususenha and usstatus=1);
+    
+    RETURN v_vsu_ususenha_status;
+END$$
+DELIMITER ;
+
+-- função para buscar username por email
+DELIMITER $$
+CREATE FUNCTION f_buscar_username_email(p_bue_usemail varchar(80)) RETURNS varchar(20) 
+BEGIN
+    DECLARE v_bue_ususername varchar(20);
+    
+    set v_bue_ususername = (select ususername
+		from usuario
+        where usemail=p_bue_usemail and usstatus=1);
+    
+    RETURN v_bue_ususername;
+END$$
+
+DELIMITER ;
