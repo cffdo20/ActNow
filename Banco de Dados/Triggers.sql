@@ -168,7 +168,7 @@ FOR EACH ROW
 BEGIN
     declare v_nome_tabela varchar(40) default '';
     set v_nome_tabela = 'usuario';
-    insert into log(logtabela,logtabcodid,logdatetime) values (v_nome_tabela,new.uscodigo,current_timestamp(),'insert');
+    insert into log(logtabela,logtabcodid,logdatetime, logoperacao) values (v_nome_tabela,new.uscodigo,current_timestamp(),'insert');
 END; ##
 DELIMITER ;
 
@@ -217,7 +217,7 @@ DELIMITER ;
 
 -- Trigger para mudar disponibilidade de voluntário insert
 DELIMITER ##
-CREATE TRIGGER tg_disponibilidade_voluntario AFTER insert ON voluntarioprojeto
+CREATE TRIGGER tg_disponibilidade_voluntario_insert AFTER insert ON voluntarioprojeto
 FOR EACH ROW
 BEGIN
     update voluntario set volstatusdisponibilidade=1 where volcpf=new.volprojcpf;
@@ -225,7 +225,7 @@ END; ##
 DELIMITER ;
 -- Trigger para mudar disponibilidade de voluntário delete
 DELIMITER ##
-CREATE TRIGGER tg_ddisponibilidade_voluntario AFTER delete ON voluntarioprojeto
+CREATE TRIGGER tg_disponibilidade_voluntario_delete AFTER delete ON voluntarioprojeto
 FOR EACH ROW
 BEGIN
     update voluntario set volstatusdisponibilidade=0 where volcpf=old.volprojcpf;

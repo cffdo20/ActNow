@@ -1063,9 +1063,9 @@ BEGIN
 						inner join projetosocial on projid=volprojid
 						where projid=v_vp_projid and volstatus=1
 						group by ususername;
-				else
-					select 'ERRO: Não há nenhum voluntário cadastrado nesse projeto.' as erro;
-                end if;
+					else
+						select 'ERRO: Não há nenhum voluntário cadastrado nesse projeto.' as erro;
+					end if;
 				end if;
 			end if;
 		end if;
@@ -1208,9 +1208,56 @@ DELIMITER ;
 -- select habnome from habilidade;
 
 -- stored procedure para o voluntario sair de um projeto
-
 -- stored procedure para o projeto retirar um voluntario
-
+DELIMITER $$
+CREATE Procedure sp_retirar_voluntario_projeto(in p_rvp_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_rvp_projtitulo VARCHAR(500);
+    declare v_rvp_projid int default 0;
+    DECLARE v_rvp_username VARCHAR(20);
+    declare v_rvp_volcpf char(11);
+    SET v_rvp_projtitulo = f_extrair_parametros(p_rvp_parametros, 1);    
+    SET v_rvp_username = f_extrair_parametros(p_rvp_parametros, 2);
+    set v_rvp_projid = f_buscar_id_projeto(v_rvp_projtitulo);
+    set v_rvp_volcpf = f_buscar_cpf_voluntario(v_rvp_username);
+    if (f_buscar_parametros_nulos(p_rvp_parametros,2) or f_buscar_caracteres_prejudiciais(p_rvp_parametros,2)) then
+		select 'ERRO: Preencha todas as informações necessárias corretamente.' as erro;
+	else
+		if f_validar_id_projeto(v_rvp_projid) is not true then
+			select 'ERRO: O projeto indicado não existe.' as erro;
+		else
+			if f_transformar_string_status((select projstatus from projetosocial where projid=v_rvp_projid)) = 0 then
+                select 'ERRO: O projeto indicado está inativo.' as erro;
+			else
+				if f_transformar_string_status((select projstatus from projetosocial where projid=v_rvp_projid)) = 1 then
+					if f_validar_cpf_voluntario(v_rvp_volcpf) is not true then
+						select 'ERRO: O voluntário indicado não existe.' as erro;
+					else
+						if f_transformar_string_status((select volstatus from voluntario where volcpf=v_rvp_volcpf)) = 0 then
+							select 'ERRO: O voluntario indicado está inativo.' as erro;
+						else
+							if f_transformar_string_status((select volstatus from voluntario where volcpf=v_rvp_volcpf)) = 1 then
+								if f_verificar_voluntario_projeto(v_rvp_projid,v_rvp_volcpf) is not true then
+									select "O voluntário informado não tem ligações com o projeto infomado!" as resposta;
+								else
+									delete from voluntarioprojeto where volprojcpf=v_rvp_volcpf and volprojid=v_rvp_projid;
+                                end if;
+							end if;
+						end if;
+					end if;
+				end if;
+			end if;
+		end if;
+	end if;
+END$$
+DELIMITER ;
+/*
+drop Procedure sp_retirar_voluntario_projeto;
+call sp_retirar_voluntario_projeto('Reforço Escolar|bobsmith|');
+select * from voluntarioprojeto;
+select * from usuario;
+select * from projetosocial;
+*/
 -- stored procedure de login por username e senha
 
 -- stored procedure de login por e-mail e senha
