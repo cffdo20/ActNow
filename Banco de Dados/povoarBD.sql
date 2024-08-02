@@ -723,18 +723,6 @@ values ('12345678910', 17, 'Ana Silva', 'André', 'Ana é uma profissional dedic
 		('33322211100', 10, 'Paulo Oliveira', 'Paula', 'Paulo é um fotógrafo apaixonado que encontra beleza até nos detalhes mais simples da vida cotidiana.', '55555566677', 10),
 		('44455566677', 7, 'Ana Costa', 'André', 'Ana é uma entusiasta da culinária que adora experimentar novas receitas e compartilhar suas criações com amigos e familiares.', '55533344455', 23); 
 
--- inseridno instituições
-insert into instituicao(instcnpj, instuscod, instnomefantasia, instrazaosocial,instcidcodigo)
-values ('12345678910111', 3, 'Tech Solutions', 'Tech Solutions LTDA',1),
-		('98765432100123', 15, 'Inovação Digital', 'Inovação Digital S.A.',1),
-		('11122233344455', 14, 'Conecta Educação', 'Conecta Educação Ltda.',1),
-		('55544433322110', 6, 'BioSaúde', 'BioSaúde Serviços Médicos Ltda.',1),
-		('77788899911100', 11, 'FutureTech', 'FutureTech Tecnologia da Informação Eireli',1),
-		('22233344455566', 20, 'Global Logistics', 'Global Logistics Transportes Ltda.',1),
-		('66677788899000', 13, 'Soluções Inteligentes', 'Soluções Inteligentes Consultoria Ltda.',1),
-		('99988877766655', 18, 'EcoFriendly', 'EcoFriendly Sustentabilidade Empresarial Ltda.',1),
-		('33322211100044', 1, 'DataDriven', 'DataDriven Tecnologia e Informática Ltda.',1),
-		('44455566677788', 2, 'MaxiServ', 'MaxiServ Soluções Empresariais Ltda.',1);  
 
 -- inserindo habilidades de voiluntários
 insert into voluntariohabilidade(volhabid, volhabcpf)
@@ -900,28 +888,6 @@ values (1, 1, 1),
 		(29, 1, 2),
 		(30, 2, 3);
 
--- inserindo participação de instituições entre projetos
-insert into instituicaoprojeto
-values (1, '12345678910111'),
-		(2, '98765432100123'),
-		(3, '11122233344455'),
-		(4, '55544433322110'),
-		(5, '77788899911100'),
-		(6, '22233344455566'),
-		(7, '66677788899000'),
-		(8, '99988877766655'),
-		(9, '33322211100044'),
-		(10, '44455566677788'),
-		(11, '12345678910111'),
-		(12, '98765432100123'),
-		(13, '11122233344455'),
-		(14, '55544433322110'),
-		(15, '77788899911100'),
-		(16, '22233344455566'),
-		(17, '66677788899000'),
-		(18, '99988877766655'),
-		(19, '33322211100044'),
-		(20, '44455566677788');
         
 -- inserindo participação de voluntário em projetos
 insert into voluntarioprojeto

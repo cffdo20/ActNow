@@ -1,31 +1,6 @@
 use actnow24;
 set global log_bin_trust_function_creators=1;
 
-
-/* 
-Em espera:
-    -Validar data de inicio do projeto - stand by;
-    -Validar data de entrega de atividade - Stand by;
-    -Validar alteraçõa na data de entrega da atividade - stand by;
-    -Validar datas - stand by;
-    -Lidar com voluntários disponíveis em diferentes turnos;
-
-Feito:
-- Terminar de criar as funções - Feito;
-- Implementar o uso das funções utilizáveis nas SPs existentes - Feito;
-- Gerar validações nas SPs exitentes:
-	-Validar títulos de projetos - Feito;
-    -Validar código do usuário do projeto - Feito;
-    -Validar criação de projeto - Feito;
-    -Validar id do projeto na atividade - Feito;
-    -Validar definição de atividade - Feito;
-    -Validar alteração no status da atividade - feito;
-    -Validar alteração na descrição da atividade - feito;
-    
-A fazer:
-- Terminar de criar as SPs necessárias par a sprint atual;
-*/
-
 -- FUNÇÕES -------------------------------------------------
 
 
@@ -87,7 +62,7 @@ BEGIN
     
     set v_bcu_codigo_usuario= (select uscodigo
 		from usuario
-        where ususername=p_bcu_ususername);
+        where ususername=p_bcu_ususername and usstatus=1);
     
     RETURN v_bcu_codigo_usuario;
 END$$
@@ -103,7 +78,7 @@ BEGIN
     
     set v_vcu_status_usuario = (select count(*)
 		from usuario
-        where uscodigo=p_vcu_uscodigo);
+        where uscodigo=p_vcu_uscodigo and usstatus=1);
     
     RETURN v_vcu_status_usuario;
 END$$
@@ -118,7 +93,7 @@ BEGIN
     DECLARE v_cpu_qt_projeto tinyint default 0;
     set v_cpu_qt_projeto=(select count(*)
 							from projetosocial
-							where projuscod=p_cpu_uscodigo);
+							where projuscod=p_cpu_uscodigo and projstatus=1);
     
 	return v_cpu_qt_projeto;
 END$$
@@ -184,7 +159,7 @@ BEGIN
     
     set v_bip_id_projeto= (select projid
 		from projetosocial
-        where projtitulo=p_bip_projtitulo);
+        where projtitulo=p_bip_projtitulo and projstatus=1);
     
     RETURN v_bip_id_projeto;
 END$$
@@ -326,7 +301,7 @@ BEGIN
     if (f_validar_codigo_usuario(p_bu_uscodigo)) is not true then
 		set v_bu_ususername = 'ERRO: O usuário indicado não existe';
     else
-		set v_bu_ususername = (select ususername from usuario where uscodigo=p_bu_uscodigo);
+		set v_bu_ususername = (select ususername from usuario where uscodigo=p_bu_uscodigo and usstatus=1);
     end if;
     return v_bu_ususername;
 END$$
@@ -342,7 +317,7 @@ BEGIN
     if (f_validar_id_projeto(p_btp_projid)) is not true then
 		set v_btp_titulo = 'ERRO: O Projeto indicado não existe';
     else
-		set v_btp_titulo = (select projtitulo from projetosocial where projid=p_btp_projid);
+		set v_btp_titulo = (select projtitulo from projetosocial where projid=p_btp_projid and projstatus=1);
     end if;
     return v_btp_titulo;
 END$$
@@ -357,11 +332,12 @@ BEGIN
     
     set v_vvu_status_voluntario = (select count(*)
 		from voluntario
-        where voluscod=p_vvu_voluscod);
+        where voluscod=p_vvu_voluscod and volstatus=1);
     
     RETURN v_vvu_status_voluntario;
 END$$
 DELIMITER ;
+
 -- função para validar id de dia da semana
 DELIMITER $$
 CREATE FUNCTION f_validar_diasemana_id(p_vdi_dsid int) RETURNS boolean
@@ -375,6 +351,7 @@ BEGIN
     RETURN v_vdn_status_diasemana;
 END$$
 DELIMITER ;
+
 -- função para buscar id pela nomeclatura do dia da semana;
 DELIMITER $$
 CREATE FUNCTION f_buscar_diasemana_id(p_bdi_dsnomeclatura varchar(15)) RETURNS boolean
@@ -453,8 +430,200 @@ BEGIN
     
     set v_cpu_status_projetos_usuario = (select count(*)
 		from projetosocial
-        where projuscod=p_cpu_uscodigo);
+        where projuscod=p_cpu_uscodigo and projstatus=1);
     
     RETURN v_cpu_status_projetos_usuario;
+END$$
+DELIMITER ;
+
+-- Função para validar e-mail de um usuario
+DELIMITER $$
+CREATE FUNCTION f_validar_email_usuario(p_veu_usemail varchar(80)) RETURNS int(11)
+BEGIN
+    DECLARE v_veu_email_usuario boolean default false;
+    
+    set v_veu_email_usuario = (select count(*)
+		from usuario
+        where usemail=p_veu_usemail and usstatus=1);
+    
+    RETURN v_veu_email_usuario;
+END$$
+DELIMITER ;
+
+
+-- Função para validar o username de um usuario
+DELIMITER $$
+CREATE FUNCTION f_validar_username_usuario(p_vuu_ususername varchar(20)) RETURNS int(11)
+BEGIN
+    DECLARE v_vuu_ususername_usuario int default 0;
+    
+    set v_vuu_ususername_usuario= (select count(*)
+		from usuario
+        where ususername=p_vuu_ususername and usstatus=1);
+    
+    RETURN v_vuu_ususername_usuario;
+END$$
+DELIMITER ;
+
+-- Função para buscar cpf de voluntário pelo username de usuário
+DELIMITER $$
+CREATE FUNCTION f_buscar_cpf_voluntario(p_bcv_ususername varchar(20)) RETURNS char(11)
+BEGIN
+    DECLARE v_bcv_volcpf char(11);
+    declare v_bcv_uscodigo int default 0;
+    
+    set v_bcv_uscodigo = f_buscar_codigo_usuario(p_bcv_ususername);
+    
+    set v_bcv_volcpf = (select volcpf
+		from voluntario
+        where voluscod=v_bcv_uscodigo and volstatus=1);
+    
+    RETURN v_bcv_volcpf;
+END$$
+DELIMITER ;
+-- select f_buscar_cpf_voluntario('ashleywhite');
+-- select * from voluntario;
+-- select * from usuario;
+
+-- Função para validar CPF de um voluntário
+DELIMITER $$
+CREATE FUNCTION f_validar_cpf_voluntario(p_vcv_volcpf char(11)) RETURNS boolean
+BEGIN
+    DECLARE v_vcv_volcpf_status boolean default false;
+    
+    set v_vcv_volcpf_status = (select count(*)
+		from voluntario
+        where volcpf=p_vcv_volcpf and volstatus=1);
+    
+    RETURN v_vcv_volcpf_status;
+END$$
+DELIMITER ;
+-- select f_validar_cpf_voluntario('12345678910');
+
+-- Função para cadastrar habilidades para um voluntario
+
+
+-- Função para verificar cadastro de voluntario em projeto
+DELIMITER $$
+CREATE FUNCTION f_validar_voluntario_projeto(p_vvp_volcpf char(11), p_vvp_projid int) RETURNS boolean
+BEGIN
+    DECLARE v_vvp_volproj_status boolean default false;
+    
+    set v_vvp_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojcpf=p_vvp_volcpf and volprojid=p_vvp_projid );
+    
+    RETURN v_vvp_volproj_status;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE FUNCTION f_voluntarios_projeto(p_vp_projid int) RETURNS boolean
+BEGIN
+    DECLARE v_vp_volproj_status boolean default false;
+    
+    set v_vp_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojid=p_vp_projid);
+    
+    RETURN v_vp_volproj_status;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE FUNCTION f_projetos_voluntario(p_pv_volcpf char(11)) RETURNS boolean
+BEGIN
+    DECLARE v_pv_volproj_status boolean default false;
+    
+    set v_pv_volproj_status = (select count(*)
+		from voluntarioprojeto
+        where volprojcpf=p_pv_volcpf);
+    
+    RETURN v_pv_volproj_status;
+END$$
+DELIMITER ;
+
+
+-- Função para verificar se um usuário possui as habilidades requisitadas
+DELIMITER $$
+CREATE FUNCTION f_verificar_habilidades_username(p_vhsu_ususername varchar(20), p_vhsu_parametros varchar(1000), p_vhsu_qt_habilidades int) RETURNS int
+BEGIN
+    declare v_vhsu_cont int default 0;
+    declare v_vhsu_cont_habilidades int default 7;
+    declare v_vhsu_conteudo_parametro_id int default 0;
+    declare v_vhsu_resultado int default 0;
+    while v_vhsu_cont<=p_vhsu_qt_habilidades do
+		set v_vhsu_conteudo_parametro_id = f_buscar_habilidade_id(f_extrair_parametros(p_vhsu_parametros,v_vhsu_cont_habilidades));
+        -- erro crasso aqui
+		if f_verificar_habilidade_username(p_vhsu_ususername,v_vhsu_conteudo_parametro_id) then
+			set v_vhsu_resultado=v_vhsu_resultado+1;
+        end if;
+        set v_vhsu_cont_habilidades=v_vhsu_cont_habilidades+1;
+        set v_vhsu_cont=v_vhsu_cont+1;
+	end while;
+    return v_vhsu_resultado;
+END$$
+DELIMITER ;
+
+-- Função para definir habilidadesde um voluntario
+DELIMITER $$
+CREATE FUNCTION f_definir_habilidades_voluntario(p_dhv_volcpf char(11), p_dhv_qt_habilidades int, p_dhv_parametros varchar(1000)) RETURNS boolean
+BEGIN
+    declare v_dhv_cont int default 0;
+    declare v_dhv_cont_habilidades int default 3;
+    declare v_dhv_conteudo_parametro_id int default 0;
+    declare v_dhv_cont_resultado int default 0;
+    declare v_dhv_resultado boolean default false;
+    declare v_dhv_habilidade varchar(20) default '';
+    while v_dhv_cont<=p_dhv_qt_habilidades do
+		set v_dhv_habilidade=f_extrair_parametros(p_dhv_parametros,v_dhv_cont_habilidades);
+        if f_buscar_habilidade_id(v_dhv_habilidade) is null then
+			set v_dhv_resultado = false;
+		else
+			set v_dhv_conteudo_parametro_id = f_buscar_habilidade_id(v_dhv_habilidade);
+			if f_verificar_habilidade_voluntario(p_dhv_volcpf,v_dhv_conteudo_parametro_id) is true then
+				set v_dhv_resultado = false;
+            else
+				insert into voluntariohabilidade(volhabid,volhabcpf) values(v_dhv_conteudo_parametro_id,p_dhv_volcpf);
+                if f_verificar_habilidade_voluntario(p_dhv_volcpf,v_dhv_conteudo_parametro_id) is not true then
+					set v_dhv_resultado = false;
+				else
+					set v_dhv_cont_resultado=v_dhv_cont_resultado+1;
+				end if;
+			end if;
+        end if;
+        set v_dhv_cont_habilidades=v_dhv_cont_habilidades+1;
+        set v_dhv_cont=v_dhv_cont+1;
+	end while;
+    if v_dhv_cont_resultado=p_dhv_qt_habilidades then
+		set v_dhv_resultado=true;
+    else
+		set v_dhv_resultado=false;
+    end if;
+    return v_dhv_resultado;
+END$$
+DELIMITER ;
+
+/*
+drop FUNCTION f_definir_habilidades_voluntario;
+select f_definir_habilidades_voluntario('11122233344',2,'bobsmith|2|Costura|Marcenaria|');
+
+select * from voluntario;
+select * from voluntariohabilidade;
+select * from voluntariohabilidade where volhabcpf='11122233344';
+select * from habilidade;
+*/
+
+-- função para verificar se há uma habilidade cadastrada de um voluntário
+DELIMITER $$
+CREATE FUNCTION f_verificar_habilidade_voluntario(p_vhv_volcpf char(11), p_vhv_habid int) RETURNS boolean
+BEGIN
+    DECLARE vhv_volhab_status boolean default false;
+    
+    set vhv_volhab_status = (select count(*)
+		from voluntariohabilidade
+        where volhabid=p_vhv_habid and volhabcpf=p_vhv_volcpf);
+    
+    RETURN vhv_volhab_status;
 END$$
 DELIMITER ;

@@ -57,6 +57,7 @@ END$$
 DELIMITER ;
 -- select f_formata_data(projdatainicio) from projetosocial;
 -- Função para verificar parâmetros nulos.
+
 DELIMITER $$
 CREATE FUNCTION f_buscar_parametros_nulos(p_parametros varchar(1000), p_qt_parametros int) RETURNS boolean
 BEGIN
@@ -96,6 +97,7 @@ BEGIN
 END$$
 DELIMITER ;
 -- select f_contar_parametros('teste|teste|teste|teste|teste|teste|teste|');
+
 -- Função para concatenar parametros
 DELIMITER $$
 CREATE FUNCTION f_concatenar_parametros(p_parametros varchar(1000), p_qt_parametros int) RETURNS varchar(1000)
@@ -127,27 +129,49 @@ BEGIN
 						join voluntario on uscodigo=voluscod
 						join voluntariohabilidade on volhabcpf=volcpf
 						join habilidade on  volhabid = habid
-                        where ususername=p_vhu_ususername and habid=p_vhu_id_habilidade);
+                        where ususername=p_vhu_ususername and habid=p_vhu_id_habilidade and usstatus=1);
     return v_vhu_resultado;
 END$$
 DELIMITER ;
 
--- Função para verificar se um usuário possui as habilidades requisitadas
+
+
+-- função para validar email
 DELIMITER $$
-CREATE FUNCTION f_verificar_habilidades_username(p_vhsu_ususername varchar(20), p_vhsu_parametros varchar(1000), p_vhsu_qt_habilidades int) RETURNS int
+CREATE FUNCTION f_validar_email(p_email VARCHAR(80))
+RETURNS BOOLEAN
 BEGIN
-    declare v_vhsu_cont int default 0;
-    declare v_vhsu_cont_habilidades int default 7;
-    declare v_vhsu_conteudo_parametro_id int default 0;
-    declare v_vhsu_resultado int default 0;
-    while v_vhsu_cont<=p_vhsu_qt_habilidades do
-		set v_vhsu_conteudo_parametro_id = f_buscar_habilidade_id(f_extrair_parametros(p_vhsu_parametros,v_vhsu_cont_habilidades));
-		if f_verificar_habilidade_username(p_vhsu_ususername,v_vhsu_conteudo_parametro_id) then
-			set v_vhsu_resultado=v_vhsu_resultado+1;
-        end if;
-        set v_vhsu_cont_habilidades=v_vhsu_cont_habilidades+1;
-        set v_vhsu_cont=v_vhsu_cont+1;
-	end while;
-    return v_vhsu_resultado;
+    DECLARE v_email_regex VARCHAR(255);
+    SET v_email_regex = '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$';
+
+    IF p_email REGEXP v_email_regex THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END; $$
+DELIMITER ;
+-- drop function f_validar_email;
+-- SELECT f_validar_email((select usemail from usuario where uscodigo=1)) AS e_mail_valido;
+
+-- Verifica se o parâmetro contém algum caractere prejudicial
+DELIMITER $$
+CREATE FUNCTION f_buscar_caracteres_prejudiciais(p_parametros VARCHAR(1000), p_qt_parametros INT) RETURNS BOOLEAN
+BEGIN
+    DECLARE v_resultado BOOLEAN DEFAULT FALSE;
+    DECLARE v_cont INT DEFAULT 1;
+    DECLARE v_conteudo_parametro VARCHAR(500);
+    DECLARE v_caracteres_prejudiciais VARCHAR(100) DEFAULT '\'\'";--|\\`&<>()=%+';
+    
+    WHILE v_cont <= p_qt_parametros DO
+        SET v_conteudo_parametro = f_extrair_parametros(p_parametros, v_cont);
+        
+        -- Verifica se o parâmetro contém algum caractere prejudicial
+        IF v_conteudo_parametro REGEXP CONCAT('[', v_caracteres_prejudiciais, ']') THEN
+            SET v_resultado = TRUE;
+        END IF;
+        SET v_cont = v_cont + 1;
+    END WHILE;
+    RETURN v_resultado;
 END$$
 DELIMITER ;

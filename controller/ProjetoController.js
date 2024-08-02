@@ -7,7 +7,7 @@ function criarProjeto(req) {
     return new Promise((resolve, reject) => {
         /** Criação do novo projeto*/
         projeto.setProjetoSocial(req.body.projNome, req.body.projDescricao, req.body.projPublico,
-            req.body.projJustificativa, req.body.projObjetivos, req.body.dataInicioProj, '1', '17')
+            req.body.projJustificativa, req.body.projObjetivos, req.body.dataInicioProj, '17')
             .then(resultado => {
                 if (resultado.erro !== undefined) {
                     // Se houver um erro na resposta, apenas envia a resposta

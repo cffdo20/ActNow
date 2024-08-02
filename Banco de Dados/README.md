@@ -1,15 +1,7 @@
-# Configuração Banco de Dados para Sprint 3
+# ActNow
 
-Para iniciar corretamente o servidor de Banco de Dados, deve-se executar os scripts MySQL na seguinte ordem:
-	
-	1. estruturaBD.sql
+Gerenciamento do Projeto
 
-	2. povoarBD.sql
+Trello: https://trello.com/b/0euNm1Xt/actnow
 
-	3. Aux_Functions.sql
-
- 	4. Procedures.sql
-
- 	5. Functions.sql
-
-Edite o arquivo 'configuracaoPessoalDB.js' para seu nome de servidor e senha local do MySQL, não fazer commit desse arquivo depois.
+Jira:   https://actnowpj.atlassian.net/browse/SCRUM
