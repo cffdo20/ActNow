@@ -16,6 +16,8 @@ body{
 .navbar{
     background-color: #fff; 
     /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    display: flex; 
+    justify-content: flex-start;
 }
 
 .navbar a{
@@ -65,6 +67,8 @@ body{
 
 /* MAIN SECTION */
 .main-content{
+    display: flex; 
+    flex-direction: column;
     min-height: 100vh; 
 }
 
@@ -77,10 +81,7 @@ body{
     font-size: 1rem; 
 }
 
-.main-paragraph{
-    font-size: 2.5rem; 
-    font-weight: 600; 
-}
+
 
 .register-text{
     font-size: 1.06rem; 
@@ -101,10 +102,16 @@ body{
 
 
 /* AREAS SECTION */
+section{
+    background-color: #2346A6;
+}
 .areas-container{ 
     background-color: #fff; 
     
 }
+
+
+
 
 .subject-container{
     background-color: white; 
@@ -152,6 +159,11 @@ body{
     box-shadow: rgba(51, 161, 208, 0.502) 0px 2px 8px 0px;
 }
 
+.bi,
+.fa-solid,
+.fa-regular{
+    font-size: 1rem;
+}
 
 /* FOOTER */
 .footer{
@@ -165,4 +177,35 @@ footer a:hover{
     text-decoration-thickness: 2px;
     
 
+}
+
+.text-to-change-container p,span{
+    position: relative; 
+    font-size: 2.5rem; 
+    font-weight: 600; 
+}
+
+
+/* test text change */
+.text-to-change-container .text-to-change:before{
+    content: "";    
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    width: 100%;
+    background-color: #fff;
+    border-left: 2px solid #333;
+    color: red; 
+    animation: animate 4s steps(12) infinite;
+
+}
+
+@keyframes animate{
+    40%,60%{
+        left: 100%;
+    }
+    100%{
+        left: 0%;
+    }
 }
