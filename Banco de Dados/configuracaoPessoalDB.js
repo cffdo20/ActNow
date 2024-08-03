@@ -2,7 +2,7 @@
 /** Observação: Não fazer commit desse módulo */
 
 const nomeServer = 'root';   // Substitua pelo nome do seu servidor local do MySQL
-const senha = 'Lilidi';        // Substitua pela sua senha local do MySQL
+const senha = 'root';        // Substitua pela sua senha local do MySQL
 
 module.exports = {
     nomeServer: nomeServer,
