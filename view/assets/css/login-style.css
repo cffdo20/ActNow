@@ -47,11 +47,14 @@ main h4{
 .input-sm{
     border-radius: 5px; 
 }
+
 #password-btn{
     position: absolute; 
-    right: 10px; 
-    top: 43%; 
-    
+    top: 64%; 
+    right: 1em; 
+    transform: translateY(-50%);
+    z-index: 1; 
+    cursor: pointer; 
 }
 
 @media (max-width: 700px){
