@@ -23,7 +23,9 @@ body{
 .navbar a{
     font-weight: 400; 
 }
-
+.btn{
+    border-radius: 10px; 
+}
 .navbar .btn{
     background-color: #3395FF; 
     border-radius: 10px; 
@@ -69,7 +71,7 @@ body{
 .main-content{
     display: flex; 
     flex-direction: column;
-    min-height: 100vh; 
+    /* min-height: 100vh; */ 
 }
 
 .main-btn{
@@ -209,3 +211,18 @@ footer a:hover{
         left: 0%;
     }
 }
+
+/* preciso de uma media query para centralizar o texto que muda em telas menores */
+
+
+#create-project-landing{
+    background-color: #f5f5f5;
+}
+
+.hidden{
+    display: none; 
+}
+
+/* #create-project-landing p.active{
+    font-size: 1rem; 
+} */
