@@ -246,7 +246,9 @@
                   <!-- input oculto enviando algum dado único do projeto para garantir que a atividade esteja relacionado a um projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <input class = "input-field-dialog form-control" type="text" name = "atvNome" placeholder = "Atividade"></input>
+                  <input class = "input-field-dialog form-control" type="text" name = "atvNome" placeholder = "Título"></input>
+
+                  <textarea class = "input-field-dialog form-control" type="text" name = "atvDescricao" placeholder = "Descrição"></textarea>
 
                   <input class = "input-field-dialog form-control" type="date" name = "atvData" placeholder = "Data da atividade...">
 
@@ -266,13 +268,13 @@
           <div class="activities-calendar">
             <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
             <div class="activity-container mb-2">
-              <span>01/04/2024 - Visita ao local</span>
+              <span class = "activity-span">01/04/2024 - Visita ao local</span>
             </div>
             <div class="activity-container mb-2">
-              <span>01/04/2024 - Visita ao local</span>
+              <span class = "activity-span">01/04/2024 - Visita ao local</span>
             </div>
             <div class="activity-container mb-2">
-              <span>01/04/2024 - Visita ao local</span>
+              <span class = "activity-span">01/04/2024 - Visita ao local</span>
             </div>
           </div>
         </div>
