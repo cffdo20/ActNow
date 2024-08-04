@@ -6,16 +6,13 @@
 .proj-container{   
     border-radius: 5px; 
     padding: 1rem;
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     background-color: #fff;
-    /* margin: 1rem 10rem 3rem 10rem;  */
 }
 
 .proj-titulo{
     font-size: 1.875rem;
     font-weight: 600; 
 }
-
 
 .calendar-title{
     font-size: 1.25rem; 
@@ -37,7 +34,6 @@
 .publico-alvo{
     font-size: 0.75rem; 
     color: #989090;
-    /* text-transform: uppercase; */
 }
 
 .atv-content p{
@@ -54,7 +50,6 @@
     font-weight: 400; 
 }
 
-
 .recrutar-btn{
     background-color: #F4D35E;
 }
@@ -62,7 +57,6 @@
 .recrutar-btn:hover{
     filter: brightness(0.95);
 }
-
 
 /* teste */
 .buttons-container{
@@ -195,8 +189,6 @@ dialog button{
     display: inline-block; 
 }
 
-
-
 .pencil-icon .tooltiptext,
 .circle-icon .tooltiptext,
 .trash-icon .tooltiptext{
@@ -215,15 +207,12 @@ dialog button{
     z-index: 1; 
 }
 
-
-
 .pencil-icon:hover .tooltiptext,
 .circle-icon:hover .tooltiptext,
 .trash-icon:hover .tooltiptext{
     visibility: visible;
     
 }
-
 
 .activities-calendar{
     display: flex; 
@@ -262,3 +251,9 @@ dialog button{
     border-radius: 15px; 
     box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
+
+.activity-span{
+    font-size: 1rem; 
+    font-weight: 500; 
+}
+
