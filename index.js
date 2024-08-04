@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 // Importando módulos de Rotas
 const volutarioRoutes = require('./routes/VoluntarioRoutes.js');
 const projetoRoutes = require('./routes/ProjetoRoutes.js');
+const usuarioRoutes = require('./routes/UsuarioRoutes.js');
 
 /** Definição das Rotas */
 // Página: Index
@@ -24,6 +25,8 @@ app.get('/', (req,res) => {
 app.use('/', volutarioRoutes);
 // Páginas de Projeto
 app.use('/', projetoRoutes);
+// Páginas de Projeto
+app.use('/', usuarioRoutes);
 
 /** Inicialização do servidor */
 // Setando a porta a ser usada no localhost
