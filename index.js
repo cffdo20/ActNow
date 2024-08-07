@@ -15,10 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 const volutarioRoutes = require('./routes/VoluntarioRoutes.js');
 const projetoRoutes = require('./routes/ProjetoRoutes.js');
 const usuarioRoutes = require('./routes/UsuarioRoutes.js');
+const sessionRoutes = require('./routes/SessionRoutes.js');
 
 /** Definição das Rotas */
 // Página: Index
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.redirect('index.html');
 });
 // Páginas de Voluntario
@@ -27,6 +28,8 @@ app.use('/', volutarioRoutes);
 app.use('/', projetoRoutes);
 // Páginas de Projeto
 app.use('/', usuarioRoutes);
+// Páginas de Sessão
+app.use('/', sessionRoutes);
 
 /** Inicialização do servidor */
 // Setando a porta a ser usada no localhost
