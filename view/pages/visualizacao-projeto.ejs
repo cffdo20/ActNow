@@ -74,9 +74,14 @@
           <div class="div">
             <div class="proj-header d-flex justify-content-between align-items-center">
               <h2 class = "proj-titulo"><%= Titulo %> </h2>
-              <button id = "new-activity-button" class = "create-activity-button btn btn-primary" href="">
-                <span class="fa-solid fa-plus"></span>
-                Cadastrar Atividade</button>
+              <div class="d-flex align-items-center">
+                <a href="" class = "trash-icon m-4">
+                  <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
+                  <span class="tooltiptext">Excluir projeto</span>
+                </a>
+                <button id = "new-activity-button" class = "create-activity-button btn btn-primary" href="">
+                  <span class="fa-solid fa-plus"></span>Cadastrar Atividade</button>
+              </div>  
             </div>
             <div class="atv-content mb-3" id = "description-container">
               <!-- <p>Data de início: 15/03/2024</p> -->
@@ -124,10 +129,10 @@
               <span class="tooltiptext"> Adicionar atividade</span>
             </a> -->
 
-            <a href="" class = "trash-icon">
-              <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
-              <span class="tooltiptext">Excluir projeto</span>
-            </a>
+              <!-- <a href="" class = "trash-icon">
+                <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
+                <span class="tooltiptext">Excluir projeto</span>
+              </a> -->
 
             <!-- Modal para EXCLUSÃO do projeto -->
             <dialog>
@@ -149,7 +154,7 @@
             <!-- Modal para editar descrição do projeto -->
             <dialog id = "edit-description-dialog" class = "edit-field-dialog">
               <div class="meuDialog">
-                
+            
                 <div class="edit-description-header d-flex justify-content-between mb-2">
                   <span>Editar Descrição do Projeto</span>
                   <button id = "close-description-dialog"><span class="fa-solid fa-xmark"></span></button>
@@ -265,18 +270,41 @@
           </div>
 
           <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->
-          <div class="activities-calendar">
+          <% if (typeof alerta !== 'undefined' && alerta) { %>
+            <div class="error-container">
+              <p><%= alerta %></p>
+            </div>
+          <% } else if (typeof Atividades !== 'undefined' && Atividades.length > 0) { %>
+            <% Atividades.forEach(function(atividade, index) { %>
+              <div class="activities-calendar">
+                <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
+                <div class="activity-container mb-2 d-flex align-items-center">
+                  <span class = "activity-span"> <%= atividade.Descricao %> </span>
+                  <div class="d-flex align-items-center">
+                    <span class="bi bi-pencil-fill"></span>
+                    <span class="bi bi-dash-circle"></span>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          <% } %>
+          <!-- <div class="activities-calendar">
             <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
-            <div class="activity-container mb-2">
+            <div class="activity-container mb-2 d-flex align-items-center">
               <span class = "activity-span">01/04/2024 - Visita ao local</span>
+              <div class="d-flex align-items-center">
+                <span class="bi bi-pencil-fill"></span>
+              </div>
             </div>
             <div class="activity-container mb-2">
               <span class = "activity-span">01/04/2024 - Visita ao local</span>
+              <span class="bi bi-pencil-fill"></span>
             </div>
             <div class="activity-container mb-2">
               <span class = "activity-span">01/04/2024 - Visita ao local</span>
+              <span class="bi bi-pencil-fill"></span>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -290,14 +318,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-  <!-- <% if (typeof alerta !== 'undefined' && alerta) { %>
+  <% if (typeof alerta !== 'undefined' && alerta) { %>
     <script>
         // JavaScript embutido para exibir o alerta passado do Node.js
         window.onload = function() {
             alert("<%= alerta %>");
         };
     </script>
-    <% } %> -->
+    <% } %>
 
 
 
