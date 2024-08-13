@@ -223,6 +223,23 @@ footer a:hover{
     display: none; 
 }
 
+.user-username{
+    font-size: 1rem; 
+}
+
+.user-button{
+    border: 1px solid #137EA7; 
+    border-radius: 10px; 
+    transition: .2s;
+    padding: 0.2rem 1rem;
+}
+
+.user-button span{
+    padding-right: 0.2rem; 
+    color: #137EA7;
+}
+
+
 /* #create-project-landing p.active{
     font-size: 1rem; 
 } */
