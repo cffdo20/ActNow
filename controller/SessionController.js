@@ -18,7 +18,7 @@ module.exports = {
           }
       
           req.session.user = user;
-          res.redirect('/projetos');
+          res.redirect('/');
         } catch (error) {
           console.error(error);
           res.render('login', { alerta: 'Ocorreu um erro ao tentar fazer login. Tente novamente.' });
@@ -29,7 +29,7 @@ module.exports = {
   logout: (req, res) => {
     req.session.destroy(err => {
       if (err) {
-        return res.redirect('/projetos'); // Em caso de erro ao destruir a sessão, redireciona para a página de projetos
+        return res.redirect('/'); // Em caso de erro ao destruir a sessão, redireciona para a página de projetos
       }
 
       res.redirect('/login'); // Redireciona para a página de login após a sessão ser destruída

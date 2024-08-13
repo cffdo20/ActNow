@@ -29,8 +29,9 @@ const sessionRoutes = require('./routes/SessionRoutes.js');
 /** Definição das Rotas */
 // Página: Index
 app.get('/', (req, res) => {
-    res.redirect('index.html');
+    res.render('../index', { user: req.session.user });
 });
+
 // Páginas de Voluntario
 app.use('/', volutarioRoutes);
 // Páginas de Projeto
