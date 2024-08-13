@@ -1,6 +1,15 @@
 // Importando módulo Express
 const express = require('express');
+const session = require('express-session');
 const app = express();
+
+// Configuração da sessão deve vir antes da definição das rotas
+app.use(session({
+    secret: 'seuSegredoAqui',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // `secure: true` se você estiver usando HTTPS
+}));
 
 // Configura a view engine como EJS
 app.set('view engine', 'ejs');
@@ -26,7 +35,7 @@ app.get('/', (req, res) => {
 app.use('/', volutarioRoutes);
 // Páginas de Projeto
 app.use('/', projetoRoutes);
-// Páginas de Projeto
+// Páginas de Usuário
 app.use('/', usuarioRoutes);
 // Páginas de Sessão
 app.use('/', sessionRoutes);

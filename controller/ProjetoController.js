@@ -7,7 +7,7 @@ function criarProjeto(req) {
     return new Promise((resolve, reject) => {
         /** Criação do novo projeto*/
         projeto.setProjetoSocial(req.body.projNome, req.body.projDescricao, req.body.projPublico,
-            req.body.projJustificativa, req.body.projObjetivos, req.body.dataInicioProj, 'ashleywhite')
+            req.body.projJustificativa, req.body.projObjetivos, req.body.dataInicioProj, req.session.user.username)
             .then(resultado => {
                 if (resultado.erro !== undefined) {
                     // Se houver um erro na resposta, apenas envia a resposta
@@ -135,7 +135,7 @@ function editarObjeProjeto(req){
 function listarProjetos(req){
     return new Promise((resolve, reject) => {
         /** Listar projeto do usuario atual*/
-        projeto.listProjetoSocial('ashleywhite') // Depois tem que trocar pelo username de usuário da sessão
+        projeto.listProjetoSocial(req.session.user.username) // Depois tem que trocar pelo username de usuário da sessão
             .then(resultado => {
                 console.log(resultado);
                 if (Array.isArray(resultado)) {

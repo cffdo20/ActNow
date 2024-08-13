@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const voluntarioController = require('../controller/VoluntarioController.js');
+const ensureAuthenticated = require('../middleware/ensureAuthenticated'); // Importa o middleware de autenticação
 
 /** Página: Filtro de Voluntário */
 // Acesso
-router.get('/recrutar-voluntario', (req, res) => {
+router.get('/recrutar-voluntario', ensureAuthenticated, (req, res) => {
     res.render('recrutar-voluntarios.ejs');
 });
 // Receber dados formulário e dar resposta
-router.post('/recrutar-voluntario', (req, res) => {
+router.post('/recrutar-voluntario', ensureAuthenticated, (req, res) => {
     console.log(req.body);
     voluntarioController.filtrarVoluntario(req)
     .then(resposta => {
