@@ -2,6 +2,9 @@ drop database if exists actnow24;
 create database actnow24;
 use actnow24;
 
+CREATE USER 'user'@'%' IDENTIFIED BY 'password';
+GRANT EXECUTE ON * TO 'user'@'%';
+
 create table usuario(
 	uscodigo int UNSIGNED NOT NULL AUTO_INCREMENT,
     ususername varchar(20) unique not null,
