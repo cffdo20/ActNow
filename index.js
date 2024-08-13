@@ -5,7 +5,7 @@ const app = express();
 
 // Configuração da sessão deve vir antes da definição das rotas
 app.use(session({
-    secret: 'seuSegredoAqui',
+    secret: 'actnow',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // `secure: true` se você estiver usando HTTPS
