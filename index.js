@@ -29,7 +29,10 @@ const sessionRoutes = require('./routes/SessionRoutes.js');
 /** Definição das Rotas */
 // Página: Index
 app.get('/', (req, res) => {
-    res.render('../index', { user: req.session.user });
+    if(req.session.user !== undefined)
+        res.render('user-page', { user: req.session.user });
+    else
+        res.render('../index', { user: req.session.user });
 });
 
 // Páginas de Voluntario

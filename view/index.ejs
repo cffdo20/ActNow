@@ -49,22 +49,12 @@
                         <li class="nav-item">
                             <a href="/recrutar-voluntario" class="nav-link text-dark">Recrutar</a>
                         </li>
-                        <% if (user) { %>
-                        <li class="nav-item me-2 d-flex align-items-center user-button">
-                            <span class="fa-solid fa-user"></span>
-                            <span class="user-username text-dark">Olá, <%= user.username %></span>
-                        </li>
-                        <form action="/logout" method="POST" class=" me-2">
-                            <button type="submit" class="btn text-light">Sair</button>
-                        </form>
-                        <% } else { %>
                         <li class="nav-item me-2">
                             <a href="/login" class="nav-link text-dark">Entrar</a>
                         </li>
                         <li class="nav-item">
                             <a href="/criar-conta" class="btn me-3">Criar Conta</a>
                         </li>
-                        <% } %>
                     </ul>
                 </div>
             </div>

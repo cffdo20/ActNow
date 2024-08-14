@@ -34,50 +34,49 @@
 </head>
 <body>
 
-      <!-- HEADER -->
-  <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
-    <div class="container-fluid">
-
-      <a href="/" class="name-logo fw-bold "><img class="img img-fluid me-2" src="../assets/img/blue-actnow-logo.png"
-          alt="Logo do ActNow">ActNow</a>
-
-      <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ms-auto">
-
-          <li class="nav-item">
-            <a href="" class="nav-link text-dark">Áreas</a>
-          </li>
-
-          <li class="nav-item">
-            <a href="" class="nav-link text-dark">Contatos</a>
-          </li>
-
-          <li class="nav-item me-2">
-            <a href="/" class="nav-link text-dark">Início</a>
-          </li>
-
-          <li class="nav-item">
-            <a href="" class="btn me-3">
-              <span class="fa-solid fa-user"></span>
-              Perfil</a>
-          </li>
-
-          <!-- <li class="nav-item">
-                    <a href="" id = "btn-tema" class="btn me-3">Tema</a>
-                </li> -->
-
-        </ul>
-      </div>
-
-    </div>
-  </nav>
-  <!-- FIM HEADER -->
+  <!-- HEADER -->
+  <div class="main-content">
+    <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
+        <div class="container-fluid">
+            <a href="/" class="name-logo fw-bold">
+                <img class="img img-fluid me-2" src="assets/img/blue-actnow-logo.png" alt="Logo do ActNow">ActNow
+            </a>
+            <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    
+                    <li class="nav-item">
+                        <a href="/projetos" class="nav-link text-dark">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="./pages/how-to-start.html" class="nav-link text-dark">Como começar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/recrutar-voluntario" class="nav-link text-dark">Recrutar</a>
+                    </li>
+                    <% if (user) { %>
+                    <li class="nav-item me-2 d-flex align-items-center user-button">
+                        <span class="fa-solid fa-user"></span>
+                        <span class="user-username text-dark">Olá, <%= user.username %></span>
+                    </li>
+                    <form action="/logout" method="POST" class=" me-2">
+                        <button type="submit" class="btn text-light">Sair</button>
+                    </form>
+                    <% } else { %>
+                    <li class="nav-item me-2">
+                        <a href="/login" class="nav-link text-dark">Entrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/criar-conta" class="btn me-3">Criar Conta</a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- FIM DA HEADER -->
 
   <!-- Possivelmente... -->
   <h3>Essa página é quando o usuário estiver logado</h3>
