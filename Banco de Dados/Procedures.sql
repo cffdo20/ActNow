@@ -1321,3 +1321,14 @@ BEGIN
 END$$
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE sp_colsultar_cidades(in p_cc_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cc_estnome VARCHAR(30);
+    declare v_cc_estcodigo int default 0;
+    SET v_cc_estnome = f_extrair_parametros(p_cc_parametros, 1);
+    set v_cc_estcodigo = f_buscar_estado_codigo(v_cc_estnome);
+	select cidnome from cidade where cidestcod = v_cc_estcodigo;
+END$$
+DELIMITER ;
+-- call sp_colsultar_cidades('Amazonas|');

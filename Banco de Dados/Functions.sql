@@ -408,6 +408,21 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- função para buscar codigo pelo nome do estado;
+DELIMITER $$
+CREATE FUNCTION f_buscar_estado_codigo(p_bce_estnome varchar(30)) RETURNS int
+BEGIN
+    DECLARE v_bce_codigo_estado int default 0;
+    
+    set v_bce_codigo_estado = (select estcodigo
+		from estado
+        where estnome=p_bce_estnome);
+    
+    RETURN v_bce_codigo_estado;
+END$$
+DELIMITER ;
+drop FUNCTION f_buscar_estado_codigo;
+
 -- função para validar codigo de cidade
 DELIMITER $$
 CREATE FUNCTION f_validar_cidade_codigo(p_vcc_cidcodigo int) RETURNS boolean
@@ -421,6 +436,8 @@ BEGIN
     RETURN v_vcc_status_cidade;
 END$$
 DELIMITER ;
+
+
 
 -- Função para consultar quantos projetos um usuário cadastrou pelo username:
 DELIMITER $$
