@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const projetoController = require('../controller/ProjetoController.js');
+const ensureAuthenticated = require('../middleware/ensureAuthenticated'); // Importa o middleware de autenticação
 
 /*
   
@@ -13,12 +14,12 @@ const projetoController = require('../controller/ProjetoController.js');
 */
 
 // Direcionar para Formulário de Criação de Projeto
-router.get('/criar-projeto', (req, res) => {
+router.get('/criar-projeto', ensureAuthenticated, (req, res) => {
     res.render('cadastrar-projeto.ejs');
 });
 
 // Tratar Dados enviados do Formulário de Criação de Projeto
-router.post('/criar-projeto', (req, res) => {
+router.post('/criar-projeto', ensureAuthenticated, (req, res) => {
     projetoController.criarProjeto(req)
     .then(resposta => {
         console.log(resposta);
@@ -44,7 +45,7 @@ router.post('/criar-projeto', (req, res) => {
 */
 
 // Listar os projetos do Usuário
-router.get('/projetos', (req, res) => {
+router.get('/projetos', ensureAuthenticated, (req, res) => {
     projetoController.listarProjetos(req) // Depois trocar pelo usuário ativo
     .then(resposta => {
         console.log(resposta);
@@ -59,7 +60,7 @@ router.get('/projetos', (req, res) => {
 });
 
 // Abrir um projeto pelo nome
-router.post('/visualizar-projeto',(req, res) =>{
+router.post('/visualizar-projeto', ensureAuthenticated,(req, res) =>{
     projetoController.exibirProjeto(req)
     .then(resposta => {
         console.log(resposta);
@@ -85,7 +86,7 @@ router.post('/visualizar-projeto',(req, res) =>{
 
 
 // Editar a Descrição
-router.post('/editar-descricao', (req, res) => {
+router.post('/editar-descricao', ensureAuthenticated, (req, res) => {
     projetoController.editarDescProjeto(req)
     .then(resposta => {
         console.log(resposta);
@@ -100,7 +101,7 @@ router.post('/editar-descricao', (req, res) => {
 });
 
 // Editar a Justificativa
-router.post('/editar-justificativa', (req, res) => {
+router.post('/editar-justificativa', ensureAuthenticated, (req, res) => {
     projetoController.editarJustProjeto(req)
     .then(resposta => {
         console.log(resposta);
@@ -115,7 +116,7 @@ router.post('/editar-justificativa', (req, res) => {
 });
 
 // Editar os Objetivos
-router.post('/editar-objetivos', (req, res) => {
+router.post('/editar-objetivos', ensureAuthenticated, (req, res) => {
     projetoController.editarObjeProjeto(req)
     .then(resposta => {
         console.log(resposta);
@@ -130,7 +131,7 @@ router.post('/editar-objetivos', (req, res) => {
 });
 
 // Editar o Público Alvo
-router.post('/editar-publico', (req, res) => {
+router.post('/editar-publico', ensureAuthenticated, (req, res) => {
     projetoController.editarPublProjeto(req)
     .then(resposta => {
         console.log(resposta);
@@ -155,7 +156,7 @@ router.post('/editar-publico', (req, res) => {
 */
 
 // Inativar o Projeto
-router.post('/excluir-projeto', (req, res) => {
+router.post('/excluir-projeto', ensureAuthenticated, (req, res) => {
     projetoController.inativarProjeto(req)
     .then(resposta => {
         console.log(resposta);

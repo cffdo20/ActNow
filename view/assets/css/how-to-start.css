@@ -1,0 +1,37 @@
+.main-container{
+    flex-direction: column;
+    display: flex; 
+    border-right: 1px solid #c1bbbb; 
+    border-left: 1px solid #c1bbbb;  
+     
+}
+
+
+ol>li{
+    padding: 0.5rem; 
+    font-size: 1.125rem; 
+}
+
+
+.paragraph{
+    font-size: 1.125rem;
+    margin: 0 2rem; 
+    line-height: 1.5; 
+    text-align: justify; 
+    padding-bottom: 1rem; 
+}
+
+.img-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem; 
+}
+
+#first-img{ 
+    width: 60%;
+}
+
+.video-container{
+    padding: 1rem; 
+}

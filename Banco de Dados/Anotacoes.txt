@@ -1,0 +1,3 @@
+https://comandosgit.github.io/
+https://git-scm.com/docs/git/pt_BR
+https://gist.github.com/leocomelli/2545add34e4fec21ec16

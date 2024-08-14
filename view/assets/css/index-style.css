@@ -16,12 +16,16 @@ body{
 .navbar{
     background-color: #fff; 
     /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    display: flex; 
+    justify-content: flex-start;
 }
 
 .navbar a{
     font-weight: 400; 
 }
-
+.btn{
+    border-radius: 10px; 
+}
 .navbar .btn{
     background-color: #3395FF; 
     border-radius: 10px; 
@@ -65,7 +69,9 @@ body{
 
 /* MAIN SECTION */
 .main-content{
-    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column;
+    /* min-height: 100vh; */ 
 }
 
 .main-btn{
@@ -77,10 +83,7 @@ body{
     font-size: 1rem; 
 }
 
-.main-paragraph{
-    font-size: 2.5rem; 
-    font-weight: 600; 
-}
+
 
 .register-text{
     font-size: 1.06rem; 
@@ -101,10 +104,16 @@ body{
 
 
 /* AREAS SECTION */
+section{
+    background-color: #2346A6;
+}
 .areas-container{ 
     background-color: #fff; 
     
 }
+
+
+
 
 .subject-container{
     background-color: white; 
@@ -152,6 +161,11 @@ body{
     box-shadow: rgba(51, 161, 208, 0.502) 0px 2px 8px 0px;
 }
 
+.bi,
+.fa-solid,
+.fa-regular{
+    font-size: 1rem;
+}
 
 /* FOOTER */
 .footer{
@@ -166,3 +180,66 @@ footer a:hover{
     
 
 }
+
+.text-to-change-container p,span{
+    position: relative; 
+    font-size: 2.5rem; 
+    font-weight: 600; 
+}
+
+
+/* test text change */
+.text-to-change-container .text-to-change:before{
+    content: "";    
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%; 
+    width: 100%;
+    background-color: #fff;
+    border-left: 2px solid #333;
+    color: red; 
+    animation: animate 4s steps(12) infinite;
+
+}
+
+@keyframes animate{
+    40%,60%{
+        left: 100%;
+    }
+    100%{
+        left: 0%;
+    }
+}
+
+/* preciso de uma media query para centralizar o texto que muda em telas menores */
+
+
+#create-project-landing{
+    background-color: #f5f5f5;
+}
+
+.hidden{
+    display: none; 
+}
+
+.user-username{
+    font-size: 1rem; 
+}
+
+.user-button{
+    border: 1px solid #137EA7; 
+    border-radius: 10px; 
+    transition: .2s;
+    padding: 0.2rem 1rem;
+}
+
+.user-button span{
+    padding-right: 0.2rem; 
+    color: #137EA7;
+}
+
+
+/* #create-project-landing p.active{
+    font-size: 1rem; 
+} */
