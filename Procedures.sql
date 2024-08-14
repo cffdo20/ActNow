@@ -1321,3 +1321,17 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- função para buscar codigo pelo nome do estado;
+DELIMITER $$
+CREATE FUNCTION f_buscar_estado_codigo(p_bce_estnome varchar(30)) RETURNS int
+BEGIN
+    DECLARE v_bce_codigo_estado int default 0;
+    
+    set v_bce_codigo_estado = (select estcodigo
+		from estado
+        where estnome=p_bce_estnome);
+    
+    RETURN v_bce_codigo_estado;
+END$$
+DELIMITER ;
+-- drop FUNCTION f_buscar_estado_codigo;
