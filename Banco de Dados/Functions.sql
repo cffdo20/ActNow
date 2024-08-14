@@ -421,7 +421,7 @@ BEGIN
     RETURN v_bce_codigo_estado;
 END$$
 DELIMITER ;
-drop FUNCTION f_buscar_estado_codigo;
+-- drop FUNCTION f_buscar_estado_codigo;
 
 -- função para validar codigo de cidade
 DELIMITER $$
