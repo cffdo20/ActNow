@@ -31,7 +31,6 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
     }
   }
 
-  console.log(parametros);
   if(Array.isArray(voluntarioHabilidades)){
     var parametrosBase = [filtroDiaSemana, matutino, vespertino, noturno];
     var respostasUnicas = new Set(); // Conjunto para armazenar respostas únicas
@@ -41,10 +40,12 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
         // Cria uma cópia dos parâmetros base e adiciona a habilidade atual
         var parametros = parametrosBase.slice(); // Copia os parâmetros base
         parametros.push(habilidade); // Adiciona a habilidade atual
+        console.log(parametros);
 
         // Retorna a promessa gerada pela função callProcedureWithParameter
         return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
             var resposta = consulta[0][0];
+            console.log(resposta);
             // Verifica se a resposta não está vazia e se não está presente no conjunto de respostas únicas
             if (resposta && !respostasUnicas.has(JSON.stringify(resposta))) {
                 respostasUnicas.add(JSON.stringify(resposta)); // Adiciona a resposta ao conjunto de respostas únicas
@@ -60,6 +61,7 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
     return Promise.all(promessasConsulta).then(respostas => {
         // Filtra as respostas para remover os elementos undefined
         var respostasValidas = respostas.filter(resposta => resposta !== undefined);
+        console.log("Retorno de getFiltro: ", respostasValidas);
         // Retorna as respostas válidas como um array
         return respostasValidas;
     });
@@ -78,6 +80,15 @@ function getVoluntario(userName){
   return bd.callProcedureWithParameter('sp_consultar_voluntario', parametros).then(consulta => {
     return consulta[0][0];
   })
-};
+}
 
-module.exports = { getVoluntario , getFiltroVoluntario };
+function setVoluntario(volUserName, volCPF, volNome, volNomeSocial, volBio, volTelefone, volCidNome) {
+  let parametros = [volUserName, volCPF, volNome, volNomeSocial, volBio, volTelefone, volCidNome];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_criar_voluntario', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+}
+
+
+module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario};

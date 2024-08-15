@@ -27,4 +27,15 @@ router.post('/recrutar-voluntario', ensureAuthenticated, (req, res) => {
     });
 });
 
+router.post('/tonar-voluntario', ensureAuthenticated, (req, res) => {
+    voluntarioController.voluntariarUsuario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            res.render('/', resposta);
+        }else{
+            res.render('/tonar-voluntario', {alerta: resposta.erro});
+        }
+    })
+});
+
 module.exports = router;
