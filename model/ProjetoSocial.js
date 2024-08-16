@@ -1,4 +1,3 @@
-const { editarProjeto } = require('../controller/ProjetoController.js');
 const bd = require('./db.js');
 
 function setProjetoSocial(tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicioProj, codUsuCriador) {
