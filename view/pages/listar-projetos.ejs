@@ -83,7 +83,7 @@
           <div class="col-12 mb-3">
             <div class="project-container">
               <div class="project-main-info d-flex">
-                <span class="bi bi-kanban me-2"></span>
+                <span class="bi bi-folder-fill me-2"></span>
                 <a href="#" onclick="document.getElementById('form_<%= index %>').submit()"><%= projeto.Titulo %></a>
                 <form id="form_<%= index %>" action="/visualizar-projeto" method="POST" style="display:none;">
                   <input type="hidden" name="projNome" value="<%= projeto.Titulo %>">
