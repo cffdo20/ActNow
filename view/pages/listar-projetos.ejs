@@ -73,9 +73,10 @@
     <p class="text-center register-text">Visualize seus projetos criados</p>
 
     <div class="row">
-      <% if (typeof alerta !== 'undefined' && alerta) { %>
-        <div class="error-container">
-          <p><%= alerta %></p>
+      <% if (Projetos && Projetos.length > 0 && Projetos.every(projeto => !projeto.Titulo || !projeto.Descricao))  { %>
+        <div class = "message-container">
+          <p>Você não possui projetos cadastrados<p>
+            <img src="../assets/img/no_projects.png" alt="" class="img-fluid">
         </div>
       <% } else if (typeof Projetos !== 'undefined' && Projetos.length > 0) { %>
         <% Projetos.forEach(function(projeto, index) { %>
