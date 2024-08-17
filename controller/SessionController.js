@@ -3,7 +3,8 @@ const usuario = require('../model/Usuario');
 module.exports = {
     login: async (req, res) => {
         const { userEmail, userSenha } = req.body;
-        userName = usuario.getUsuarioByEmail(userEmail);
+        var consulta = await usuario.getUsuarioByEmail(userEmail);
+        const userName = consulta.resposta;
       
         try {
           // Verifique se req.session existe e é um objeto
@@ -25,7 +26,7 @@ module.exports = {
           res.render('login', { alerta: 'Ocorreu um erro ao tentar fazer login. Tente novamente.' });
         }
       },
-          
+
 
   logout: (req, res) => {
     req.session.destroy(err => {

@@ -19,7 +19,7 @@ function getUsuario(userName) {
 }
 
 function getUsuarioByEmail(userEmail) {
-  return bd.callProcedureWithParameter('sp_buscar_username_usuario', userEmail)
+  return bd.callProcedureWithParameter('sp_buscar_username_usuario', [userEmail])
   .then(consulta => {
     return consulta[0][0];
   })
