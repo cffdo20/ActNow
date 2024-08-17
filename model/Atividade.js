@@ -1,10 +1,10 @@
 const bd = require('./db.js');
 
-// CRATE
+// CREATE
 function setAtividade(tituloAtividade, descricaoAtividade, dataEntregaAtividade, tituloProjeto){
     const data = new Date();
-    const dataInicio = data.toISOString(dataEntregaAtividade).split('T')[0];
-    parametros = [tituloAtividade, descricaoAtividade, dataInicio, '1', tituloProjeto];
+    const dataEntrega = data.toISOString(dataEntregaAtividade).split('T')[0];
+    parametros = [tituloAtividade, descricaoAtividade, dataEntrega, '1', tituloProjeto];
     return bd.callProcedureWithParameter('sp_definir_Atividade', parametros)
     .then(consulta =>{
         return consulta[0][0];
@@ -20,18 +20,54 @@ function getAtividade(){
     //stub
 }
 
-// UPDATE
-function editarDataAtividade(){
-    //stub
+function listAtividades(tituloProjeto){
+    return bd.callProcedureWithParameter('sp_consultar_atividades_projeto',[tituloProjeto])
+    .then(consulta => {
+        return consulta[0][0];
+    })
+    .catch(error => {
+        console.log(error);
+        return error;
+    });
 }
 
-function editarDescAtividade(){
-    //stub
+// UPDATE
+function editarDataAtividade(tituloAtividade, tituloProjeto, dataEntregaAtividade){
+    const data = new Date();
+    const dataEntrega = data.toISOString(dataEntregaAtividade).split('T')[0];
+    parametros = [tituloAtividade, tituloProjeto, dataEntrega];
+    return bd.callProcedureWithParameter('sp_alterar_data_atividade', parametros)
+    .then(consulta => {
+        return consulta[0][0];
+    })
+    .catch(error => {
+        console.log(error);
+        return error;
+    });
+}
+
+function editarDescAtividade(tituloAtividade, tituloProjeto, descricaoAtividade){
+    parametros = [tituloAtividade, tituloProjeto, descricaoAtividade];
+    return bd.callProcedureWithParameter('sp_alterar_descricao_atividade', parametros)
+    .then(consulta => {
+        return consulta[0][0];
+    }).catch(error => {
+        console.log(error);
+        return error;
+    });
 }
 
 // DELETE
-function deleteAtividade(){
-    //stub
+function deleteAtividade(tituloAtividade, tituloProjeto){
+    parametros = [tituloAtividade, tituloProjeto, '0'];
+    return bd.callProcedureWithParameter('sp_alterar_status_atividade', parametros)
+    .then(consulta =>{
+        return consulta[0][0];
+    })
+    .catch(error => {
+        console.log(error);
+        return error;
+    });
 }
 
-module.exports = { setAtividade, getAtividade, editarDataAtividade, editarDescAtividade, deleteAtividade }
+module.exports = { setAtividade, getAtividade, listAtividades, editarDataAtividade, editarDescAtividade, deleteAtividade }
