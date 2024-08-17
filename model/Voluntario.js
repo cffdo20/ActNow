@@ -67,6 +67,7 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
     });
   }else{
     var parametros = [filtroDiaSemana, matutino, vespertino, noturno, voluntarioHabilidades];
+    console.log(parametros);
     // Retorna a promessa gerada pela função callProcedureWithParameter
     return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
       return consulta[0][0];
