@@ -23,4 +23,18 @@ function updateSenhaUsuario(userName, userSenha) {
   })
 }
 
-module.exports = { getUsuario, setUsuario, updateSenhaUsuario };
+function updateEmailUsuario(userName, userEmail) {
+  let parametros = [userName, userEmail];
+  return bd.callProcedureWithParameter('sp_alterar_email_usuario', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+}
+
+function deleteUsuario(userName){
+  return bd.callProcedureWithParameter('sp_inativar_usuario', userName)
+  .then(consulta => {
+    return consulta[0][0];
+  })
+}
+
+module.exports = { getUsuario, setUsuario, updateSenhaUsuario, updateEmailUsuario, deleteUsuario };
