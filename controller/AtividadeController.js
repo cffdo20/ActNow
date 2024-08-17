@@ -3,7 +3,7 @@ const atividade = require('../model/Atividade.js');
 // CREATE
 function cadastrarAtividade(req){
     return new Promise((resolve, reject) => {
-        atividade.setAtividade(req.body.tituloAtividade, req.body.dataEntregaAtividade, req.body.tituloProjeto)
+        atividade.setAtividade(req.body.tituloAtividade, req.body.dataEntregaAtividade, req.body.projNome)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);
@@ -22,7 +22,7 @@ function cadastrarAtividade(req){
 // READ
 function listarAtividades(req){
     return new Promise((resolve, reject) => {
-        atividade.listAtividades(req.body.tituloProjeto)
+        atividade.listAtividades(req.body.projNome)
         .then(resultado => {
             if(resultado !== undefined){
                 resolve(resultado);
@@ -41,7 +41,7 @@ function listarAtividades(req){
 // UPDATE
 function alterarDataEntrega(req){
     return new Promise((resolve, reject) => {
-        atividade.editarDataAtividade(req.body.tituloAtividade, req.body.tituloProjeto, req.doby.dataEntregaAtividade)
+        atividade.editarDataAtividade(req.body.tituloAtividade, req.body.projNome, req.doby.dataEntregaAtividade)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);
@@ -58,7 +58,7 @@ function alterarDataEntrega(req){
 
 function alterarDescricaoAtividade(req){
     return new Promise((resolve, reject) => {
-        atividade.editarDescAtividade(req.body.tituloAtividade, req.body.tituloProjeto, req.doby.descricaoAtividade)
+        atividade.editarDescAtividade(req.body.tituloAtividade, req.body.projNome, req.doby.descricaoAtividade)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);
@@ -76,7 +76,7 @@ function alterarDescricaoAtividade(req){
 // DELETE
 function inativarAtividade(req){
     return new Promise((resolve, reject) => {
-        atividade.deleteAtividade(req.body.tituloAtividade, req.body.tituloProjeto)
+        atividade.deleteAtividade(req.body.tituloAtividade, req.body.projNome)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);

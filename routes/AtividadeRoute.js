@@ -9,8 +9,17 @@ router.get('/criar-atividade', ensureAuthenticated, (req, res) => {
     res.render('cadastrar-atividade.ejs');
 });
 
+/*
+Exemplo de como tem que ser enviados os dados do formulário para criar-atividade: 
+    req.body = {
+                tituloAtividade: 'Example',
+                dataEntregaAtividade: '[data em formato padrao]',
+                projNome: 'Example'
+                }
+*/
+
 // Criar a atividade no projeto
-router.post('criar-atividade', ensureAuthenticated, (req, res) => {
+router.post('/criar-atividade', ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body);
     atividadeController.cadastrarAtividade(req)
     .then(resposta => {
@@ -28,6 +37,11 @@ router.post('criar-atividade', ensureAuthenticated, (req, res) => {
 });
 
 // READ
+router.get('/atividades', ensureAuthenticated, (req, res) => {
+    console.log('entrada do front-end: ', req.body);
+    
+});
+
 
 // UPDATE
 

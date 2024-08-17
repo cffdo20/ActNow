@@ -135,7 +135,7 @@ function editarObjeProjeto(req){
 function listarProjetos(req){
     return new Promise((resolve, reject) => {
         /** Listar projeto do usuario atual*/
-        projeto.listProjetoSocial(req.session.user.username) // Depois tem que trocar pelo username de usuário da sessão
+        projeto.listProjetoSocial(req.session.user.username)
             .then(resultado => {
                 console.log(resultado);
                 if (Array.isArray(resultado)) {
@@ -203,6 +203,12 @@ function exibirProjeto(req) {
                     // Caso contrário, busca os dados do projeto recém-criado e depois envia a resposta e os dados do projeto
                     dados.getProjetoSocial(req.body.projNome).then(elementos => {
                         console.log(req.body.projNome);
+
+                        /* Aqui tem que acrescentar uma Promisse para acessar
+                        a listAtivides e carregar a lista de atividades para enviar junto
+                        com os dados do projeto no resolve abaixo
+                        */
+
                         resolve({
                             Titulo: elementos.titulo,
                             Descricao: elementos.descricao,
@@ -210,6 +216,7 @@ function exibirProjeto(req) {
                             Justificativa: elementos.justificativa,
                             Objetivos: elementos.objetivos,
                             Inicio: elementos.inicio
+                            //Atividades: list de Atividades
                         });
                     })
     });
