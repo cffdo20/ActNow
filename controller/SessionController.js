@@ -1,8 +1,9 @@
-const Usuario = require('../model/Usuario');
+const usuario = require('../model/Usuario');
 
 module.exports = {
     login: async (req, res) => {
-        const { userName, userSenha } = req.body;
+        const { userEmail, userSenha } = req.body;
+        userName = usuario.getUsuarioByEmail(userEmail);
       
         try {
           // Verifique se req.session existe e é um objeto
@@ -11,7 +12,7 @@ module.exports = {
             return res.render('login', { alerta: 'Ocorreu um erro na sessão. Tente novamente.' });
           }
       
-          const user = await Usuario.getUsuario(userName);
+          const user = await usuario.getUsuario(userName);
       
           if (!user || user.senha !== userSenha) {
             return res.render('login', { alerta: 'Credenciais inválidas. Tente novamente.' });
