@@ -20,10 +20,10 @@ Exemplo de como tem que ser enviados os dados do formulário para criar-atividad
 
 // Criar a atividade no projeto
 router.post('/criar-atividade', ensureAuthenticated, (req, res) => {
-    console.log('entrada do front-end: ', req.body);
+    console.log('entrada do front-end: ', req.body,'\n');
     atividadeController.cadastrarAtividade(req)
     .then(resposta => {
-        console.log('resposta do back-end: ',resposta);
+        console.log('resposta do back-end: ',resposta),'\n';
         if(!resposta.erro){
             res.render('visualizacao-projeto.ejs', resposta);
         }else{

@@ -4,7 +4,6 @@ function setProjetoSocial(tituloProj, descricaoProj, publicoAlvoProj, justificat
   // Converter a Data para String
   const data = new Date();
   const dataInicio = data.toISOString(dataInicioProj).split('T')[0];
-  console.log(dataInicio);
   let parametros = [tituloProj, descricaoProj, publicoAlvoProj, justificativaProj, objetivosProj, dataInicio, '1', codUsuCriador];
   // Retorna a promessa gerada pela função callProcedureWithParameter
   return bd.callProcedureWithParameter('sp_criar_projeto', parametros).then(consulta => {

@@ -20,8 +20,10 @@ router.get('/criar-projeto', ensureAuthenticated, (req, res) => {
 
 // Tratar Dados enviados do Formulário de Criação de Projeto
 router.post('/criar-projeto', ensureAuthenticated, (req, res) => {
+    console.log('entrada do front-end: ', req.body);
     projetoController.criarProjeto(req)
     .then(resposta => {
+        console.log('resposta do back-end: ',resposta);
         console.log(resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do filtro com os dados de voluntários que atenderam aos critérios da busca
@@ -48,7 +50,7 @@ router.post('/criar-projeto', ensureAuthenticated, (req, res) => {
 router.get('/projetos', ensureAuthenticated, (req, res) => {
     projetoController.listarProjetos(req) // Depois trocar pelo usuário ativo
     .then(resposta => {
-        console.log(resposta);
+        console.log('resposta do back-end: ',resposta,'\n');
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do filtro com os dados de voluntários que atenderam aos critérios da busca
             res.render('listar-projetos.ejs', resposta);
@@ -61,9 +63,10 @@ router.get('/projetos', ensureAuthenticated, (req, res) => {
 
 // Abrir um projeto pelo nome
 router.post('/visualizar-projeto', ensureAuthenticated,(req, res) =>{
+    console.log('entrada do front-end: ', req.body);
     projetoController.exibirProjeto(req)
     .then(resposta => {
-        console.log(resposta);
+        console.log('resposta do back-end: ',resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do filtro com os dados de voluntários que atenderam aos critérios da busca
             res.render('visualizacao-projeto.ejs', resposta);
@@ -142,6 +145,9 @@ router.post('/editar-publico', ensureAuthenticated, (req, res) => {
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
             res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
         }
+    })
+    .catch(error => {
+        .
     });
 });
 
@@ -170,8 +176,11 @@ router.post('/excluir-projeto', ensureAuthenticated, (req, res) => {
         }
     })
     .catch(error => {
+        console.log(error);
         // Se ocorrer um erro inesperado, redireciona para uma página de erro ou para a mesma página
-        res.redirect(`/visualizar-projeto?erro=${encodeURIComponent('Ocorreu um erro inesperado.')}`);
+        res.redirect(`/visualizar-projeto?erro=${
+            encodeURIComponent('Ocorreu um erro inesperado.')
+        }`);
     });
 });
 
