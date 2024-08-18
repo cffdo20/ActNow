@@ -13,19 +13,19 @@ cd "C:\Program Files\MySQL\MySQL Server 8.3\bin"
 net start MySQL83
 
 :: Executa o arquivo 'estruturaBD.sql', mude o diretório conforme a necessidade
-mysql < C:\Users\josed\ActNow\Banco de Dados\estruturaBD.sql
+mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\estruturaBD.sql
 
 :: Executa o arquivo 'Triggers.sql'
-mysql < C:\Users\josed\ActNow\Banco de Dados\Triggers.sql
+mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Triggers.sql
 
 :: Executa o arquivo 'povoarBD.sql'
-mysql < C:\Users\josed\ActNow\Banco de Dados\povoarBD.sql
+mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\povoarBD.sql
 
 :: Executa o arquivo 'Aux_Functions.sql'
-mysql < C:\Users\josed\ActNow\Banco de Dados\Aux_Functions.sql
+mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Aux_Functions.sql
 
 :: Executa o arquivo 'Functions.sql'
-mysql < C:\Users\josed\ActNow\Banco de Dados\Functions.sql
+mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Functions.sql
 
 :: Executa o arquivo 'Procedures.sql'
-mysql < C:\Users\josed\ActNow\Banco de Dados\Procedures.sql
+mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Procedures.sql

@@ -1,6 +1,7 @@
 // Importando a classe ProjetoSocial
 const projeto = require('../model/ProjetoSocial.js');
 const dados = require('../model/ProjetoSocial.js');
+const atividade = require('../model/Atividade.js');
 
 // CREAT
 function criarProjeto(req) {
@@ -208,16 +209,17 @@ function exibirProjeto(req) {
                         a listAtivides e carregar a lista de atividades para enviar junto
                         com os dados do projeto no resolve abaixo
                         */
-
+                       atividade.listAtividades(req.body.projNome).then(atividades => {
                         resolve({
                             Titulo: elementos.titulo,
                             Descricao: elementos.descricao,
                             Publico: elementos.publico,
                             Justificativa: elementos.justificativa,
                             Objetivos: elementos.objetivos,
-                            Inicio: elementos.inicio
-                            //Atividades: list de Atividades
+                            Inicio: elementos.inicio,
+                            Atividades: atividades
                         });
+                       });
                     })
     });
 }

@@ -3,7 +3,7 @@ async function connect() {
     return global.connection;
 
   const mysql = require("mysql2/promise");
-  const dadosServerLocal = require('../Banco de Dados/configuracaoPessoalDB');
+  const dadosServerLocal = require('../_Desenvolvimento/Banco de Dados/configuracaoPessoalDB');
   const connection = await mysql.createConnection("mysql://"+dadosServerLocal.nomeServer+":"+dadosServerLocal.senha+"@localhost:3306/actnow24");
   console.log("Conectou no MySQL!");
   global.connection = connection;
