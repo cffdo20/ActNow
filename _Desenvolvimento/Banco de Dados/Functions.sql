@@ -237,10 +237,10 @@ BEGIN
 					LEAVE l_constuir_string;
 				else
 					if v_cont=v_qt_ativ_projeto then
-						set  v_baip_string_atividade=concat(v_baip_string_atividade,',',v_linha,',');
+						set  v_baip_string_atividade=concat(v_baip_string_atividade,'|',v_linha,'|');
                         set v_baip_string_atividade=substring(v_baip_string_atividade,2);
 					else
-						set v_baip_string_atividade=concat(v_baip_string_atividade,',',v_linha);
+						set v_baip_string_atividade=concat(v_baip_string_atividade,'|',v_linha);
 					end if;
                     SET v_cont = v_cont + 1;
 				END IF;
