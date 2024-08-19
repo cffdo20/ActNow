@@ -270,24 +270,30 @@
           </div>
 
           <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->
-          <!-- <% if (typeof alerta !== 'undefined' && alerta) { %>
+          <% if (Atividades && Atividades.length > 0 && Atividades.every(atividade => !atividade.titulo || !atividade.descricao) ) { %>
             <div class="error-container">
-              <p><%= alerta %></p>
+              <p></p>
             </div>
           <% } else if (typeof Atividades !== 'undefined' && Atividades.length > 0) { %>
             <% Atividades.forEach(function(atividade, index) { %>
               <div class="activities-calendar">
                 <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
                 <div class="activity-container mb-2 d-flex align-items-center">
-                  <span class = "activity-span"> <%= atividade.Descricao %> </span>
-                  <div class="d-flex align-items-center">
+                  <div class="d-flex flex-column m-1">
+                    <span class = "activity-span"> <%= atividade.titulo %> </span>
+                    <div class="d-flex flex-1-row gap-2">
+                      <p><%= atividade.descricao %></p>
+                      <p class="activity-span"><%= atividade.Entrega %></p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center gap-2">
                     <span class="bi bi-pencil-fill"></span>
                     <span class="bi bi-dash-circle"></span>
                   </div>
                 </div>
               </div>
             <% }); %>
-          <% } %> -->
+          <% } %>
           <!-- <div class="activities-calendar">
             <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
             <div class="activity-container mb-2 d-flex align-items-center">
