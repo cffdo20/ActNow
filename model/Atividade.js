@@ -2,8 +2,7 @@ const bd = require('./db.js');
 
 // CREATE
 function setAtividade(tituloAtividade, descricaoAtividade, dataEntregaAtividade, tituloProjeto){
-    const data = new Date();
-    const dataEntrega = data.toISOString(dataEntregaAtividade).split('T')[0];
+    const dataEntrega = new Date(dataInicioProj).toISOString().split('T')[0];
     parametros = [tituloAtividade, descricaoAtividade, dataEntrega, '1', tituloProjeto];
     return bd.callProcedureWithParameter('sp_definir_Atividade', parametros)
     .then(consulta => {
