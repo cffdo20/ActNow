@@ -236,9 +236,13 @@ function listarProjetos(req){
 // Exibe o projeto e as atividades que ele contém
 function exibirProjeto(req) {
     return new Promise((resolve, reject) => {
-        dados.getProjetoSocial(req.body.projNome)
+        var parametro = req.body.projNome;
+        if(!req.body.projNome)
+            parametro = req.session.projNome;
+
+        dados.getProjetoSocial(parametro)
         .then(elementos => {
-            atividade.listAtividades(req.body.projNome).then(atividades => {
+            atividade.listAtividades(parametro).then(atividades => {
                 resolve({
                     Titulo: elementos.titulo,
                     Descricao: elementos.descricao,

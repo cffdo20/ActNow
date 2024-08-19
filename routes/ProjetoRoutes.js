@@ -26,8 +26,8 @@ router.post('/criar', ensureAuthenticated, (req, res) => {
         console.log('resposta do back-end: ',resposta);
         console.log(resposta);
         if(!resposta.erro){
-            // Se não retornar erro renderiza a pagina do filtro com os dados de voluntários que atenderam aos critérios da busca
-            res.render('visualizacao-projeto.ejs', resposta);
+            req.session.projNome = req.body.projNome;
+            res.redirect(`/projetos/visualizar?alerta:${encodeURIComponent(resposta.alerta)}`);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
             res.render('cadastrar-projeto.ejs',{ alerta: resposta.erro });
@@ -58,11 +58,15 @@ router.get('/', ensureAuthenticated, (req, res) => {
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
             res.render('cadastrar-projeto.ejs',{ alerta: resposta.erro });
         }
+    })
+    .catch(error => {
+        console.log(error);
+        res.redirect('/');
     });
 });
 
 // Abrir um projeto pelo nome
-router.post('/visualizar', ensureAuthenticated,(req, res) =>{
+router.post('/visualizar', ensureAuthenticated,(req, res) => {
     console.log('entrada do front-end: ', req.body);
     projetoController.exibirProjeto(req)
     .then(resposta => {
@@ -76,6 +80,26 @@ router.post('/visualizar', ensureAuthenticated,(req, res) =>{
         }
     });
 })
+
+router.get('/visualizar', ensureAuthenticated, (req, res) => {
+    projetoController.exibirProjeto(req)
+    .then(resposta => {
+        console.log('resposta do back-end: ', resposta);
+        if (!resposta.erro) {
+            delete req.session.projNome;
+            res.render('visualizacao-projeto.ejs', resposta);
+        } else {
+            delete req.session.projNome;
+            res.render('visualizar-projeto.ejs', { alerta: resposta.erro });
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        delete req.session.projNome;
+        res.redirect('/');
+    });
+});
+
 
 /*
 

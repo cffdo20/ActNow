@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const atividadeController = require('../controller/AtividadeController.js');
+const projetoController = require('../controller/ProjetoController.js');
 const ensureAuthenticated = require('../middleware/ensureAuthenticated.js');
 
 // CREATE
@@ -14,11 +15,14 @@ router.post('/criar', ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body,'\n');
     atividadeController.cadastrarAtividade(req)
     .then(resposta => {
-        console.log('resposta do back-end: ',resposta,'\n');
+        console.log('resposta do back-end: ',resposta, '\n');
         if(!resposta.erro){
-            res.render('visualizacao-projeto.ejs', resposta);
+            // Armazena na sessão e redireciona
+            req.session.projNome = req.body.projNome;
+            res.redirect('/projetos/visualizar');
         }else{
-            res.render('visualizacao-projeto.ejs', {alerta: resposta.erro});
+            req.session.projNome = req.body.projNome;
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.erro)}`);
         }
     })
     .catch(error => {
