@@ -6,10 +6,10 @@ function setAtividade(tituloAtividade, descricaoAtividade, dataEntregaAtividade,
     const dataEntrega = data.toISOString(dataEntregaAtividade).split('T')[0];
     parametros = [tituloAtividade, descricaoAtividade, dataEntrega, '1', tituloProjeto];
     return bd.callProcedureWithParameter('sp_definir_Atividade', parametros)
-    .then(consulta =>{
+    .then(consulta => {
         return consulta[0][0];
     })
-    .catch(error =>{
+    .catch(error => {
         console.log(error);
         return error;
     });

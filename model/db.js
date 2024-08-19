@@ -18,6 +18,7 @@ async function callProcedureWithParameter(nomeProcedure, parametros = []) {
   const conn = await connect();
   const sql = 'Call ' + nomeProcedure + '(?);';
   const values = concatParametros(parametros);
+  console.log(`SQL Executado: ${sql.replace('?', values)}`); // Exibir no log o comando enviado ao servidor SQL
   const [resposta] = await conn.query(sql, values);
   return resposta;
 }

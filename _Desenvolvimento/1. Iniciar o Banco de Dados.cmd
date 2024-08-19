@@ -7,25 +7,26 @@
 
 @echo off
 :: Acessar o MySQL, se necessário, mude o diretório de acordo com a versão na linha abaixo.
-cd "C:\Program Files\MySQL\MySQL Server 8.3\bin"
+c:
+cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
 
 :: Iniciar o servidor MySQL (caso não esteja em execução), troque a versão se necessário
-net start MySQL83
+net start MySQL80
 
 :: Executa o arquivo 'estruturaBD.sql', mude o diretório conforme a necessidade
-mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\estruturaBD.sql
+mysql < D:\Salve_Aqui_Seus_Arquivos\DIOGO\ActNow\_Desenvolvimento\Banco de Dados\estruturaBD.sql
 
 :: Executa o arquivo 'Triggers.sql'
-mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Triggers.sql
+mysql < D:\Salve_Aqui_Seus_Arquivos\DIOGO\ActNow\_Desenvolvimento\Banco de Dados\Triggers.sql
 
 :: Executa o arquivo 'povoarBD.sql'
-mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\povoarBD.sql
+mysql < D:\Salve_Aqui_Seus_Arquivos\DIOGO\ActNow\_Desenvolvimento\Banco de Dados\povoarBD.sql
 
 :: Executa o arquivo 'Aux_Functions.sql'
-mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Aux_Functions.sql
+mysql < D:\Salve_Aqui_Seus_Arquivos\DIOGO\ActNow\_Desenvolvimento\Banco de Dados\Aux_Functions.sql
 
 :: Executa o arquivo 'Functions.sql'
-mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Functions.sql
+mysql < D:\Salve_Aqui_Seus_Arquivos\DIOGO\ActNow\_Desenvolvimento\Banco de Dados\Functions.sql
 
 :: Executa o arquivo 'Procedures.sql'
-mysql < C:\Users\josed\ActNow\_Desenvolvimento\Banco de Dados\Procedures.sql
+mysql < D:\Salve_Aqui_Seus_Arquivos\DIOGO\ActNow\_Desenvolvimento\Banco de Dados\Procedures.sql
