@@ -85,7 +85,7 @@
               <div class="project-main-info d-flex">
                 <span class="bi bi-folder-fill me-2"></span>
                 <a href="#" onclick="document.getElementById('form_<%= index %>').submit()"><%= projeto.Titulo %></a>
-                <form id="form_<%= index %>" action="/visualizar-projeto" method="POST" style="display:none;">
+                <form id="form_<%= index %>" action="/projetos/visualizar" method="POST" style="display:none;">
                   <input type="hidden" name="projNome" value="<%= projeto.Titulo %>">
                 </form>
               </div>
@@ -97,7 +97,7 @@
         <% }); %>
       <% } %>
       <div class="d-flex justify-content-center">
-        <a href="/criar-projeto" class="main-btn btn mt-2">
+        <a href="/projetos/criar" class="main-btn btn mt-2">
           <span class="fa-solid fa-plus"></span>
           Criar novo Projeto</a>
       </div>

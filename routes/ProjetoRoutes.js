@@ -14,12 +14,12 @@ const ensureAuthenticated = require('../middleware/ensureAuthenticated'); // Imp
 */
 
 // Direcionar para Formulário de Criação de Projeto
-router.get('/criar-projeto', ensureAuthenticated, (req, res) => {
+router.get('/criar', ensureAuthenticated, (req, res) => {
     res.render('cadastrar-projeto.ejs');
 });
 
 // Tratar Dados enviados do Formulário de Criação de Projeto
-router.post('/criar-projeto', ensureAuthenticated, (req, res) => {
+router.post('/criar', ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body);
     projetoController.criarProjeto(req)
     .then(resposta => {
@@ -47,7 +47,7 @@ router.post('/criar-projeto', ensureAuthenticated, (req, res) => {
 */
 
 // Listar os projetos do Usuário
-router.get('/projetos', ensureAuthenticated, (req, res) => {
+router.get('/', ensureAuthenticated, (req, res) => {
     projetoController.listarProjetos(req) // Depois trocar pelo usuário ativo
     .then(resposta => {
         console.log('resposta do back-end: ',resposta,'\n');
@@ -62,7 +62,7 @@ router.get('/projetos', ensureAuthenticated, (req, res) => {
 });
 
 // Abrir um projeto pelo nome
-router.post('/visualizar-projeto', ensureAuthenticated,(req, res) =>{
+router.post('/visualizar', ensureAuthenticated,(req, res) =>{
     console.log('entrada do front-end: ', req.body);
     projetoController.exibirProjeto(req)
     .then(resposta => {
@@ -147,7 +147,8 @@ router.post('/editar-publico', ensureAuthenticated, (req, res) => {
         }
     })
     .catch(error => {
-        .
+        console.log('resposta do back-end (com erro): ', error,'\n');
+        res.render('criar-atividade.ejs', {alerta: 'Houve um erro no servidor, favor tente mais tarde ou entre em contato com o suporte'});
     });
 });
 
@@ -162,7 +163,7 @@ router.post('/editar-publico', ensureAuthenticated, (req, res) => {
 */
 
 // Inativar o Projeto
-router.post('/excluir-projeto', ensureAuthenticated, (req, res) => {
+router.post('/excluir', ensureAuthenticated, (req, res) => {
     projetoController.inativarProjeto(req)
     .then(resposta => {
         console.log(resposta);

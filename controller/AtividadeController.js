@@ -3,7 +3,7 @@ const atividade = require('../model/Atividade.js');
 // CREATE
 function cadastrarAtividade(req){
     return new Promise((resolve, reject) => {
-        atividade.setAtividade(req.body.tituloAtividade, req.body.dataEntregaAtividade, req.body.projNome)
+        atividade.setAtividade(req.body.tituloAtividade, req.body.descricaoAtividade, req.body.dataEntregaAtividade, req.body.projNome)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);

@@ -40,12 +40,9 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
         // Cria uma cópia dos parâmetros base e adiciona a habilidade atual
         var parametros = parametrosBase.slice(); // Copia os parâmetros base
         parametros.push(habilidade); // Adiciona a habilidade atual
-        console.log(parametros);
-
         // Retorna a promessa gerada pela função callProcedureWithParameter
         return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
             var resposta = consulta[0][0];
-            console.log(resposta);
             // Verifica se a resposta não está vazia e se não está presente no conjunto de respostas únicas
             if (resposta && !respostasUnicas.has(JSON.stringify(resposta))) {
                 respostasUnicas.add(JSON.stringify(resposta)); // Adiciona a resposta ao conjunto de respostas únicas
@@ -61,13 +58,11 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
     return Promise.all(promessasConsulta).then(respostas => {
         // Filtra as respostas para remover os elementos undefined
         var respostasValidas = respostas.filter(resposta => resposta !== undefined);
-        console.log("Retorno de getFiltro: ", respostasValidas);
         // Retorna as respostas válidas como um array
         return respostasValidas;
     });
   }else{
     var parametros = [filtroDiaSemana, matutino, vespertino, noturno, voluntarioHabilidades];
-    console.log(parametros);
     // Retorna a promessa gerada pela função callProcedureWithParameter
     return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
       return consulta[0][0];
@@ -76,9 +71,8 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
 }
 
 function getVoluntario(userName){
-  let parametros = [userName];
   // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_consultar_voluntario', parametros).then(consulta => {
+  return bd.callProcedureWithParameter('sp_consultar_voluntario', [userName]).then(consulta => {
     return consulta[0][0];
   })
 }

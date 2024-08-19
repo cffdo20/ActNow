@@ -141,7 +141,7 @@
                 <span>Deseja excluir permanentemente o projeto?</span>
                 <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
                 <!-- Form apenas com submit para exclusão (?) -->
-                <form id = "exclusaoProjetoForm" action="/excluir-projeto" method = "POST" >
+                <form id = "exclusaoProjetoForm" action="/projetos/excluir" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
                   
@@ -160,7 +160,7 @@
                   <button id = "close-description-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-descricao" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-descricao" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico. Pode ser o ID do projeto (!?) -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -181,7 +181,7 @@
                   <button id = "close-justify-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-justificativa" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-justificativa" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -202,7 +202,7 @@
                   <button id = "close-goals-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-objetivos" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-objetivos" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -223,7 +223,7 @@
                   <button id = "close-audience-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-publico" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-publico" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -247,15 +247,15 @@
                 </div>
 
                 <!-- form para cadastrar atividade -->
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/cadastrar-atividade" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/atividades/criar" method = "POST" >
                   <!-- input oculto enviando algum dado único do projeto para garantir que a atividade esteja relacionado a um projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <input class = "input-field-dialog form-control" type="text" name = "atvNome" placeholder = "Título"></input>
+                  <input class = "input-field-dialog form-control" type="text" name = "tituloAtividade" placeholder = "Título"></input>
 
-                  <textarea class = "input-field-dialog form-control" type="text" name = "atvDescricao" placeholder = "Descrição"></textarea>
+                  <textarea class = "input-field-dialog form-control" type="text" name = "descricaoAtividade" placeholder = "Descrição"></textarea>
 
-                  <input class = "input-field-dialog form-control" type="date" name = "atvData" placeholder = "Data da atividade...">
+                  <input class = "input-field-dialog form-control" type="date" name = "dataEntregaAtividade" placeholder = "Data da atividade...">
 
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
