@@ -124,10 +124,10 @@ BEGIN
 					LEAVE l_constuir_string;
 				else
 					if v_cont=v_qt_proj_usuario then
-						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,',',v_linha,',');
+						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,'|',v_linha,'|');
 						set v_bpcu_string_projeto=substring(v_bpcu_string_projeto,2);
 					else
-						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,',',v_linha);
+						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,'|',v_linha);
 					end if;
                     SET v_cont = v_cont + 1;
 				END IF;
@@ -136,9 +136,9 @@ BEGIN
         end while;
 	else 
 		if v_qt_proj_usuario=1 then
-			set v_bpcu_string_projeto = convert((select projid
+			set v_bpcu_string_projeto = concat(convert((select projid
 									from projetosocial
-									where projuscod=p_bpcu_uscodigo), char);
+									where projuscod=p_bpcu_uscodigo), char),'|');
 		else
 			if v_qt_proj_usuario<1 then
                 set v_bpcu_string_projeto='0';
@@ -249,9 +249,9 @@ BEGIN
         end while;
 	else 
 		if v_qt_ativ_projeto=1 then
-			set v_baip_string_atividade = convert((select atid
+			set v_baip_string_atividade = concat(convert((select atid
 													from atividade
-													where atprojid=p_baip_projid), char);
+													where atprojid=p_baip_projid), char),'|');
 		else
 			if v_qt_ativ_projeto<1 then
                 set v_baip_string_atividade='0';
