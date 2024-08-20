@@ -32,6 +32,14 @@ ol>li{
     width: 60%;
 }
 
-.video-container{
-    padding: 1rem; 
+@media(max-width: 700px){
+    .video-container{
+        display: flex; 
+        justify-content: center;
+    }
+    iframe{
+
+        max-width: 90%; 
+        height: auto; 
+    }
 }
