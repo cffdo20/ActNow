@@ -5,3 +5,13 @@
     padding-bottom: 1rem; 
     padding-top: 1rem; 
 }
+
+@media(max-width: 700px){
+    h4{
+        text-align: center;
+    }
+    .paragraph{
+        padding: 1rem; 
+    }
+
+}
