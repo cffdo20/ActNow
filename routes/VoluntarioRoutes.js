@@ -27,7 +27,7 @@ router.post('/recrutar-voluntario', ensureAuthenticated, (req, res) => {
     });
 });
 
-router.post('/tonar-voluntario', ensureAuthenticated, (req, res) => {
+router.post('/voluntario', ensureAuthenticated, (req, res) => {
     voluntarioController.voluntariarUsuario(req)
     .then(resposta => {
         if(!resposta.erro){

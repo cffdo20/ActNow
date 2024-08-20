@@ -1,5 +1,20 @@
 const bd = require('./db.js');
 
+function getVoluntario(userName){
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_consultar_voluntario', [userName]).then(consulta => {
+    return consulta[0][0];
+  })
+}
+
+function setVoluntario(volUserName, volCPF, volNome, volNomeSocial, volBio, volTelefone, volCidNome) {
+  let parametros = [volUserName, volCPF, volNome, volNomeSocial, volBio, volTelefone, volCidNome];
+  // Retorna a promessa gerada pela função callProcedureWithParameter
+  return bd.callProcedureWithParameter('sp_criar_voluntario', parametros).then(consulta => {
+    return consulta[0][0];
+  })
+}
+
 function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabilidades) {
   // Tratar horário
   var matutino = '0' , vespertino = '0', noturno = '0';
@@ -70,20 +85,6 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
   }
 }
 
-function getVoluntario(userName){
-  // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_consultar_voluntario', [userName]).then(consulta => {
-    return consulta[0][0];
-  })
-}
-
-function setVoluntario(volUserName, volCPF, volNome, volNomeSocial, volBio, volTelefone, volCidNome) {
-  let parametros = [volUserName, volCPF, volNome, volNomeSocial, volBio, volTelefone, volCidNome];
-  // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_criar_voluntario', parametros).then(consulta => {
-    return consulta[0][0];
-  })
-}
 
 
 module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario};

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const atividadeController = require('../controller/AtividadeController.js');
-const projetoController = require('../controller/ProjetoController.js');
 const ensureAuthenticated = require('../middleware/ensureAuthenticated.js');
 
 // CREATE
@@ -38,9 +37,9 @@ router.post('/criar', ensureAuthenticated, (req, res) => {
 
 
 // UPDATE
-router.post('/editar-descricao',ensureAuthenticated, (req, res) => {
+router.post('/editar',ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body,'\n');
-    atividadeController.alterarDescricaoAtividade(req)
+    atividadeController.editarAtividade(req)
     .then(resposta => {
         console.log('resposta do back-end: ',resposta,'\n');
         if(!resposta.erro){
@@ -55,6 +54,7 @@ router.post('/editar-descricao',ensureAuthenticated, (req, res) => {
     });
 });
 
+/*
 router.post('/editar-data',ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body,'\n');
     atividadeController.alterarDataEntrega(req)
@@ -71,6 +71,7 @@ router.post('/editar-data',ensureAuthenticated, (req, res) => {
         res.render('criar-atividade.ejs', {alerta: 'Houve um erro no servidor, favor tente mais tarde ou entre em contato com o suporte'});
     });
 });
+*/
 
 // DELETE
 

@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 });
 
 // Páginas de Voluntario
-app.use('/', volutarioRoutes);
+app.use('/voluntarios', volutarioRoutes);
 // Páginas de Projeto
 app.use('/projetos', projetoRoutes);
 // Páginas de Usuário

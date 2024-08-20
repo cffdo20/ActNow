@@ -39,6 +39,42 @@ function listarAtividades(req){
 }
 
 // UPDATE
+function editarAtividade(req) {
+    return new Promise((resolve, reject) => {
+        atividade.listAtividades(req.body.projNome)
+            .then(resultado => {
+                const atividadeEncontrada = resultado.find(atividade => atividade.titulo === req.body.tituloAtividade);
+
+                if (atividadeEncontrada) {
+                    const promises = [];
+
+                    if (atividadeEncontrada.descricao !== req.body.descricaoAtividade) {
+                        promises.push(alterarDescricaoAtividade(req));
+                    }
+
+                    if (atividadeEncontrada.Entrega !== req.body.dataEntregaAtividade) {
+                        promises.push(alterarDataEntrega(req));
+                    }
+
+                    if (promises.length > 0) {
+                        Promise.all(promises)
+                            .then(() => resolve({ alerta: 'Atividade alterada com sucesso' }))
+                            .catch(error => reject(error));
+                    } else {
+                        resolve({ alerta: 'Não houve alteração nos dados da atividade' });
+                    }
+                } else {
+                    resolve({ alerta: 'Atividade não encontrada' });
+                }
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
+
+
 function alterarDataEntrega(req){
     return new Promise((resolve, reject) => {
         atividade.editarDataAtividade(req.body.tituloAtividade, req.body.projNome, req.doby.dataEntregaAtividade)
@@ -92,4 +128,4 @@ function inativarAtividade(req){
     });
 }
 
-module.exports = {cadastrarAtividade, listarAtividades ,alterarDataEntrega, alterarDescricaoAtividade, inativarAtividade};
+module.exports = {cadastrarAtividade, listarAtividades , editarAtividade, inativarAtividade};
