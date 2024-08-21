@@ -77,7 +77,7 @@ function editarAtividade(req) {
 
 function alterarDataEntrega(req){
     return new Promise((resolve, reject) => {
-        atividade.editarDataAtividade(req.body.tituloAtividade, req.body.projNome, req.doby.dataEntregaAtividade)
+        atividade.editarDataAtividade(req.body.tituloAtividade, req.body.projNome, req.body.dataEntregaAtividade)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);
@@ -94,7 +94,7 @@ function alterarDataEntrega(req){
 
 function alterarDescricaoAtividade(req){
     return new Promise((resolve, reject) => {
-        atividade.editarDescAtividade(req.body.tituloAtividade, req.body.projNome, req.doby.descricaoAtividade)
+        atividade.editarDescAtividade(req.body.tituloAtividade, req.body.projNome, req.body.descricaoAtividade)
         .then(resultado => {
             if(resultado.erro !== undefined){
                 resolve(resultado);
