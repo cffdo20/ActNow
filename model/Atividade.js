@@ -23,7 +23,7 @@ function listAtividades(tituloProjeto){
     return bd.callProcedureWithParameter('sp_consultar_atividades_projeto',[tituloProjeto])
     .then(consulta => {
         //console.log('O que voltou do banco de dados', consulta[0]);
-        return consulta[0];
+        return consulta[0].filter(atividade => atividade.Status === 'ABERTO');
     })
     .catch(error => {
         console.log(error);

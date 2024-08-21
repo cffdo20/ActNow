@@ -157,7 +157,7 @@ BEGIN
 			if !f_validar_string_status(v_asta_atstatus) then
 				select 'ERRO: O status informado para a atividade é inválido.' as erro;
 			else 
-				set v_asta_atstatustinyint = f_transforma_string_status(v_asta_atstatus);
+				set v_asta_atstatustinyint = f_transformar_string_status(v_asta_atstatus);
 				update atividade set atstatus=v_asta_atstatustinyint where atid=v_asta_atid;
 				if (select count(*) from atividade where atid=v_asta_atid and atstatus=v_asta_atstatustinyint)<1 then
 					select 'ERRO: Status da atividade não atualizada.' as erro;
@@ -171,6 +171,8 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
+
+-- drop procedure sp_alterar_status_atividade;
 
 -- Stored procedure ara alterar a descrição de uma atividade
 
