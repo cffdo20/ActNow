@@ -287,6 +287,31 @@
               </div>
             </dialog>
 
+
+            <!-- modal para editar atividade -->
+            <dialog id = "editAtividadeModal" class = "edit-field-dialog">
+              <div class="meuDialog">      
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  <span>Editar Atividade</span>
+                  <button id = "close-edit-activity-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+                <!-- form para editar atividade -->
+                <form class = "edit-dialog-form" id = "edicaoAtividadeForm" action="/atividades/editar" method = "POST" >
+                  <!-- input oculto enviando algum dado único do projeto para garantir que a atividade esteja relacionado a um projeto específico  -->
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
+                  <input type="hidden" name="tituloAtividade" value="">
+
+                  <textarea class = "input-field-dialog form-control" type="text" name = "descricaoAtividade" placeholder = "Nova descrição"></textarea>
+
+                  <input class = "input-field-dialog form-control" type="date" name = "dataEntregaAtividade" placeholder = "Nova data de entrega">
+
+                  <input type="submit" value="Salvar alterações" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+          
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+              </div>
+            </dialog>
+
             <a href="/recrutar-voluntario" class = "recruit-btn">
               <span class="fa-solid fa-users"></span>
               Recrutar</a>
@@ -307,6 +332,7 @@
                       <span class = "activity-span"> 
                         <span class="bi bi-sticky-fill"></span>
                         <%= atividade.titulo %> </span>
+                      <span class="fa-solid fa-pencil edit-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
                       <span class="fa fa-solid fa-trash delete-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
                     </div>
                       <p><%= atividade.descricao %></p>

@@ -33,6 +33,10 @@ const closeDeleteActivityModal = document.querySelector("#close-delete-activity-
 
 console.log(deleteActivityButtons)
 
+/* editar atividades */
+const editActivityButtons = document.querySelectorAll(".edit-activity-btn");
+const closeEditActivityModal = document.querySelector("#close-edit-activity-dialog"); 
+
 
 
 
@@ -110,5 +114,20 @@ deleteActivityButtons.forEach((btn) => {
 
 closeDeleteActivityModal.addEventListener("click", () => {
     const modal = document.getElementById('exclusaoFormModal');
+    modal.close(); 
+})
+
+editActivityButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+        const tituloAtividade = btn.getAttribute('data-titulo');
+        const modal = document.getElementById('editAtividadeModal');
+        const form = modal.querySelector('form');
+        form.querySelector('input[name="tituloAtividade"]').value = tituloAtividade;
+        modal.showModal(); 
+    })
+})
+
+closeEditActivityModal.addEventListener("click", () => {
+    const modal = document.getElementById('editAtividadeModal');
     modal.close(); 
 })
