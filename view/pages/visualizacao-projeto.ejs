@@ -291,7 +291,7 @@
           </div>
 
           <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->
-          <h4 id = "activity-calendar" class = "fw-bold">Calendário de Atividades</h4>
+          <h4 id = "activity-calendar" class = "fw-bold">Atividades</h4>
           <% if (Atividades && Atividades.length > 0 && Atividades.every(atividade => !atividade.titulo || !atividade.descricao) ) { %>
             <div class="error-container">
               <p></p>
@@ -301,13 +301,14 @@
               <div class="activities-calendar">
                 <div class="activity-container mb-2 d-flex align-items-center">
                   <div class="d-flex flex-column m-1">
-                    <div class="d-flex align-items-center justify-content-between">
-                      <span class = "activity-span"> <%= atividade.titulo %> </span>
+                    <div class="activity-header">
+                      <span class = "activity-span"> 
+                        <span class="bi bi-sticky-fill"></span>
+                        <%= atividade.titulo %> </span>
                       <span class="fa fa-solid fa-trash delete-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
                     </div>
                       <p><%= atividade.descricao %></p>
                       <p class="activity-span"><%= atividade.Entrega %></p>
-                      
                   </div>
                 </div>
               </div>
