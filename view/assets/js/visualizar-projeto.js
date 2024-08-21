@@ -27,8 +27,14 @@ const createActivityModal = document.querySelector("#create-new-activity");
 const closeActivityModal = document.querySelector("#close-activity-dialog"); 
 
 
+/* excluir atividade */
+const deleteActivityButtons = document.querySelectorAll(".delete-activity-btn");
+const closeDeleteActivityModal = document.querySelector("#close-delete-activity-modal"); 
 
-console.log(closeDescriptionModal); 
+console.log(deleteActivityButtons)
+
+
+
 
 
 /* addAtvButton.addEventListener("mouseover", () => {
@@ -91,3 +97,18 @@ closeActivityModal.addEventListener("click", () => {
     createActivityModal.close(); 
 })
 
+/* excluir atividade */
+deleteActivityButtons.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    const tituloAtividade = btn.getAttribute('data-titulo');
+    const modal = document.getElementById('exclusaoFormModal');
+    const form = modal.querySelector('form');
+    form.querySelector('input[name="tituloAtividade"]').value = tituloAtividade;
+    modal.showModal();
+  });
+});
+
+closeDeleteActivityModal.addEventListener("click", () => {
+    const modal = document.getElementById('exclusaoFormModal');
+    modal.close(); 
+})

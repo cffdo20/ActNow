@@ -257,3 +257,13 @@ dialog button{
     font-weight: 500; 
 }
 
+#activity-calendar{
+    padding: 2rem; 
+    text-align: center;
+    font-size: 1.25rem; 
+}
+
+.delete-activity-btn{
+    color: #44546F; 
+    cursor: pointer; 
+}
