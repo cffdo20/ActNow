@@ -9,7 +9,7 @@ function criarProjeto(req) {
         /** Criação do novo projeto*/
         projeto.setProjetoSocial(req.body.projNome, req.body.projDescricao,
                                  req.body.projPublico,req.body.projJustificativa,
-                                 req.body.projObjetivos, req.body.dataInicioProj,
+                                 req.body.projObjetivos, req.body.projDataInicio,
                                  req.session.user.username)
         .then(resultado => {
             if (resultado.erro !== undefined) {
