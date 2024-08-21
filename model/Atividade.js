@@ -33,8 +33,7 @@ function listAtividades(tituloProjeto){
 
 // UPDATE
 function editarDataAtividade(tituloAtividade, tituloProjeto, dataEntregaAtividade){
-    const data = new Date();
-    const dataEntrega = data.toISOString(dataEntregaAtividade).split('T')[0];
+    const dataEntrega = new Date(dataEntregaAtividade).toISOString().split('T')[0];
     parametros = [tituloAtividade, tituloProjeto, dataEntrega];
     return bd.callProcedureWithParameter('sp_alterar_data_atividade', parametros)
     .then(consulta => {

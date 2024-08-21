@@ -41,16 +41,19 @@ router.post('/editar',ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body,'\n');
     atividadeController.editarAtividade(req)
     .then(resposta => {
-        console.log('resposta do back-end: ',resposta,'\n');
+        console.log('resposta do back-end: ',resposta, '\n');
         if(!resposta.erro){
-            res.render('visualizacao-projeto.ejs', resposta);
+            // Armazena na sessão e redireciona
+            req.session.projNome = req.body.projNome;
+            res.redirect('/projetos/visualizar');
         }else{
-            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
+            req.session.projNome = req.body.projNome;
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.erro)}`);
         }
     })
     .catch(error => {
-        console.log('resposta do back-end (com erro): ', error,'\n');
-        res.render('criar-atividade.ejs', {alerta: 'Houve um erro no servidor, favor tente mais tarde ou entre em contato com o suporte'});
+        console.log('resposta do back-end (com erro): ', error);
+        res.render('visualizacao-projeto.ejs', {alerta: 'Houve um erro no servidor, favor tente mais tarde ou entre em contato com o suporte'});
     });
 });
 

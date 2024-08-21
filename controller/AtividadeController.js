@@ -48,6 +48,8 @@ function editarAtividade(req) {
                 if (atividadeEncontrada) {
                     const promises = [];
 
+                    console.log('Entrada da Data: ',req.body.dataEntregaAtividade);
+
                     if (atividadeEncontrada.descricao !== req.body.descricaoAtividade) {
                         promises.push(alterarDescricaoAtividade(req));
                     }
