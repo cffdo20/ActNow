@@ -23,6 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="assets/js/script.js" defer></script>
     <link rel="stylesheet" href="assets/css/index-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css" />
     <title>ActNow</title>
 </head>
 <body>
@@ -42,7 +43,7 @@
                     <ul class="navbar-nav ms-auto">
                         
                         <li class="nav-item">
-                            <a href="./pages/how-to-start.html" class="nav-link text-dark">
+                            <a href="./pages/how-to-start.html" class="nav-link text-dark how-to-start">
                                 <span class="bi bi-lightbulb"></span>
                                 Como começar</a>
                         </li>
@@ -50,7 +51,7 @@
                             <a href="/login" class="nav-link text-dark">Entrar</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/criar-conta" class="btn me-3">Criar Conta</a>
+                            <a href="/criar-conta" class="btn me-3 ">Criar Conta</a>
                         </li>
                     </ul>
                 </div>
@@ -71,8 +72,8 @@
 
                         <% if (!user) { %>
                         <div class="container text-center text-md-start">
-                            <a href="/criar-conta" class="main-btn btn">Criar conta</a>
-                            <a href="/login" class="login-btn btn">Fazer login</a>
+                            <a href="/criar-conta" class="main-btn btn register-button">Criar conta</a>
+                            <a href="/login" class="login-btn btn login-button">Fazer login</a>
                         </div>
                         <% } %>
                     </div>
@@ -239,5 +240,8 @@
         <!-- FIM FOOTER -->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
+
     </body>
 </html>
