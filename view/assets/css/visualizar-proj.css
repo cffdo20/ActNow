@@ -85,9 +85,11 @@
     background-color: #F1F2F4;
 }
 .recruit-btn{
+    color: #0B5ED7;
     border: 1px solid; 
     border-radius: 10px; 
     transition: .2s; 
+    background-color: #fff;
 }
 
 .recruit-btn:hover{
