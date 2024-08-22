@@ -55,28 +55,18 @@
 .user-main-info{
     display: flex; 
     align-items: center;
+    
 }
 
-.user-main-info img{
-    width: 3rem; 
-    height: 3rem; 
-    border-radius: 999px; 
-    margin: .5rem; 
-}
 
 .profile-container h3{
     font-size: 1.5rem; 
     font-weight: 400; 
 }
 
-/* .profile-container:hover{
-    transform: scale(1.04);
-    transition: transform 330ms ease-in-out; 
-    box-shadow: rgba(60, 102, 171, 0.24) 0px 3px 8px;
-
-} */
-
-
+.user-filter-bio{
+    font-size: 1rem; 
+}
 
 .contacts, .information{
     display: flex; 
