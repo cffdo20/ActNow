@@ -61,9 +61,21 @@ function updateProjeto_objetivos(tituloProj, objetivosProj){
 function deleteProjeto(tituloProj){
   let parametros = [tituloProj];
   // Retorna a promessa gerada pela função callProcedureWithParameter
-  return bd.callProcedureWithParameter('sp_inativar_projeto', parametros).then(consulta => {
+  return bd.callProcedureWithParameter('sp_inativar_projeto', parametros)
+  .then(consulta => {
     return consulta[0][0];
   })
 };
 
-module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjeto_descricao, updateProjeto_publico, updateProjeto_justificativa, updateProjeto_objetivos, deleteProjeto};
+function addVoluntario(userNameVol, projNome){
+  let parametros = [userNameVol, projNome];
+  return bd.callProcedureWithParameter('sp_adicionar_voluntario_projeto',parametros)
+  .then(consulta => {
+    return consulta[0][0];
+  }).catch(error => {
+    console.log('Erro no model: ',error);
+    return error;
+  });
+}
+
+module.exports = { setProjetoSocial , getProjetoSocial , listProjetoSocial, updateProjeto_descricao, updateProjeto_publico, updateProjeto_justificativa, updateProjeto_objetivos, deleteProjeto, addVoluntario};

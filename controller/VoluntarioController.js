@@ -1,11 +1,12 @@
 // Importando a classe FiltroVoluntario
-const filtro = require('../model/Voluntario.js');
+const voluntario = require('../model/Voluntario.js');
 const dados = require('../model/Voluntario.js');
+const projeto = require('../model/ProjetoSocial.js');
 
 function filtrarVoluntario(req) {
     return new Promise((resolve, reject) => {
         /** Filtro com base nos parâmetros */
-        filtro.getFiltroVoluntario(req.body.filtroDiaSemana, req.body.voluntarioHorario, req.body.voluntarioHabilidades)
+        voluntario.getFiltroVoluntario(req.body.filtroDiaSemana, req.body.voluntarioHorario, req.body.voluntarioHabilidades)
             .then(resultado => {
                 if (Array.isArray(resultado) && resultado.length !== 0) {
                     // Se for um array, ou seja, tem mais de um voluntário que atende aos critérios do filtro
@@ -15,6 +16,7 @@ function filtrarVoluntario(req) {
                     Promise.all(promises)
                         .then(elementos => {
                             var dadosVoluntarios = elementos.map(elemento => ({
+                                username: resultado.username,
                                 Nome: elemento.nome,
                                 Bio: elemento.biografia,
                                 Contato: elemento.telefone
@@ -40,6 +42,7 @@ function filtrarVoluntario(req) {
                             .then(elemento => {
                                 // Caso um voluntário atendeu aos critérios
                                 var dadosVoluntarios = [{
+                                    username: resultado.username,
                                     Nome: elemento.nome,
                                     Bio: elemento.biografia,
                                     Contato: elemento.telefone
@@ -63,7 +66,7 @@ function filtrarVoluntario(req) {
 
 function voluntariarUsuario(req){
     return new Promise((resolve, reject) => {
-        filtro.setVoluntario(req.session.user.username, req.body.volCPF, req.body.volNome, req.body.volNomeSocial, req.body.volBio, req.body.volTelefone, req.body.volCidNome)
+        voluntario.setVoluntario(req.session.user.username, req.body.volCPF, req.body.volNome, req.body.volNomeSocial, req.body.volBio, req.body.volTelefone, req.body.volCidNome)
         .then(resultado => {
             resolve ({
                 alerta: resultado.resposta
@@ -75,4 +78,19 @@ function voluntariarUsuario(req){
     })
 }
 
-module.exports = { filtrarVoluntario, voluntariarUsuario };
+ function recrutarVoluntario(req){
+    return new Promise((resolve, reject) => {
+        projeto.addVoluntario(req.body.username, req.session.projNome)
+        .then(resultado => {
+            resolve({
+                alerta: resultado.resposta
+            });
+        })
+        .catch(error => {
+            reject(error);
+        })
+    });
+ }
+
+
+module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario };

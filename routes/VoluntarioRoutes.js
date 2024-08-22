@@ -35,7 +35,18 @@ router.post('/filtrar', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/recrutar',ensureAuthenticated, (req, res) => {
-    voluntarioController.voluntariarUsuario(req).then().catch();
+    voluntarioController.recrutarVoluntario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta)}`);
+        }else{
+            res.render('/filtro', {alerta: resposta.erro});
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.render('/',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
+    });
 });
 
 router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
@@ -47,6 +58,10 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
             res.render('/tonar-voluntario', {alerta: resposta.erro});
         }
     })
+    .catch(error => {
+        console.log(error);
+        res.render('/',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
+    });
 });
 
 module.exports = router;

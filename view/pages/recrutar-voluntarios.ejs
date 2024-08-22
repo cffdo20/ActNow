@@ -246,10 +246,17 @@
                                     <p class="contato">Contato: <%= voluntario.Contato %></p>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <a class="btn invite-btn" href="">
-                                        Convidar
+                                    
+                                  <!-- <a class="btn invite-btn" href="">
+                                        Convidar -->
                                         <!-- <span class="bi bi-plus"></span> -->
-                                    </a>
+                                    <!-- </a> -->
+                                    <form action="/voluntarios/recrutar" method="POST">
+                                      <input type="hidden" name="username" value="<%= voluntario.username %>">
+                                      <button type="submit" class="btn invite-btn">
+                                          <span class="fa-solid fa-users"></span> Convidar
+                                      </button>
+                                  </form>
                                 </div>
                                 
                             </div>
