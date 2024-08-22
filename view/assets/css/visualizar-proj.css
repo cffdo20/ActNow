@@ -274,7 +274,7 @@ dialog button{
 }
 
 #activity-calendar{
-    padding: 2rem; 
+    padding: 2rem 1rem 1rem 1rem; 
     text-align: center;
     font-size: 1.25rem; 
 }
@@ -291,6 +291,21 @@ dialog button{
 }
 .edit-activity-btn:hover{
     color: #0D6EFD; 
+}
+
+/* voluntários */
+.volunteers-container{
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.volunteer-container{
+    width: 20rem; 
+    height: auto; 
+    padding: 0.1rem 1rem;  
+    
 }
 
 
