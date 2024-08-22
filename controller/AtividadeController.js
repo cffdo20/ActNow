@@ -50,11 +50,13 @@ function editarAtividade(req) {
 
                     console.log('Entrada da Data: ',req.body.dataEntregaAtividade);
 
-                    if (atividadeEncontrada.descricao !== req.body.descricaoAtividade) {
+                    if (atividadeEncontrada.descricao !== req.body.descricaoAtividade && req.body.descricaoAtividade !== '') {
+                        console.log('Entrou no if de alterar descrição');
                         promises.push(alterarDescricaoAtividade(req));
                     }
 
-                    if (atividadeEncontrada.Entrega !== req.body.dataEntregaAtividade) {
+                    if (atividadeEncontrada.Entrega !== req.body.dataEntregaAtividade && req.body.dataEntregaAtividade !== '') {
+                        console.log('Entrou no if de alterar data');
                         promises.push(alterarDataEntrega(req));
                     }
 
