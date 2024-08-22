@@ -57,27 +57,8 @@ router.post('/editar',ensureAuthenticated, (req, res) => {
     });
 });
 
-/*
-router.post('/editar-data',ensureAuthenticated, (req, res) => {
-    console.log('entrada do front-end: ', req.body,'\n');
-    atividadeController.alterarDataEntrega(req)
-    .then(resposta => {
-        console.log('resposta do back-end: ',resposta,'\n');
-        if(!resposta.erro){
-            res.render('visualizacao-projeto.ejs', resposta);
-        }else{
-            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
-        }
-    })
-    .catch(error => {
-        console.log('resposta do back-end (com erro): ', error,'\n');
-        res.render('criar-atividade.ejs', {alerta: 'Houve um erro no servidor, favor tente mais tarde ou entre em contato com o suporte'});
-    });
-});
-*/
-
 // DELETE
-// Criar a atividade no projeto
+// Inativar a atividade no projeto
 router.post('/excluir', ensureAuthenticated, (req, res) => {
     console.log('entrada do front-end: ', req.body,'\n');
     atividadeController.inativarAtividade(req)
