@@ -31,7 +31,7 @@
   <link rel="stylesheet" href="../assets/css/index-style.css">
   <link rel="stylesheet" href="../assets/css/login-style.css">
 
-  <title>Recrutar Voluntários</title>
+  <title>ActNow - Recrutar Voluntários</title>
 </head>
 <body>
 
@@ -234,12 +234,12 @@
                         <% Voluntarios.forEach(function(voluntario) { %>
                             <div class="container profile-container">
                                 <div class = "user-main-info">
-                                  <img src = "../assets/img/lorde.jpg" alt="">
                                   <h3><%= voluntario.Nome %></h3>
                                 </div>
+                                <hr>
                                 <div class="information">
                                     <span class="bi bi-file-person me-2"></span>
-                                    <p class="lead">Bio: <%= voluntario.Bio %></p>
+                                    <p class="user-filter-bio">Bio: <%= voluntario.Bio %></p>
                                 </div>
                                 <div class="contacts">
                                     <span class="bi bi-telephone me-2"></span>
