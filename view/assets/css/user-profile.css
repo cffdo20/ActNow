@@ -1,0 +1,76 @@
+.user-info-container{
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    padding: 1rem; 
+}
+.user-info-header{
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;    
+}
+
+.username-container{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+}
+
+.username{
+    font-size: 1.5rem; 
+}
+
+#edit-profile-button{
+    cursor: pointer;  
+    color: #44546F; 
+}
+
+.projects{
+    display: flex; 
+    justify-content: flex-start;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.projects-number{
+    font-size: 1.3rem; 
+}
+
+.email-field{
+    font-size: 1rem;  
+    color: #747479;
+}
+
+.row{
+    display: flex; 
+    align-items: flex-start;
+    justify-content: center;
+}
+
+hr{
+    width:100%; 
+    height: 1rem; 
+}
+
+.profile-container{
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /* max-width: 19rem; 
+    min-height: 14rem; */ 
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+#delete-profile-button{
+    border: 1px solid #AD4646; 
+    padding: 0.3rem 1rem; 
+    color: #AD4646;
+    border-radius: 5px; 
+    color: red;
+}
+
+#delete-profile-button:hover{
+    color: red; 
+    background-color: #ad464692; 
+}
+

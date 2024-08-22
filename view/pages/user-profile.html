@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../assets/img/favicon.ico" type="image/x-icon"><link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <link
+  rel="stylesheet"
+  href="https:/use.fontawesome.com/releases/v5.15.4/css/solid.css"
+  />
+  <link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css"
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="../assets/js/user-profile.js" defer></script>
+  <link rel="stylesheet" href="../assets/css/recrutar-voluntario.css">
+  <link rel="stylesheet" href="../assets/css/index-style.css">
+  <link rel="stylesheet" href="../assets/css/login-style.css">
+  <link rel="stylesheet" href="../assets/css/listar-projetos.css">
+  <link rel="stylesheet" href="../assets/css/user-profile.css">
+  <link rel="stylesheet" href="../assets/css/visualizar-proj.css">
+
+
+  <title>ActNow - Meu perfil</title>
+</head>
+<body>
+
+      <!-- HEADER -->
+  <nav class="navbar navbar-dark sticky-top navbar-expand-lg">
+    <div class="container-fluid">
+
+      <a href="/" class="name-logo fw-bold "><img class="img img-fluid me-2" src="../assets/img/blue-actnow-logo.png"
+          alt="Logo do ActNow">ActNow</a>
+
+      <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto">
+
+            <li class="nav-item me-2">
+                <a href="/" class="nav-link text-dark">Início</a>
+              </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+  <!-- FIM HEADER -->
+
+  <div class="container main-container mt-4">
+    <div class="user-info-container d-flex justify-content-center flex-column align-items-center">
+      <div class="user-info-header">
+        <div class="username-container">
+          <span class="username"><%= userName %></span>
+        </div>
+        <span class="fa-solid fa-pen-to-square" id = "edit-profile-button"></span>
+      </div>
+      <span class="email-field"><%= userEmail %></span>
+      <a href="" class = "trash-icon m-4">
+        <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
+        <span class="tooltiptext">Excluir perfil</span>
+      </a>
+    </div>
+    </div>
+
+    <!-- Modal para EXCLUSÃO do perfil -->
+    <dialog id = "delete-profile-modal">
+      <div class="dialogExclusao">
+        <span id = "exclamation-triangle" class="bi bi-exclamation-triangle-fill"></span>
+        <span>Deseja excluir permanentemente seu perfil?</span>
+        <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
+        <!-- Form apenas com submit para exclusão (?) -->
+        <form id = "exclusaoPerfilForm" action="/usuarios/excluir" method = "POST" >
+          <!-- input oculto para relacionar edição a projeto específico  -->
+          <input type="hidden" name="username" value="<%= userName %>">
+          <input id = "delete-profile-button" type="submit" value="Sim, excluir">
+        </form>
+        <button id = "returnPopBtn">Voltar</button>
+      </div>
+    </dialog>
+
+    <!-- modal para editar usuário -->
+    <dialog id = "editUsuarioModal" class = "edit-field-dialog">
+      <div class="meuDialog">      
+        <div class="edit-description-header d-flex justify-content-between mb-2">
+          <span>Editar Email</span>
+          <button id = "close-edit-user-dialog"><span class="fa-solid fa-xmark"></span></button>
+        </div>
+        <!-- form para editar email do usuário -->
+        <form class = "edit-dialog-form" id = "edicaoUsuarioForm" action="/usuarios/editar" method = "POST" >
+          <input type="hidden" name="username" value="<%= userName %>">
+
+          <input class = "input-field-dialog form-control" type="email" name = "userEmail" placeholder = "Novo Email"></input>
+
+          <input type="submit" value="Salvar alterações" class = "submit-field-dialog btn btn-primary text-light">
+        </form>
+  
+        <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+      </div>
+    </dialog>
+
+    <!-- <div class="row">
+      <div class="profile-container col-12 pb-2 pb-md-0 col-md-4">
+          <h5 class="text-dark">não sei</h5> 
+          <hr>
+          <span>5</span>
+      </div>
+
+      <div class="profile-container col-12 pb-2 pb-md-0 col-md-4">
+          <h5 class="text-dark">Projetos cadastrados</h5>
+          <hr>
+          <span>3</span>
+      </div>
+
+      <div class="profile-container col-12 pb-2 pb-md-0 col-md-4">
+          <h5 class="text-dark">Redes Sociais</h5>
+          <hr>
+          <span>2</span>
+      </div>
+  </div> -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
