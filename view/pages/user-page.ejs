@@ -23,13 +23,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="../assets/js/recrutar-voluntario.js" defer></script>
-  <script src="assets/js/script.js" defer></script>
+    <!-- <script src="../assets/js/recrutar-voluntario.js" defer></script> -->
+  <!-- <script src="assets/js/script.js" defer></script> -->
+  <script src="../assets/js/user-page.js" defer></script>
   <link rel="stylesheet" href="../assets/css/recrutar-voluntario.css">
   <link rel="stylesheet" href="../assets/css/index-style.css">
   <link rel="stylesheet" href="../assets/css/login-style.css">
   <link rel="stylesheet" href="../assets/css/listar-projetos.css">
   <link rel="stylesheet" href="../assets/css/user-page.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css" />
 
   <title>ActNow - Homepage</title>
 </head>
@@ -50,7 +53,7 @@
                     
                     <li class="nav-item">
                         <a href="/projetos" class="nav-link text-dark">
-                            <span class="fa-solid fa-folder-tree"></span>
+                            <span class="fa-solid fa-folder-tree projects-button"></span>
                             Projetos</a>
                     </li>
                     <li class="nav-item">
@@ -61,7 +64,7 @@
                     <% if (user) { %>
                     <li class="nav-item me-2 d-flex align-items-center user-button">
                         <span class="fa-solid fa-user"></span>
-                        <span class="user-username text-dark">Olá, <%= user.username %></span>
+                        <a href = "/usuarios" class="user-username text-dark">Olá, <%= user.username %></a>
                     </li>
                     <form action="/logout" method="POST" class=" me-2">
                         <button type="submit" class="btn text-light">Sair</button>
@@ -96,7 +99,7 @@
             </div>
             <div class="col-lg-5 text-center">
                 <div class="div">
-                    <img id="index-main-img" class="img-fluid team-img fade-in" src="../assets/img/welcoming.png" alt="">
+                    <img id="homepage-main-img" class="img-fluid team-img fade-in" src="../assets/img/welcoming.png" alt="">
                 </div>
             </div>
         </div>
@@ -104,6 +107,8 @@
 </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
 
 </body>
 </html>
