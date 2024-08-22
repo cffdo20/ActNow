@@ -312,9 +312,16 @@
               </div>
             </dialog>
 
-            <a href="/recrutar-voluntario" class = "recruit-btn">
+            <!-- <a href="/voluntarios/recrutar" class = "recruit-btn">
               <span class="fa-solid fa-users"></span>
-              Recrutar</a>
+              Recrutar</a> -->
+
+            <form action="/voluntarios/recrutar" method="POST">
+                <input type="hidden" name="projNome" value="<%= Titulo %>">
+                <button type="submit" class="recruit-btn">
+                    <span class="fa-solid fa-users"></span> Recrutar
+                </button>
+            </form>
           </div>
 
           <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->

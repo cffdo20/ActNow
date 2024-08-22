@@ -5,11 +5,18 @@ const ensureAuthenticated = require('../middleware/ensureAuthenticated'); // Imp
 
 /** Página: Filtro de Voluntário */
 // Acesso
-router.get('/recrutar', ensureAuthenticated, (req, res) => {
+router.get('/recrutar/filtro', ensureAuthenticated, (req, res) => {
     res.render('recrutar-voluntarios.ejs');
 });
+
 // Receber dados formulário e dar resposta
 router.post('/recrutar', ensureAuthenticated, (req, res) => {
+    console.log(req.body);
+    req.session.projNome = req.body.projNome;
+    res.redirect('/voluntarios/recrutar/filtro');
+});
+
+router.post('/recrutar/filtrar', ensureAuthenticated, (req, res) => {
     console.log(req.body);
     voluntarioController.filtrarVoluntario(req)
     .then(resposta => {
