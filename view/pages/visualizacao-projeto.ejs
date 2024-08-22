@@ -339,8 +339,10 @@
                       <span class = "activity-span"> 
                         <span class="bi bi-sticky-fill"></span>
                         <%= atividade.titulo %> </span>
-                      <span class="fa-solid fa-pencil edit-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
-                      <span class="fa fa-solid fa-trash delete-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
+                      <div class="d-flex gap-4">
+                        <span class="fa-solid fa-pencil edit-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
+                        <span class="fa fa-solid fa-trash delete-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
+                      </div>
                     </div>
                       <p><%= atividade.descricao %></p>
                       <p class="activity-span"><%= atividade.Entrega %></p>
