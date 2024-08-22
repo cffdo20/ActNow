@@ -122,7 +122,7 @@ BEGIN
 	else
 		if f_validar_atividade_id(v_adta_atid) is true then
 			update atividade set atdataentrega=v_adta_atdataentrega where atid=v_adta_atid;
-			if (select count(*) from atividade where atid=v_asta_atid and atdataentrega=v_adta_atdataentrega)<1 then
+			if (select count(*) from atividade where atid=v_adta_atid and atdataentrega=v_adta_atdataentrega)<1 then
 				select 'ERRO: Data de entrega da atividade não atualizada.' as erro;
 			else
 				SELECT 'Data de entrega da atividade alterada no banco de dados.' AS resposta;
@@ -133,7 +133,6 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
-
 -- Stored procedure para alterar o status de uma atividade
 
 DELIMITER $$
