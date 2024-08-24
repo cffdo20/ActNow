@@ -94,9 +94,7 @@ function voluntariarUsuario(req){
 
 function listarVoluntarios(voluntarios){
     return new Promise((resolve, reject) => {
-
-        console.log('\nComo está chegando a req: ',voluntarios,'\n');
-        /** Listar projeto do usuario atual*/
+        /** Listar voluntarios do projeto atual*/
                 if (Array.isArray(voluntarios)) {
                 // Se for um array, ou seja, o usuario é gestor de mais de um projeto
                 var promises = voluntarios.map(item => dados.getVoluntario(item.username));

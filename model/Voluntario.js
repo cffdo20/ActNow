@@ -89,7 +89,7 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
 function listVoluntarios(tituloProj){
   return bd.callProcedureWithParameter('sp_voluntarios_projeto',[tituloProj])
   .then(consulta => {
-    return consulta[0][0];
+    return consulta[0];
   })
   .catch(error => {
     console.log(error);
