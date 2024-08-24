@@ -11,25 +11,30 @@ function filtrarVoluntario(req) {
                 if (Array.isArray(resultado) && resultado.length !== 0) {
                     // Se for um array, ou seja, tem mais de um voluntário que atende aos critérios do filtro
                     console.log('É Array: ', resultado);
-                    var promises = resultado.map(item => dados.getVoluntario(item.username));
 
-                    Promise.all(promises)
-                        .then(elementos => {
-                            var dadosVoluntarios = elementos.map(elemento => ({
-                                username: resultado.username,
-                                Nome: elemento.nome,
-                                Bio: elemento.biografia,
-                                Contato: elemento.telefone
-                            }));
+            // Mapear o array `resultado` para obter as promessas dos dados dos voluntários
+            var promises = resultado.map(item => dados.getVoluntario(item.username));
 
-                            resolve({
-                                alerta: resultado.resposta,
-                                Voluntarios: dadosVoluntarios
-                            });
-                        })
-                        .catch(error => {
-                            reject(error);
-                        });
+            Promise.all(promises)
+                .then(elementos => {
+                    // Associar cada elemento dos dados dos voluntários ao item correspondente em `resultado`
+                    var dadosVoluntarios = resultado.map((item, index) => ({
+                        username: item.username, // Pegar o username do item atual
+                        Nome: elementos[index].nome,
+                        Bio: elementos[index].biografia,
+                        Contato: elementos[index].telefone
+                    }));
+
+                    resolve({
+                        alerta: resultado.resposta, // Pode ser necessário verificar se 'resposta' está acessível
+                        Voluntarios: dadosVoluntarios
+                    });
+                })
+                .catch(error => {
+                    // Lidar com erros, se necessário
+                    console.error('Erro ao obter dados dos voluntários:', error);
+                    reject(error);
+                });                        
                 } else {
                     console.log('Não é Array: ', resultado);
                     // Se não for um array, ou seja, somente um, ou nenhum, voluntário atende aos critérios do filtro

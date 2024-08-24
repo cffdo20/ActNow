@@ -37,6 +37,7 @@ router.post('/filtrar', ensureAuthenticated, (req, res) => {
 router.post('/recrutar',ensureAuthenticated, (req, res) => {
     voluntarioController.recrutarVoluntario(req)
     .then(resposta => {
+        console.log('Entrada do front-end: ',req.body);
         if(!resposta.erro){
             res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta)}`);
         }else{
