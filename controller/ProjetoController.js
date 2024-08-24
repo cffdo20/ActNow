@@ -2,6 +2,8 @@
 const projeto = require('../model/ProjetoSocial.js');
 const dados = require('../model/ProjetoSocial.js');
 const atividade = require('../model/Atividade.js');
+const voluntario = require('../model/Voluntario.js');
+const voluntarioCtr = require('../controller/VoluntarioController.js');
 
 // CREAT
 function criarProjeto(req) {
@@ -237,22 +239,40 @@ function listarProjetos(req){
 function exibirProjeto(req) {
     return new Promise((resolve, reject) => {
         var parametro = req.body.projNome;
-        if(!req.body.projNome)
+        if(!req.body.projNome){
             parametro = req.session.projNome;
-
+        }
         dados.getProjetoSocial(parametro)
         .then(elementos => {
-            atividade.listAtividades(parametro).then(atividades => {
-                resolve({
-                    Titulo: elementos.titulo,
-                    Descricao: elementos.descricao,
-                    Publico: elementos.publico,
-                    Justificativa: elementos.justificativa,
-                    Objetivos: elementos.objetivos,
-                    Inicio: elementos.inicio,
-                    Atividades: atividades
+            atividade.listAtividades(parametro)
+            .then(atividades => {
+                voluntario.listVoluntarios(parametro)
+                .then(voluntarios => {
+                    voluntarioCtr.listarVoluntarios(voluntarios)
+                    .then(listaVoluntarios => {
+                        resolve({
+                            Titulo: elementos.titulo,
+                            Descricao: elementos.descricao,
+                            Publico: elementos.publico,
+                            Justificativa: elementos.justificativa,
+                            Objetivos: elementos.objetivos,
+                            Inicio: elementos.inicio,
+                            Atividades: atividades,
+                            Voluntarios: listaVoluntarios.Voluntarios
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error);
+                    });
+                }).catch(error => {
+                    console.log(error);
+                    reject(error);
                 });
-           });
+            }).catch(error => {
+                console.log(error);
+                reject(error);
+            });
         })
         .catch(error => {
             console.log(error);

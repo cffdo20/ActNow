@@ -3,6 +3,7 @@ const bd = require('./db.js');
 function getVoluntario(userName){
   // Retorna a promessa gerada pela função callProcedureWithParameter
   return bd.callProcedureWithParameter('sp_consultar_voluntario', [userName]).then(consulta => {
+    console.log(consulta);
     return consulta[0][0];
   })
 }
@@ -85,6 +86,15 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
   }
 }
 
+function listVoluntarios(tituloProj){
+  return bd.callProcedureWithParameter('sp_voluntarios_projeto',[tituloProj])
+  .then(consulta => {
+    return consulta[0][0];
+  })
+  .catch(error => {
+    console.log(error);
+    return error;
+  });
+}
 
-
-module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario};
+module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios};

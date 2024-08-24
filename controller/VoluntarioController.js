@@ -92,5 +92,58 @@ function voluntariarUsuario(req){
     });
  }
 
+function listarVoluntarios(voluntarios){
+    return new Promise((resolve, reject) => {
 
-module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario };
+        console.log('\nComo está chegando a req: ',voluntarios,'\n');
+        /** Listar projeto do usuario atual*/
+                if (Array.isArray(voluntarios)) {
+                // Se for um array, ou seja, o usuario é gestor de mais de um projeto
+                var promises = voluntarios.map(item => dados.getVoluntario(item.username));
+                Promise.all(promises)
+                .then(elementos => {
+                    var dadosVoluntarios = elementos
+                    .map(elemento => ({
+                        Nome: elemento.nome,
+                        Telefone: elemento.telefone
+                    })
+                );
+                    resolve({
+                        alerta: voluntarios.resposta,
+                        Voluntarios: dadosVoluntarios
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    reject(error);
+                });
+            } else {
+                // Se não for um array, ou seja, o usuário é gestor de somente um, ou nenhum projeto
+                if(voluntarios === undefined || voluntarios.length === 0){
+                    // Caso o usuario não gere nenhum projeto
+                    resolve({
+                        erro: 'Não há voluntários nesse projeto.'
+                    });
+                }else{
+                    dados.getVoluntario(voluntarios.username)
+                    .then(elemento => {
+                        // Caso o usuario seja gestor de apenas um projeto
+                        var dadosVoluntarios = [{
+                            Nome: elemento.nome,
+                            Telefone: elemento.telefone
+                        }];
+                        resolve({
+                            alerta: voluntarios.resposta,
+                            Voluntarios: dadosVoluntarios
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        reject(error);
+                    })
+                }
+            }
+    });
+}
+
+module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios };
