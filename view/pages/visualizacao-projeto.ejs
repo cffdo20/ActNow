@@ -326,20 +326,21 @@
 
           <!-- exibir voluntários  -->
           <h4 id = "activity-calendar" class = "fw-bold">Voluntários</h4>
-          <% if (Atividades && Atividades.length > 0 && Atividades.every(atividade => !atividade.titulo || !atividade.descricao) ) { %>
+          <% if (Voluntarios && Voluntarios.length > 0 && Voluntarios.every(voluntario => !voluntario.Nome || !voluntario.Telefone) ) { %>
             <div class="error-container">
               <p></p>
             </div>
-          <% } else if (typeof Atividades !== 'undefined' && Atividades.length > 0) { %>
-            <% Atividades.forEach(function(atividade, index) { %>
+          <% } else if (typeof Voluntarios !== 'undefined' && Voluntarios.length > 0) { %>
+            <% Voluntarios.forEach(function(voluntario, index) { %>
               <div class="volunteers-container">
                 <div class="volunteer-container  d-flex align-items-center">
                   <div class="d-flex flex-column m-1">
                     <div class="activity-header">
                       <span class = "activity-span"> 
-                        <%= atividade.titulo %> </span>
+                        <%= voluntario.Nome %> </span>
                     </div>
-                      <p class = "register-text"><%= atividade.descricao %></p>
+                      <p class = "register-text">
+                        <%= voluntario.Telefone %></p>
                   </div>
                 </div>
               </div>
