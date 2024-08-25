@@ -56,7 +56,23 @@ router.post('/recrutar',ensureAuthenticated, (req, res) => {
     })
     .catch(error => {
         console.log('\nResposta do back-end (com erro): ',error,'\n');
-        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
+
+router.post('/sair-projeto', ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada no front-end: ',req.session.user,req.body,'\n');
+    voluntarioController.sairProjeto(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta)}`);
+        }else{
+            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
     });
 });
 

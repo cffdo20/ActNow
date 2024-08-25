@@ -199,4 +199,24 @@ function exibirAreaVoluntario(req){
     });
 }
 
-module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios, exibirAreaVoluntario };
+function sairProjeto(req){
+    return new Promise((resolve, reject) => {
+        voluntario.exitProjeto(req.body.projNome, req.session.user.username)
+        .then(resultado => {
+            if(!resultado.erro){
+                resolve({
+                    alerta: resultado.resposta
+                });
+            }else{
+                resolve({
+                    erro: resultado.erro
+                });
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios, exibirAreaVoluntario, sairProjeto };

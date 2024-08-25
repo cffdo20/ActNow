@@ -109,4 +109,16 @@ function getProjetosVoluntario(username){
   });
 }
 
-module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios, getProjetosVoluntario};
+function exitProjeto(tituloProj, username){
+  const parametros = [tituloProj, username];
+  return bd.callProcedureWithParameter('sp_retirar_voluntario_projeto',parametros)
+  .then(consulta => {
+    return consulta[0][0];
+  })
+  .catch(error => {
+    console.log(error);
+    return error;
+  });
+}
+
+module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios, getProjetosVoluntario, exitProjeto};
