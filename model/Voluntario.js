@@ -3,7 +3,6 @@ const bd = require('./db.js');
 function getVoluntario(userName){
   // Retorna a promessa gerada pela função callProcedureWithParameter
   return bd.callProcedureWithParameter('sp_consultar_voluntario', [userName]).then(consulta => {
-    console.log(consulta);
     return consulta[0][0];
   })
 }

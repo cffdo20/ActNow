@@ -14,12 +14,14 @@ module.exports = {
           }
       
           const user = await usuario.getUsuario(userName);
+          // Remover a senha do objeto 'user'
+          const { senha, ...userWithoutPassword } = user;
       
           if (!user || user.senha !== userSenha) {
             return res.render('login', { alerta: 'Credenciais inválidas. Tente novamente.' });
           }
       
-          req.session.user = user;
+          req.session.user = userWithoutPassword;
           res.redirect('/');
         } catch (error) {
           console.error(error);

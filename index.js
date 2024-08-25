@@ -41,7 +41,7 @@ app.use('/voluntarios', volutarioRoutes);
 // Páginas de Projeto
 app.use('/projetos', projetoRoutes);
 // Páginas de Usuário
-app.use('/', usuarioRoutes);
+app.use('/usuarios', usuarioRoutes);
 // Páginas de Sessão
 app.use('/', sessionRoutes);
 // Páginas de Atividade
