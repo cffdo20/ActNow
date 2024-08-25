@@ -149,4 +149,49 @@ function listarVoluntarios(voluntarios){
     });
 }
 
-module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios };
+function exibirAreaVoluntario(req){
+    return new Promise((resolve, reject) => {
+        voluntario.getVoluntario(req.session.user.username)
+        .then(voluntario => {
+            if(voluntario.erro === 'ERRO: O voluntário indicado não existe.'){
+                resolve({
+                    isNotVoluntario: 'Este usuário não é voluntário.'
+                });
+            }else{
+                if(!voluntario.erro){
+                    // existe o voluntario, então vamos buscar os dados do projeto que ele está e retornar (isto é, se estiver em algum projeto)
+                    dados.getProjetosVoluntario(req.session.user.username)
+                    .then(dados => {
+                        if(!dados.erro){
+                            projeto.getProjetoSocial(dados.titulo)
+                            .then(resultado => {
+                                // ele está em um projeto e retornamos os dados deste projeto
+                                resolve(resultado);
+                            })
+                            .catch(error => {
+                                resolve(error);
+                            });
+                        }else{
+                            // o usuario não está em um projeto retorna o erro como veio do banco
+                            resolve({
+                                erro: dados.erro
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        resolve(error);
+                    });
+                }else{
+                    resolve({
+                        alerta: 'Houve um erro interno no servidor.'
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            reject(error);
+        })
+    });
+}
+
+module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios, exibirAreaVoluntario };

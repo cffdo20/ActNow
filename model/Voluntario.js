@@ -80,7 +80,7 @@ function getFiltroVoluntario(filtroDiaSemana, voluntarioHorario, voluntarioHabil
     var parametros = [filtroDiaSemana, matutino, vespertino, noturno, voluntarioHabilidades];
     // Retorna a promessa gerada pela função callProcedureWithParameter
     return bd.callProcedureWithParameter('sp_filtrar_voluntarios', parametros).then(consulta => {
-      console.log(consulta[0][0]);
+      //console.log(consulta[0][0]);
       return consulta[0][0];
     })
   }
@@ -97,4 +97,16 @@ function listVoluntarios(tituloProj){
   });
 }
 
-module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios};
+function getProjetosVoluntario(username){
+  return bd.callProcedureWithParameter('sp_projetos_voluntario',[username])
+  .then(consulta => {
+    console.log(consulta[0][0]);
+    return consulta[0][0];
+  })
+  .catch(error => {
+    console.log(error);
+    return error;
+  });
+}
+
+module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios, getProjetosVoluntario};

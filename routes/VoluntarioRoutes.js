@@ -85,7 +85,7 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
     })
     .catch(error => {
         console.log(error);
-        res.render('',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
     });
 });
 
@@ -100,7 +100,16 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
 */
 
 router.get('/',ensureAuthenticated, (req, res) => {
-    res.render('projeto-voluntario.ejs');
+    console.log('\nEntrada do frot-end: ',req.session.user,req.body,'\n');
+    voluntarioController.exibirAreaVoluntario(req)
+    .then(resposta => {
+        console.log('\nResposta do back-end: ',resposta,'\n');
+        res.render('projeto-voluntario.ejs',resposta);
+    })
+    .catch(error => {
+        console.log(error);
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
+    });
 });
 
 /*
