@@ -107,10 +107,11 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/cidades/:estado', (req, res) => {
+    console.log('\nEntrada do front-end: ',req.params,'\n');
     //const estado = 'Amazonas';
-    const estado = req.params.estado;
+    //const estado = req.params.estado;
     //const cidades = cidadesPorEstado[estado] || [];
-    voluntarioController.listarCidades(estado)
+    voluntarioController.listarCidades(req)
     .then(resposta => {
         if(!resposta.erro){
             console.log('\nResposta do Back-end: ',resposta,'\n');
