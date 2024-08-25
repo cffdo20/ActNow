@@ -56,7 +56,23 @@ router.post('/recrutar',ensureAuthenticated, (req, res) => {
     })
     .catch(error => {
         console.log('\nResposta do back-end (com erro): ',error,'\n');
-        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
+
+router.post('/sair-projeto', ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada no front-end: ',req.session.user,req.body,'\n');
+    voluntarioController.sairProjeto(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        }else{
+            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
     });
 });
 
@@ -71,10 +87,11 @@ router.post('/recrutar',ensureAuthenticated, (req, res) => {
 */
 
 router.get('/voluntariar-se', ensureAuthenticated, (req, res) => {
-    res.render('voluntario-format.ejs');
+    res.render('voluntario-form.ejs',{userName: req.session.user.username});
 });
 
 router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada do front-end: ',req.session.user, req.body,'\n');
     voluntarioController.voluntariarUsuario(req)
     .then(resposta => {
         if(!resposta.erro){
@@ -87,6 +104,25 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
         console.log(error);
         res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
     });
+});
+
+router.get('/cidades/:estado', (req, res) => {
+    //const estado = 'Amazonas';
+    const estado = req.params.estado;
+    //const cidades = cidadesPorEstado[estado] || [];
+    voluntarioController.listarCidades(estado)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do Back-end: ',resposta,'\n');
+            res.json(resposta);
+            //res.redirect('/');
+        }else{
+            console.log('\nResposta do Back-end: ',resposta.erro,'\n');
+            res.redirect('/');
+        }
+    })
+    .catch();
+    res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
 });
 
 /*
