@@ -150,11 +150,11 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
         <form class = "edit-dialog-form" id = "edicaoSenhaForm" action="/usuarios/editar" method = "POST" >
           <input type="hidden" name="username" value="<%= userName %>">
 
-          <input class = "input-field-dialog form-control" type="password" name = "userSenha" placeholder = "Senha atual"></input>
+          <input class = "input-field-dialog form-control" type="password" name = "senhaOld" placeholder = "Senha atual"></input>
 
-          <input class = "input-field-dialog form-control" type="password" name = "userSenha" placeholder = "Nova senha"></input>
+          <input class = "input-field-dialog form-control" type="password" name = "senhaNew1" placeholder = "Nova senha"></input>
 
-          <input class = "input-field-dialog form-control" type="password" name = "userSenha" placeholder = "Repita a nova senha"></input>
+          <input class = "input-field-dialog form-control" type="password" name = "senhaNew2" placeholder = "Repita a nova senha"></input>
 
           <input type="submit" value="Salvar alteração" class = "submit-field-dialog btn btn-primary text-light">
         </form>
