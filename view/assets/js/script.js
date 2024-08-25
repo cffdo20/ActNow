@@ -69,6 +69,6 @@ introJs().setOptions({
 nextLabel: 'Próximo',
 prevLabel: 'Anterior',
 doneLabel: 'Concluído',
-dontShowAgain:true,
+dontShowAgain: true,
 }).start();
 

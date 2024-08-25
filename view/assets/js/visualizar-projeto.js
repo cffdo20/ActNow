@@ -131,3 +131,5 @@ closeEditActivityModal.addEventListener("click", () => {
     const modal = document.getElementById('editAtividadeModal');
     modal.close(); 
 })
+
+
