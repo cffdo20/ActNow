@@ -57,6 +57,11 @@
   <!-- FIM HEADER -->
 
   <main>
+    <% isNotVoluntario = typeof isNotVoluntario !== 'undefined' ? isNotVoluntario : false; %>
+    <% Projeto = typeof Projeto !== 'undefined' ? Projeto : {}; %>
+    <% titulo = typeof Projeto.titulo !== 'undefined' ? Projeto.titulo : ''; %>
+    <% descricao = typeof Projeto.descricao !== 'undefined' ? Projeto.descricao : ''; %>
+
     <% if(typeof titulo !== 'undefined' && typeof descricao !== 'undefined' && titulo && descricao){ %>
       <div class="proj-container main-box container mt-4">
         <div class="row">

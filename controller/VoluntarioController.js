@@ -155,7 +155,8 @@ function exibirAreaVoluntario(req){
         .then(voluntario => {
             if(voluntario.erro === 'ERRO: O voluntário indicado não existe.'){
                 resolve({
-                    isNotVoluntario: 'Este usuário não é voluntário.'
+                    // ele não é um voluntário: CASO 3
+                    caso: 3
                 });
             }else{
                 if(!voluntario.erro){
@@ -165,15 +166,19 @@ function exibirAreaVoluntario(req){
                         if(!dados.erro){
                             projeto.getProjetoSocial(dados.titulo)
                             .then(resultado => {
-                                // ele está em um projeto e retornamos os dados deste projeto
-                                resolve(resultado);
+                                // ele está em um projeto e retornamos os dados deste projeto: CASO 1
+                                resolve({
+                                    caso: 1,
+                                    ...resultado
+                                });
                             })
                             .catch(error => {
                                 resolve(error);
                             });
                         }else{
-                            // o usuario não está em um projeto retorna o erro como veio do banco
+                            // o usuario não está em um projeto retorna o erro como veio do banco: CASO 2
                             resolve({
+                                caso: 2,
                                 erro: dados.erro
                             });
                         }
