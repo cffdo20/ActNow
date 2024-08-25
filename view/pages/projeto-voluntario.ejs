@@ -57,13 +57,15 @@
   <!-- FIM HEADER -->
 
   <main>
-    <% isNotVoluntario = typeof isNotVoluntario !== 'undefined' ? isNotVoluntario : false; %>
-    <% Projeto = typeof Projeto !== 'undefined' ? Projeto : {}; %>
-    <% titulo = typeof Projeto.titulo !== 'undefined' ? Projeto.titulo : ''; %>
-    <% descricao = typeof Projeto.descricao !== 'undefined' ? Projeto.descricao : ''; %>
-
-    <% if(typeof titulo !== 'undefined' && typeof descricao !== 'undefined' && titulo && descricao){ %>
-      <div class="proj-container main-box container mt-4">
+    <main>
+      <% isNotVoluntario = typeof isNotVoluntario !== 'undefined' ? isNotVoluntario : false %>
+      <% Projeto = typeof Projeto !== 'undefined' ? Projeto : {} %>
+      <% titulo = typeof Projeto.titulo !== 'undefined' ? Projeto.titulo : '' %>
+      <% descricao = typeof Projeto.descricao !== 'undefined' ? Projeto.descricao : '' %>
+      
+      <% if (caso == 1) { %>
+        <!-- já é voluntário e tem projeto, caso 1 -->
+        <div class="proj-container main-box container mt-4">
         <div class="row">
           <div class="col-lg-8 first-container">
             <div class="div">
@@ -109,23 +111,23 @@
             </div>
           </div>
         </div>
-      </div>
-    <% } else if (typeof titulo === 'undefined' && isNotVoluntario) { %>
-      <div class="message-container d-flex justify-content-center flex-column align-items-center">
-        <p>Você ainda não se tornou um Voluntário</p>
-        <img src="../assets/img/alone.png" alt="Pessoa caminhando sozinha" class = "img-fluid">
-        <a href="/voluntarios/voluntariar-se" class = "btn btn-primary">
-          <span class="bi bi-person-badge-fill"></span>
-          Ser um Voluntário</a>
-      </div>
-      
-    <% } else { %>
-      
+        </div>
+      <% } else if (caso == 2) { %>
       <div class="message-container">
         <p>Você não está em nenhum projeto</p>
         <img src="../assets/img/no_projects.png" alt="Pastas vazias" class="img-fluid">
       </div>
-    <% } %>
+      <% } else if (caso == 3) { %>
+      <div class="message-container d-flex justify-content-center flex-column align-items-center">
+        <p>Você ainda não se tornou um Voluntário</p>
+        <img src="../assets/img/alone.png" alt="Pessoa caminhando sozinha" class="img-fluid">
+        <a href="/voluntarios/voluntariar-se" class="btn btn-primary">
+          <span class="bi bi-person-badge-fill"></span>
+          Ser um Voluntário</a>
+      </div>
+      <% } else { %>
+      <p>ocorreu um erro...</p>
+      <% } %>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -134,8 +136,8 @@
     <script>
       // JavaScript embutido para exibir o alerta passado do Node.js
       window.onload = function() {
-        alert("<%= alerta %>");
-      };
+        alert("<%= alerta %>")
+      }
     </script>
   <% } %>
 </body>
