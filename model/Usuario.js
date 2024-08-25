@@ -42,7 +42,7 @@ function updateEmailUsuario(userName, userEmail) {
 }
 
 function deleteUsuario(userName){
-  return bd.callProcedureWithParameter('sp_inativar_usuario', userName)
+  return bd.callProcedureWithParameter('sp_inativar_usuario', [userName])
   .then(consulta => {
     return consulta[0][0];
   })

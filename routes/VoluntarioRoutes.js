@@ -3,6 +3,16 @@ const router = express.Router();
 const voluntarioController = require('../controller/VoluntarioController.js');
 const ensureAuthenticated = require('../middleware/ensureAuthenticated'); // Importa o middleware de autenticação
 
+/*
+  
+# # # #    #     #    #     #      # # #    # # # # #    # # #     # # #      #     #
+#          #     #    # #   #    #              #          #     #       #    # #   #
+# # #      #     #    #  #  #    #              #          #     #       #    #  #  #
+#          #     #    #   # #    #              #          #     #       #    #   # #
+#           # # #     #     #      # # #        #        # # #     # # #      #     #
+
+*/
+
 /** Página: Filtro de Voluntário */
 // Acesso
 router.get('/filtro', ensureAuthenticated, (req, res) => {
@@ -50,6 +60,16 @@ router.post('/recrutar',ensureAuthenticated, (req, res) => {
     });
 });
 
+/*
+  
+  # # #    # # #    # # # #    # # #    # # # # #    # # # #
+#          #   #    #         #     #       #        #
+#          # # #    # # #     # # # #       #        # # #
+#          #  #     #         #     #       #        #
+  # # #    #   #    # # # #   #     #       #        # # # #
+
+*/
+
 router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
     voluntarioController.voluntariarUsuario(req)
     .then(resposta => {
@@ -63,6 +83,36 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
         console.log(error);
         res.render('/',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
     });
+});
+
+/*
+
+#     #    # # #     # # #       # # #    # # # # #    # # # #
+#     #    #     #   #     #    #     #       #        #
+#     #    # # #     #     #    # # # #       #        # # #
+#     #    #         #     #    #     #       #        #
+ # # #     #         # # #      #     #       #        # # # #
+
+*/
+
+// Editar o Nome Social do voluntário
+router.post('/editar-nomesocial',ensureAuthenticated,(req,res)=> {
+    //stub
+});
+
+// Editar a Biografia do voluntário
+router.post('/editar-bio',ensureAuthenticated,(req,res)=> {
+    //stub
+});
+
+// Editar a Cidade do voluntário
+router.post('/editar-cidade',ensureAuthenticated,(req,res)=> {
+    //stub
+});
+
+// Editar o Telefone do voluntário
+router.post('/editar-telefone',ensureAuthenticated,(req,res)=> {
+    //stub
 });
 
 module.exports = router;

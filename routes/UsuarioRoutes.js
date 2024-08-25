@@ -82,15 +82,15 @@ router.post('/editar', ensureAuthenticated, (req, res) => {
             req.session.user['e-mail'] = req.body.userEmail;
             res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta})}`);
         }else{
+            console.log('\nResposta do back-end: ',{alerta: resposta.erro},'\n');
             res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
         }
     })
     .catch(error => {
         console.log('\nResposta do back-end (com erro): ',error,'\n');
-        res.redirect(`/usuarios?alerta=${encodeURIComponent(error)}`);
+        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
     });
 });
-
 
 /*
 
@@ -102,5 +102,28 @@ router.post('/editar', ensureAuthenticated, (req, res) => {
 
 */
 
+// Inativa um usuário
+router.post('/excluir', ensureAuthenticated, (req,res) => {
+    console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
+    usuarioController.inativarUsuario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',{alerta: resposta},'\n');
+            req.session.destroy(err => {
+                if (err) {
+                  return res.redirect('/');
+                }
+                res.redirect('/');
+              });
+        }else{
+            console.log('\nResposta do back-end: ',{alerta: resposta.erro},'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
 
 module.exports = router;
