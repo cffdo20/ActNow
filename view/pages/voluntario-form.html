@@ -72,38 +72,39 @@
 
         <div class="main-form-container">
           <form id = "cadastroProjetoForm" action="/criar-conta" method = "POST">
+            <input type="hidden" name="username" value="<%= userName %>">
 
             <div class="form-group p-2">
               <span class="bi bi-123"></span>
               <label for="user-cpf">CPF</label>
-              <input class="form-control font-weight-lighter input-sm" id="user-cpf" name="" type="text" placeholder="Digite seu CPF" required>
+              <input class="form-control font-weight-lighter input-sm" id="user-cpf" name="volCPF" type="text" placeholder="Digite seu CPF" required>
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-person"></span>
               <label for="user-full-name">Nome</label>
-              <input class="form-control font-weight-lighter input-sm" id="user-full-name" name="" type="text" placeholder="Maria do Carmo Silva" required>
+              <input class="form-control font-weight-lighter input-sm" id="user-full-name" name="volNome" type="text" placeholder="Maria do Carmo Silva" required>
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-person"></span>
               <label for="user-nome-social">Nome Social (se houver)</label>
-              <input class="form-control font-weight-lighter input-sm" id="user-nome-social" name="" type="text" placeholder="">
+              <input class="form-control font-weight-lighter input-sm" id="user-nome-social" name="volNomeSocial" type="text" placeholder="">
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-card-text"></span>
               <label for="user-bio">Bio</label>
-              <textarea class="form-control input-sm" id="user-bio" name="" type="text" placeholder= "Escreva sobre você" required></textarea>
+              <textarea class="form-control input-sm" id="user-bio" name="volBio" type="text" placeholder= "Escreva sobre você" required></textarea>
             </div>
 
             <div class="form-group p-2">
               <span class="bi bi-telephone"></span>
               <label for="user-telefone">Telefone</label>
-              <input class="form-control input-sm" id="user-telefone" name="" type="text" placeholder= "92999999999" required></textarea>
+              <input class="form-control input-sm" id="user-telefone" name="volTelefone" type="text" placeholder= "92999999999" required></textarea>
             </div>
 
-            <select class="form-select mb-2" aria-label="Estado">
+            <select class="form-select mb-2" aria-label="Estado" name = "volEstado">
               <option selected>Estado</option>
               <option value="AC">Acre</option>
               <option value="AL">Alagoas</option>
@@ -134,11 +135,11 @@
               <option value="TO">Tocantins</option>
             </select>
             
-            <select class="form-select mb-2" aria-label="Default select example">
+            <select class="form-select mb-2" aria-label="Default select example" name = "volCidNome">
               <option selected>Cidade</option>
-              <option value="1">Manhã</option>
-              <option value="2">Tarde</option>
-              <option value="3">Noite</option>
+              <option value="1"></option>
+              <option value="2"></option>
+              <option value="3"></option>
             </select>
 
 
