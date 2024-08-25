@@ -121,4 +121,15 @@ function exitProjeto(tituloProj, username){
   });
 }
 
-module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios, getProjetosVoluntario, exitProjeto};
+function listCidades(estnome){
+  return bd.callProcedureWithParameter('sp_colsultar_cidades',[estnome])
+  .then(consulta => {
+    return consulta[0];
+  })
+  .catch(error => {
+    console.log(error);
+    return error;
+  });
+}
+
+module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios, getProjetosVoluntario, exitProjeto, listCidades};

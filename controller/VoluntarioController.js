@@ -219,4 +219,23 @@ function sairProjeto(req){
     });
 }
 
-module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios, exibirAreaVoluntario, sairProjeto };
+function listarCidades(req){
+    return new Promise((resolve, reject) => {
+        voluntario.listCidades(req.params.estado)
+        //voluntario.listCidades(req)
+        .then(resultado => {
+            if(!resultado.erro){
+                resolve(resultado);
+            }else{
+                resolve({
+                    erro: resultado.erro
+                });
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios, exibirAreaVoluntario, sairProjeto, listarCidades };
