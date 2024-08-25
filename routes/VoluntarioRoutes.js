@@ -65,7 +65,7 @@ router.post('/sair-projeto', ensureAuthenticated, (req, res) => {
     voluntarioController.sairProjeto(req)
     .then(resposta => {
         if(!resposta.erro){
-            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta)}`);
+            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
             res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.erro)}`);
         }
