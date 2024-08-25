@@ -55,8 +55,8 @@ router.post('/recrutar',ensureAuthenticated, (req, res) => {
         }
     })
     .catch(error => {
-        console.log(error);
-        res.render('/',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
     });
 });
 
@@ -70,19 +70,37 @@ router.post('/recrutar',ensureAuthenticated, (req, res) => {
 
 */
 
+router.get('/voluntariar-se', ensureAuthenticated, (req, res) => {
+    res.render('voluntario-format.ejs');
+});
+
 router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
     voluntarioController.voluntariarUsuario(req)
     .then(resposta => {
         if(!resposta.erro){
-            res.render('/', resposta);
+            res.render('/voluntarios', resposta);
         }else{
-            res.render('/tonar-voluntario', {alerta: resposta.erro});
+            res.render('/voluntariar-se', {alerta: resposta.erro});
         }
     })
     .catch(error => {
         console.log(error);
-        res.render('/',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
+        res.render('',{alerta: 'Um erro interno no servidor foi encontrado, favor tente mais tarde ou contacte o administrador do sistema'});
     });
+});
+
+/*
+
+# # #     # # # #    # # #      # # #
+#   #     #         #     #     #     #
+# # #     # # #     # # # #     #     #
+#  #      #         #     #     #     #
+#   #     # # # #   #     #     # # #
+
+*/
+
+router.get('/',ensureAuthenticated, (req, res) => {
+    res.render('projeto-voluntario.ejs');
 });
 
 /*

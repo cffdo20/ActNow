@@ -68,6 +68,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 // Abrir um projeto pelo nome
 router.post('/visualizar', ensureAuthenticated,(req, res) => {
     console.log('entrada do front-end: ', req.body);
+    req.session.projNome = req.body.projNome;
     projetoController.exibirProjeto(req)
     .then(resposta => {
         console.log('resposta do back-end: ',resposta);
@@ -82,6 +83,7 @@ router.post('/visualizar', ensureAuthenticated,(req, res) => {
 })
 
 router.get('/visualizar', ensureAuthenticated, (req, res) => {
+    console.log('entrada do front-end: ', req.body.session);
     projetoController.exibirProjeto(req)
     .then(resposta => {
         console.log('resposta do back-end: ', resposta);
@@ -114,65 +116,85 @@ router.get('/visualizar', ensureAuthenticated, (req, res) => {
 
 // Editar a Descrição
 router.post('/editar-descricao', ensureAuthenticated, (req, res) => {
+    req.session.projNome = req.body.projNome;
     projetoController.editarDescProjeto(req)
     .then(resposta => {
         console.log(resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do projeto com os dados editados
-            res.render('visualizacao-projeto.ejs', resposta);
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.resposta)}`);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
-            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
         }
+    })
+    .catch(error => {
+        console.log(error);
+        delete req.session.projNome;
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
     });
 });
 
 // Editar a Justificativa
 router.post('/editar-justificativa', ensureAuthenticated, (req, res) => {
+    req.session.projNome = req.body.projNome;
     projetoController.editarJustProjeto(req)
     .then(resposta => {
         console.log(resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do projeto com os dados editados
-            res.render('visualizacao-projeto.ejs', resposta);
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.resposta)}`);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
-            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
         }
+    })
+    .catch(error => {
+        console.log(error);
+        delete req.session.projNome;
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
     });
 });
 
 // Editar os Objetivos
 router.post('/editar-objetivos', ensureAuthenticated, (req, res) => {
+    req.session.projNome = req.body.projNome;
     projetoController.editarObjeProjeto(req)
     .then(resposta => {
         console.log(resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do projeto com os dados editados
-            res.render('visualizacao-projeto.ejs', resposta);
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.resposta)}`);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
-            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
         }
+    })
+    .catch(error => {
+        console.log(error);
+        delete req.session.projNome;
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
     });
 });
 
 // Editar o Público Alvo
 router.post('/editar-publico', ensureAuthenticated, (req, res) => {
+    req.session.projNome = req.body.projNome;
     projetoController.editarPublProjeto(req)
     .then(resposta => {
         console.log(resposta);
         if(!resposta.erro){
             // Se não retornar erro renderiza a pagina do projeto com os dados editados
-            res.render('visualizacao-projeto.ejs', resposta);
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.resposta)}`);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
-            res.render('visualizacao-projeto.ejs',{resposta, alerta: resposta.erro });
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
         }
     })
     .catch(error => {
-        console.log('resposta do back-end (com erro): ', error,'\n');
-        res.render('criar-atividade.ejs', {alerta: 'Houve um erro no servidor, favor tente mais tarde ou entre em contato com o suporte'});
+        console.log(error);
+        delete req.session.projNome;
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
     });
 });
 
@@ -196,6 +218,7 @@ router.post('/excluir', ensureAuthenticated, (req, res) => {
             // Aqui você pode adicionar dados na URL como parâmetros de consulta ou usar um sistema de sessão
             res.redirect('/projetos');
         } else {
+            req.session.projNome = req.body.projNome;
             // Em caso de erro, redireciona para a mesma página e passa a mensagem de erro na URL como parâmetro de consulta
             res.redirect(`/visualizar-projeto?erro=${encodeURIComponent(resposta.erro)}`);
         }

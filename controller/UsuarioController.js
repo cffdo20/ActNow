@@ -39,17 +39,34 @@ function verDadosUsuario(req){
 // UPDATE
 function alterarSenhaUsuario(req) {
   return new Promise((resolve, reject) => {
-    usuario.updateSenhaUsuario(req.session.user.username, req.body.userSenha)
-    .then(resultado => {
-      resolve({
-        alerta: resultado.resposta
-      });  
+    // Validar a senha antiga
+    usuario.getUsuario(req.session.user.username)
+    .then(usuario => {
+      if (usuario.senha === req.body.senhaOld) {
+        if (req.body.senhaNew1 === req.body.senhaNew2) {
+          const senhaNew = req.body.senhaNew1;
+          usuario.updateSenhaUsuario(req.session.user.username, senhaNew)
+          .then(resultado => {
+            resolve({
+              alerta: resultado.resposta
+            });
+          })
+          .catch(error => {
+            reject(error);
+          });
+        } else {
+          resolve({ alerta: 'As senhas digitadas não conferem.' });
+        }
+      } else {
+        resolve({ alerta: 'Senha incorreta.' });
+      }
     })
     .catch(error => {
-      reject(error)
-    })
-  })
+      reject(error);
+    });
+  });
 }
+
 
 function alterarEmailUsuario(req) {
   return new Promise((resolve, reject) => {

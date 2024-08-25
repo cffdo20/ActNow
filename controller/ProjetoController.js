@@ -50,26 +50,10 @@ function editarDescProjeto(req){
         /** Editar um projeto*/
         projeto.updateProjeto_descricao(req.body.projNome, req.body.projDescricao)
         .then(resultado => {
-            if (resultado.erro !== undefined) {
-                // Se houver um erro na resposta, apenas envia a resposta.
+            if (!resultado.erro) {
                 resolve(resultado);
             } else {
-                // Se não houver um erro na resposta, busca os dados do projeto e retorna para o front-end.
-                dados.getProjetoSocial(req.body.projNome)
-                .then(elementos => {
-                    resolve({
-                        Titulo: elementos.titulo,
-                        Descricao: elementos.descricao,
-                        Publico: elementos.publico,
-                        Justificativa: elementos.justificativa,
-                        Objetivos: elementos.objetivos,
-                        Inicio: elementos.inicio
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+                resolve(resultado.erro);
             }               
         })
         .catch(error => {
@@ -84,26 +68,10 @@ function editarPublProjeto(req){
         /** Editar um projeto*/
         projeto.updateProjeto_publico(req.body.projNome, req.body.projPublico)
         .then(resultado => {
-            if (resultado.erro !== undefined) {
-                // Se houver um erro na resposta, apenas envia a resposta.
+            if (!resultado.erro) {
                 resolve(resultado);
             } else {
-                // Se não houver um erro na resposta, busca os dados do projeto e retorna para o front-end.
-                dados.getProjetoSocial(req.body.projNome)
-                .then(elementos => {
-                    resolve({
-                        Titulo: elementos.titulo,
-                        Descricao: elementos.descricao,
-                        Publico: elementos.publico,
-                        Justificativa: elementos.justificativa,
-                        Objetivos: elementos.objetivos,
-                        Inicio: elementos.inicio
-                    });
-                })
-                .catch(error => {
-                    console.log(error);
-                    reject(error);
-                });
+                resolve(resultado.erro);
             }               
         })
         .catch(error => {
@@ -117,21 +85,10 @@ function editarJustProjeto(req){
     return new Promise((resolve, reject) => {
         projeto.updateProjeto_justificativa(req.body.projNome, req.body.projJustificativa)
         .then(resultado => {
-            if (resultado.erro !== undefined) {
-                // Se houver um erro na resposta, apenas envia a resposta.
+            if (!resultado.erro) {
                 resolve(resultado);
             } else {
-                // Se não houver um erro na resposta, busca os dados do projeto e retorna para o front-end.
-                dados.getProjetoSocial(req.body.projNome).then(elementos => {
-                    resolve({
-                        Titulo: elementos.titulo,
-                        Descricao: elementos.descricao,
-                        Publico: elementos.publico,
-                        Justificativa: elementos.justificativa,
-                        Objetivos: elementos.objetivos,
-                        Inicio: elementos.inicio
-                    });
-                })
+                resolve(resultado.erro);
             }               
         })
         .catch(error => {
@@ -145,21 +102,10 @@ function editarObjeProjeto(req){
     return new Promise((resolve, reject) => {
         projeto.updateProjeto_objetivos(req.body.projNome, req.body.projObjetivos)
         .then(resultado => {
-            if (resultado.erro !== undefined) {
-                // Se houver um erro na resposta, apenas envia a resposta.
+            if (!resultado.erro) {
                 resolve(resultado);
             } else {
-                // Se não houver um erro na resposta, busca os dados do projeto e retorna para o front-end.
-                dados.getProjetoSocial(req.body.projNome).then(elementos => {
-                    resolve({
-                        Titulo: elementos.titulo,
-                        Descricao: elementos.descricao,
-                        Publico: elementos.publico,
-                        Justificativa: elementos.justificativa,
-                        Objetivos: elementos.objetivos,
-                        Inicio: elementos.inicio
-                    });
-                })
+                resolve(resultado.erro);
             }               
         })
         .catch(error => {
@@ -239,7 +185,7 @@ function listarProjetos(req){
 function exibirProjeto(req) {
     return new Promise((resolve, reject) => {
         var parametro = req.body.projNome;
-        if(!req.body.projNome){
+        if(req.body.projNome === undefined){
             parametro = req.session.projNome;
         }
         dados.getProjetoSocial(parametro)

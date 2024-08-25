@@ -92,6 +92,25 @@ router.post('/editar', ensureAuthenticated, (req, res) => {
     });
 });
 
+// Altera a senha do usuario
+router.post('/alterar-senha', ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
+    usuarioController.alterarSenhaUsuario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',{alerta: resposta},'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta})}`);
+        }else{
+            console.log('\nResposta do back-end: ',{alerta: resposta.erro},'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
+
 /*
 
 # # #      # # # #    #          # # # #    # # # # #    # # # #
