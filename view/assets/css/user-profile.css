@@ -24,6 +24,11 @@
     cursor: pointer;  
     color: #44546F; 
 }
+#edit-password-button{
+    cursor: pointer; 
+    color: #44546F; 
+    margin-left: 0.6rem;    
+}
 
 .projects{
     display: flex; 
@@ -74,3 +79,43 @@ hr{
     background-color: #ad464692; 
 }
 
+.volunteer-name{
+    font-weight: 600; 
+    font-size: 1.5rem; 
+}
+.volunteer-bio{
+    padding: 0.5rem; 
+    width: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    cursor: pointer;
+
+}
+.bi-person-badge{
+    color: #0D6EFD; 
+}
+
+.bi-telephone{
+    color: #63BA3C; 
+}
+
+.volunteer-phone{
+    padding: 0.5rem; 
+    width: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    cursor: pointer; 
+}
+
+.volunteer-location{
+    padding: 0.5rem; 
+    width: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    font-weight: 600; 
+    color: #747479; 
+    cursor: pointer; 
+}
+
+/* .volunteer-bio:hover,
+.volunteer-location:hover,
+.volunteer-phone:hover{
+    background-color: #E9EAEE; 
+} */

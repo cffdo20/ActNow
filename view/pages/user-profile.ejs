@@ -69,9 +69,32 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
         <div class="username-container">
           <span class="username"><%= userName %></span>
         </div>
-        <span class="fa-solid fa-pen-to-square" id = "edit-profile-button"></span>
+        <div class="d-flex align-items-center">
+          <span class="fa-solid fa-envelope" id = "edit-profile-button"></span>
+          <span class="fa-solid fa-lock" id = "edit-password-button"></span>
+        </div>
       </div>
       <span class="email-field"><%= userEmail %></span>
+      <% if (Voluntario && !Voluntario.erro) { %>
+        <div>
+          <p class="volunteer-name"><%= Voluntario.nome %></p>
+          <p class="volunteer-bio">
+            <span class="bi bi-person-badge"></span>
+            Bio: <%= Voluntario.biografia %>
+          </p>
+          <p class="volunteer-phone">
+            <span class="bi bi-telephone"></span>
+            <%= Voluntario.telefone %>
+          </p>
+          <p class="volunteer-location">
+            <span class="bi bi-geo-alt"></span>
+            <%= Voluntario.cidade %>
+          </p>
+        </div>
+      <% } else{ %>
+        <p></p>
+      <% } %>
+      
       <a href="" class = "trash-icon m-4">
         <span id = "trashBtn" class="fa fa-solid fa-trash"></span>
         <span class="tooltiptext">Excluir perfil</span>
@@ -95,7 +118,7 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
       </div>
     </dialog>
 
-    <!-- modal para editar usuário -->
+    <!-- modal para editar email do usuário -->
     <dialog id = "editUsuarioModal" class = "edit-field-dialog">
       <div class="meuDialog">      
         <div class="edit-description-header d-flex justify-content-between mb-2">
@@ -114,6 +137,35 @@ integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLAS
         <!-- <button id = "returnPopBtn">Manter projeto</button> -->
       </div>
     </dialog>
+
+
+    <!-- modal para editar senha do usuário -->
+    <dialog id = "editSenhaModal" class = "edit-field-dialog">
+      <div class="meuDialog">      
+        <div class="edit-description-header d-flex justify-content-between mb-2">
+          <span>Alterar senha</span>
+          <button id = "close-edit-password-dialog"><span class="fa-solid fa-xmark"></span></button>
+        </div>
+        <!-- form para editar email do usuário -->
+        <form class = "edit-dialog-form" id = "edicaoSenhaForm" action="/usuarios/editar" method = "POST" >
+          <input type="hidden" name="username" value="<%= userName %>">
+
+          <input class = "input-field-dialog form-control" type="password" name = "userSenha" placeholder = "Senha atual"></input>
+
+          <input class = "input-field-dialog form-control" type="password" name = "userSenha" placeholder = "Nova senha"></input>
+
+          <input class = "input-field-dialog form-control" type="password" name = "userSenha" placeholder = "Repita a nova senha"></input>
+
+          <input type="submit" value="Salvar alteração" class = "submit-field-dialog btn btn-primary text-light">
+        </form>
+  
+        <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+      </div>
+    </dialog>
+
+    
+
+    
 
     <!-- <div class="row">
       <div class="profile-container col-12 pb-2 pb-md-0 col-md-4">
