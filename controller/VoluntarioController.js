@@ -1,5 +1,6 @@
 // Importando a classe FiltroVoluntario
 const voluntario = require('../model/Voluntario.js');
+const disponibilidade = require('../model/Voluntario.js');
 const dados = require('../model/Voluntario.js');
 const projeto = require('../model/ProjetoSocial.js');
 
@@ -73,9 +74,13 @@ function voluntariarUsuario(req){
     return new Promise((resolve, reject) => {
         voluntario.setVoluntario(req.session.user.username, req.body.volCPF, req.body.volNome, req.body.volNomeSocial, req.body.volBio, req.body.volTelefone, req.body.volCidNome)
         .then(resultado => {
-            resolve ({
-                alerta: resultado.resposta
-            })
+            if(!resultado.erro){
+                // Criou o voluntário, agora vamos adicionar a disponibilidade dele
+                
+            }
+            //resolve ({
+            //    alerta: resultado.resposta
+            //})
         })
         .catch(error => {
             reject(error)

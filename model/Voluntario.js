@@ -109,6 +109,10 @@ function getProjetosVoluntario(username){
   });
 }
 
+function setDisponibilidade(){
+  //stub
+}
+
 async function exitProjeto(tituloProj, username){
   const parametros = [tituloProj, username];
   try {
@@ -176,4 +180,4 @@ async function editTelefone(username, telefone){
 
 module.exports = {  getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios,
                     getProjetosVoluntario, exitProjeto, listCidades, editNomeSocial, editBio,
-                    editCidade, editTelefone};
+                    editCidade, editTelefone, setDisponibilidade};

@@ -97,7 +97,7 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
         if(!resposta.erro){
             res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
-            res.render('/voluntariar-se', {alerta: resposta.erro});
+            res.redirect(`/voluntariar-se?alerta=${encodeURIComponent(resposta.erro)}`);
         }
     })
     .catch(error => {
