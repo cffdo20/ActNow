@@ -95,7 +95,7 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
     voluntarioController.voluntariarUsuario(req)
     .then(resposta => {
         if(!resposta.erro){
-            res.render('/voluntarios', resposta);
+            res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
             res.render('/voluntariar-se', {alerta: resposta.erro});
         }
