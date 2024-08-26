@@ -396,7 +396,7 @@ DELIMITER ;
 
 -- função para buscar codigo pelo nome da da cidade;
 DELIMITER $$
-CREATE FUNCTION f_buscar_cidade_codigo(p_bcc_cidnome varchar(40)) RETURNS boolean
+CREATE FUNCTION f_buscar_cidade_codigo(p_bcc_cidnome varchar(40)) RETURNS int
 BEGIN
     DECLARE v_bcc_codigo_cidade int default 0;
     
