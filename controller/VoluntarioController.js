@@ -76,7 +76,9 @@ function voluntariarUsuario(req){
         .then(resultado => {
             if(!resultado.erro){
                 // Criou o voluntário, agora vamos adicionar a disponibilidade dele
-                
+                resolve (req.body.voluntarioDias.map(dia => {
+                    return addDisponibilidade(req.session.user.username,dia,req.body.voluntarioHorario);
+                }));
             }
             //resolve ({
             //    alerta: resultado.resposta
@@ -86,6 +88,19 @@ function voluntariarUsuario(req){
             reject(error)
         })
     })
+}
+
+async function addDisponibilidade(user, dia, turno){
+    try{
+    const resultado = await disponibilidade.setDisponibilidade(user, dia, turno);
+    return resultado;
+    } catch (error) { 
+        throw error;
+    }
+}
+
+async function addHabilidade(user, habilidade){
+    //stub
 }
 
  function recrutarVoluntario(req){

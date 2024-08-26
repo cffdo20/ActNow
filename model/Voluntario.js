@@ -109,8 +109,49 @@ function getProjetosVoluntario(username){
   });
 }
 
-function setDisponibilidade(){
-  //stub
+function setDisponibilidade(username, dia, turno){
+  var matutino = '0' , vespertino = '0', noturno = '0';
+  if(turno === 'Manhã'){
+    matutino = '1';
+  }else if(turno === 'Tarde'){
+    vespertino = '1';
+  }else if(turno === 'Noite'){
+    noturno = '1';
+  }else{
+    switch(turno[0]){
+      case 'Manhã':
+        matutino = '1';
+        break;
+      default:
+        vespertino = '1';
+        break;
+    }
+    switch(turno[1]){
+      case 'Tarde':
+        vespertino = '1';
+        break;
+      default:
+        noturno = '1';
+        break;
+    }
+    if(turno[2] === 'Noite'){
+      noturno = '1';
+    }
+  }
+  const parametros = [username, dia, matutino, vespertino, noturno];
+  return bd.callProcedureWithParameter('sp_disponibilidade_voluntario', parametros)
+  .then(consulta => {
+    return consulta[0][0];
+  })
+  .catch(error => {
+    console.log(error);
+    return error;
+  });
+}
+
+function setHabilidade(username, habilidades){
+  const qtdeHabilidades = habilidades.length();
+  const parametros = [username, qtdeHabilidades, ];
 }
 
 async function exitProjeto(tituloProj, username){
