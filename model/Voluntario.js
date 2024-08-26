@@ -109,27 +109,71 @@ function getProjetosVoluntario(username){
   });
 }
 
-function exitProjeto(tituloProj, username){
+async function exitProjeto(tituloProj, username){
   const parametros = [tituloProj, username];
-  return bd.callProcedureWithParameter('sp_retirar_voluntario_projeto',parametros)
-  .then(consulta => {
+  try {
+    const consulta = await bd.callProcedureWithParameter('sp_retirar_voluntario_projeto', parametros);
     return consulta[0][0];
-  })
-  .catch(error => {
+  } catch (error) {
     console.log(error);
     return error;
-  });
+  }
 }
 
-function listCidades(estnome){
-  return bd.callProcedureWithParameter('sp_colsultar_cidades',[estnome])
-  .then(consulta => {
+async function listCidades(estnome){
+  try {
+    const consulta = await bd.callProcedureWithParameter('sp_colsultar_cidades', [estnome]);
     return consulta[0];
-  })
-  .catch(error => {
+  } catch (error) {
     console.log(error);
     return error;
-  });
+  }
 }
 
-module.exports = { getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios, getProjetosVoluntario, exitProjeto, listCidades};
+async function editNomeSocial(username, nomesocial){
+  const parametros = [username, nomesocial];
+  try {
+    const consulta = await bd.callProcedureWithParameter('sp_alterar_nomesocial_voluntario',parametros);
+    return consulta[0][0];
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+async function editBio(username, bio){
+  const parametros = [username, bio];
+  try {
+    const consulta = bd.callProcedureWithParameter('sp_alterar_bio_voluntario',parametros);
+    return consulta[0][0];
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+async function editCidade(username, cidade){
+  const parametros = [username, cidade];
+  try {
+    const consulta = bd.callProcedureWithParameter('sp_alterar_cidade_voluntario',parametros);
+    return consulta[0][0];
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+async function editTelefone(username, telefone){
+  const parametros = [username, telefone];
+  try {
+    const consulta = bd.callProcedureWithParameter('sp_alterar_telefone_voluntario',parametros);
+    return consulta[0][0];
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+module.exports = {  getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios,
+                    getProjetosVoluntario, exitProjeto, listCidades, editNomeSocial, editBio,
+                    editCidade, editTelefone};

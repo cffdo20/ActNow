@@ -78,36 +78,36 @@ router.post('/editar', ensureAuthenticated, (req, res) => {
     usuarioController.alterarEmailUsuario(req)
     .then(resposta => {
         if(!resposta.erro){
-            console.log('\nResposta do back-end: ',{alerta: resposta},'\n');
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
             req.session.user['e-mail'] = req.body.userEmail;
-            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta})}`);
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
-            console.log('\nResposta do back-end: ',{alerta: resposta.erro},'\n');
-            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
         }
     })
     .catch(error => {
         console.log('\nResposta do back-end (com erro): ',error,'\n');
-        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
     });
 });
 
 // Altera a senha do usuario
-router.post('/alterar-senha', ensureAuthenticated, (req, res) => {
+router.post('/editar-senha', ensureAuthenticated, (req, res) => {
     console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
     usuarioController.alterarSenhaUsuario(req)
     .then(resposta => {
         if(!resposta.erro){
-            console.log('\nResposta do back-end: ',{alerta: resposta},'\n');
-            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta})}`);
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
-            console.log('\nResposta do back-end: ',{alerta: resposta.erro},'\n');
-            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
         }
     })
     .catch(error => {
         console.log('\nResposta do back-end (com erro): ',error,'\n');
-        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
     });
 });
 

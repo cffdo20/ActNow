@@ -238,4 +238,86 @@ function listarCidades(req){
     });
 }
 
-module.exports = { filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios, exibirAreaVoluntario, sairProjeto, listarCidades };
+function editarNomeSocial(req){
+    return new Promise((resolve, reject) => {
+        voluntario.editNomeSocial(req.session.user.username, req.body.volNomeSocial)
+        .then(resultado => {
+            if(!resultado.erro){
+                resolve({
+                    alerta: resultado.resposta
+                });
+            } else {
+                resolve({
+                    erro: resultado.erro
+                });
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+function editarBio(req){
+    return new Promise((resolve, reject) => {
+        voluntario.editBio(req.session.user.username, req.body.volBio)
+        .then(resultado => {
+            if(!resultado.erro){
+                resolve({
+                    alerta: resultado.resposta
+                });
+            } else {
+                resolve({
+                    erro: resultado.erro
+                });
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+function editarCidade(req){
+    return new Promise((resolve, reject) => {
+        voluntario.editCidade(req.session.user.username, req.body.volCidNome)
+        .then(resultado => {
+            if(!resultado.erro){
+                resolve({
+                    alerta: resultado.resposta
+                });
+            } else {
+                resolve({
+                    erro: resultado.erro
+                });
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+function editarTelefone(req){
+    return new Promise((resolve, reject) => {
+        voluntario.editTelefone(req.session.user.username, req.body.volTelefone)
+        .then(resultado => {
+            if(!resultado.erro){
+                resolve({
+                    alerta: resultado.resposta
+                });
+            } else {
+                resolve({
+                    erro: resultado.erro
+                });
+            }
+        })
+        .catch(error => {
+            reject(error);
+        });
+    });
+}
+
+module.exports = {  filtrarVoluntario, voluntariarUsuario, recrutarVoluntario, listarVoluntarios,
+                    exibirAreaVoluntario, sairProjeto, listarCidades, editarNomeSocial, editarBio,
+                    editarCidade, editarTelefone };

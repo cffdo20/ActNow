@@ -1,5 +1,6 @@
 // Importando a classe Usuario
 const usuario = require('../model/Usuario.js');
+const usuario1 = require('../model/Usuario.js');
 
 // CREAT
 function criarUsuario(req) {
@@ -45,7 +46,7 @@ function alterarSenhaUsuario(req) {
       if (usuario.senha === req.body.senhaOld) {
         if (req.body.senhaNew1 === req.body.senhaNew2) {
           const senhaNew = req.body.senhaNew1;
-          usuario.updateSenhaUsuario(req.session.user.username, senhaNew)
+          usuario1.updateSenhaUsuario(req.session.user.username, senhaNew)
           .then(resultado => {
             resolve({
               alerta: resultado.resposta

@@ -159,22 +159,78 @@ router.get('/',ensureAuthenticated, (req, res) => {
 
 // Editar o Nome Social do voluntário
 router.post('/editar-nomesocial',ensureAuthenticated,(req,res)=> {
-    //stub
+    console.log('\nEntrada do frot-end: ',req.session.user,req.body,'\n');
+    voluntarioController.editarNomeSocial(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        } else {
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
+    });
 });
 
 // Editar a Biografia do voluntário
 router.post('/editar-bio',ensureAuthenticated,(req,res)=> {
-    //stub
+    console.log('\nEntrada do frot-end: ',req.session.user,req.body,'\n');
+    voluntarioController.editarBio(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        } else {
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
+    });
 });
 
 // Editar a Cidade do voluntário
 router.post('/editar-cidade',ensureAuthenticated,(req,res)=> {
-    //stub
+    console.log('\nEntrada do frot-end: ',req.session.user,req.body,'\n');
+    voluntarioController.editarCidade(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        } else {
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
+    });
 });
 
 // Editar o Telefone do voluntário
 router.post('/editar-telefone',ensureAuthenticated,(req,res)=> {
-    //stub
+    console.log('\nEntrada do frot-end: ',req.session.user,req.body,'\n');
+    voluntarioController.editarTelefone(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        } else {
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
+    });
 });
 
 module.exports = router;
