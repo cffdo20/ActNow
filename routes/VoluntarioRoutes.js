@@ -107,23 +107,21 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/cidades/:estado', (req, res) => {
-    console.log('\nEntrada do front-end: ',req.params,'\n');
-    //const estado = 'Amazonas';
-    //const estado = req.params.estado;
-    //const cidades = cidadesPorEstado[estado] || [];
+    console.log('\nEntrada do front-end: ', req.params, '\n');
     voluntarioController.listarCidades(req)
     .then(resposta => {
-        if(!resposta.erro){
-            console.log('\nResposta do Back-end: ',resposta,'\n');
-            res.json(resposta);
-            //res.redirect('/');
-        }else{
-            console.log('\nResposta do Back-end: ',resposta.erro,'\n');
-            res.redirect('/');
+        if (!resposta.erro) {
+            console.log('\nResposta do Back-end: ', resposta, '\n');
+            res.json(resposta); // Envia a resposta JSON
+        } else {
+            console.log('\nResposta do Back-end: ', resposta.erro, '\n');
+            res.status(500).json({ erro: 'Erro ao buscar cidades.' }); // Envia um erro se houver
         }
     })
-    .catch();
-    res.redirect(`/?alerta=${encodeURIComponent('Houve um erro interno no servidor. Contacte o administrador do sistema ou tente mais tarde')}`);
+    .catch(error => {
+        console.error('Erro no servidor:', error);
+        res.status(500).json({ erro: 'Erro interno do servidor.' }); // Lida com erros internos
+    });
 });
 
 /*

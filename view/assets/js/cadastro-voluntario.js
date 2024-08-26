@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const estado = estadoSelect.value; // Corrigido
 
         if (estado) {
-            fetch(`/cidades/${estado}`) 
+            fetch(`/voluntarios/cidades/${estado}`) 
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erro de conexão');
@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     cidadeSelect.innerHTML = '<option selected>Cidade</option>';
                     cidades.forEach(cidade => {
                         const option = document.createElement('option');
-                        option.value = cidade; 
-                        option.textContent = cidade;
+                        option.value = cidade.cidnome; 
+                        option.textContent = cidade.cidnome;
 
                         cidadeSelect.appendChild(option);
                     });
