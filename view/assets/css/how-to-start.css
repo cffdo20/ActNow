@@ -1,15 +1,13 @@
 .main-container{
     flex-direction: column;
-    display: flex; 
-    border-right: 1px solid #c1bbbb; 
-    border-left: 1px solid #c1bbbb;  
-     
+    display: flex;   
+    width: 80%;
 }
 
 
 ol>li{
     padding: 0.5rem; 
-    font-size: 1.125rem; 
+    font-size: 1rem; 
 }
 
 
