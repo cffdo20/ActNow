@@ -76,13 +76,16 @@ function voluntariarUsuario(req){
         .then(resultado => {
             if(!resultado.erro){
                 // Criou o voluntário, agora vamos adicionar a disponibilidade dele
-                resolve (req.body.voluntarioDias.map(dia => {
-                    return addDisponibilidade(req.session.user.username,dia,req.body.voluntarioHorario);
-                }));
+                const resultadoHabilidade = addHabilidade(req.session.user.username,req.body.voluntarioHabilidades);
+                if(!resultadoHabilidade.erro){
+                    req.body.voluntarioDias.map(dia => {
+                        resolve(addDisponibilidade(req.session.user.username,dia,req.body.voluntarioHorario));
+                    });
+                }
+                    
+            }else{
+                resolve({alerta: 'Não foi possível criar o voluntário'});
             }
-            //resolve ({
-            //    alerta: resultado.resposta
-            //})
         })
         .catch(error => {
             reject(error)
@@ -99,8 +102,13 @@ async function addDisponibilidade(user, dia, turno){
     }
 }
 
-async function addHabilidade(user, habilidade){
-    //stub
+async function addHabilidade(user, habilidades){
+    try{
+        const resultado = await disponibilidade.setHabilidade(user, habilidades);
+        return resultado;
+        } catch (error) { 
+            throw error;
+        }
 }
 
  function recrutarVoluntario(req){

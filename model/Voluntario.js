@@ -150,8 +150,16 @@ function setDisponibilidade(username, dia, turno){
 }
 
 function setHabilidade(username, habilidades){
-  const qtdeHabilidades = habilidades.length();
-  const parametros = [username, qtdeHabilidades, ];
+  const qtdeHabilidades = habilidades.length;
+  const parametros = [username, qtdeHabilidades, ...habilidades];
+  return bd.callProcedureWithParameter('sp_habilidades_voluntario',parametros)
+  .then(consulta => {
+    return consulta[0][0];
+  })
+  .catch(error => {
+    console.log(error);
+    return error;
+  });
 }
 
 async function exitProjeto(tituloProj, username){
@@ -221,4 +229,4 @@ async function editTelefone(username, telefone){
 
 module.exports = {  getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios,
                     getProjetosVoluntario, exitProjeto, listCidades, editNomeSocial, editBio,
-                    editCidade, editTelefone, setDisponibilidade};
+                    editCidade, editTelefone, setDisponibilidade, setHabilidade};

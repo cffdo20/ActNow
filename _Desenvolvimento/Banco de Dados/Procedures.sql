@@ -789,7 +789,7 @@ BEGIN
 						insert into voluntario(volcpf, voluscod, volnome, volnomesocial, volbio, voltelefone, volcidcod)
 						values(v_crvol_volcpf, v_crvol_voluscod, v_crvol_volnome, v_crvol_volnomesocial, v_crvol_volbio, v_crvol_voltelefone, v_crvol_volcidcod);
 						if (select count(*) from voluntario where volcpf=v_crvol_volcpf and volstatus=1)<1 then
-							select 'ERRO: O Usuário não foi criado no banco de dados.' as erro;
+							select 'ERRO: O Voluntário não foi criado no banco de dados.' as erro;
 						else
 							select 'Voluntário criado com sucesso.' as resposta;
 						end if;
@@ -800,9 +800,15 @@ BEGIN
     end if;
 END$$
 DELIMITER ;
+
 /* 
 drop Procedure sp_criar_voluntario;
-call sp_criar_voluntario('user123|12345767889|TESTER|BETATESTER|TESTANDO ISSO AQUI!|11111111111|MANAUS|');
+delete from voluntario where volcpf='12345767889';
+call sp_criar_voluntario('juliascott|12345767889|TESTER||TESTúNDO, ISSO AQUI!|11111111111|MANAUS|');
+Call sp_criar_voluntario('juliascott|01235678460|Yulia Scott||Júlia SCHOTT, A melhor!|92992470452|MANAUS|');
+drop Procedure sp_criar_voluntario;
+call sp_criar_voluntario('user123|12345767889|TESTER||TESTANDO, ISSO AQUI!|11111111111|MANAUS|');
+select * from voluntario;
 select * from usuario;
 select * from voluntario;
 */
