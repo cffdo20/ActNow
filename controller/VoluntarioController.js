@@ -127,7 +127,7 @@ async function addHabilidade(user, habilidades){
         }
 }
 
- function recrutarVoluntario(req){
+function recrutarVoluntario(req){
     return new Promise((resolve, reject) => {
         projeto.addVoluntario(req.body.username, req.session.projNome)
         .then(resultado => {
@@ -139,7 +139,7 @@ async function addHabilidade(user, habilidades){
             reject(error);
         })
     });
- }
+}
 
 function listarVoluntarios(voluntarios){
     return new Promise((resolve, reject) => {

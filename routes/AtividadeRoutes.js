@@ -18,7 +18,7 @@ router.post('/criar', ensureAuthenticated, (req, res) => {
         if(!resposta.erro){
             // Armazena na sessão e redireciona
             req.session.projNome = req.body.projNome;
-            res.redirect('/projetos/visualizar');
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
             req.session.projNome = req.body.projNome;
             res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.erro)}`);
@@ -67,7 +67,7 @@ router.post('/excluir', ensureAuthenticated, (req, res) => {
         if(!resposta.erro){
             // Armazena na sessão e redireciona
             req.session.projNome = req.body.projNome;
-            res.redirect('/projetos/visualizar');
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
             req.session.projNome = req.body.projNome;
             res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.erro)}`);

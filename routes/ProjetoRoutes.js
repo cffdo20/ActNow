@@ -27,7 +27,7 @@ router.post('/criar', ensureAuthenticated, (req, res) => {
         console.log(resposta);
         if(!resposta.erro){
             req.session.projNome = req.body.projNome;
-            res.redirect(`/projetos/visualizar?alerta:${encodeURIComponent(resposta.alerta)}`);
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
             // Em caso de erro renderiza a mesma página sem dados e enviando a mensagem de erro como alert
             res.render('cadastrar-projeto.ejs',{ alerta: resposta.erro });
@@ -216,7 +216,7 @@ router.post('/excluir', ensureAuthenticated, (req, res) => {
         if (!resposta.erro) {
             // Se não retornar erro, redireciona para a página do projeto com os dados editados
             // Aqui você pode adicionar dados na URL como parâmetros de consulta ou usar um sistema de sessão
-            res.redirect('/projetos');
+            res.redirect(`/projetos?alerta=${encodeURIComponent(resposta.resposta)}`);
         } else {
             req.session.projNome = req.body.projNome;
             // Em caso de erro, redireciona para a mesma página e passa a mensagem de erro na URL como parâmetro de consulta
