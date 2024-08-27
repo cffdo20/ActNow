@@ -100,7 +100,7 @@ function listVoluntarios(tituloProj){
 function getProjetosVoluntario(username){
   return bd.callProcedureWithParameter('sp_projetos_voluntario',[username])
   .then(consulta => {
-    console.log(consulta[0][0]);
+    //console.log(consulta[0][0]);
     return consulta[0][0];
   })
   .catch(error => {
@@ -141,7 +141,11 @@ function setDisponibilidade(username, dia, turno){
   const parametros = [username, dia, matutino, vespertino, noturno];
   return bd.callProcedureWithParameter('sp_disponibilidade_voluntario', parametros)
   .then(consulta => {
-    return consulta[0][0];
+    if(consulta.warningStatus === 0){
+      return {resposta: 'A disponibilidade foi incluída com sucesso'};
+    } else {
+      return {erro: 'houve um erro no cadastro de disponibilidade do voluntário, tente novamente.'}
+    }
   })
   .catch(error => {
     console.log(error);
@@ -150,8 +154,12 @@ function setDisponibilidade(username, dia, turno){
 }
 
 function setHabilidade(username, habilidades){
-  const qtdeHabilidades = habilidades.length;
-  const parametros = [username, qtdeHabilidades, ...habilidades];
+  var parametros = [];
+  if(Array.isArray(habilidades)){
+    parametros = [username, habilidades.length, ...habilidades];
+  } else {
+    parametros = [username, 1, habilidades];
+  }
   return bd.callProcedureWithParameter('sp_habilidades_voluntario',parametros)
   .then(consulta => {
     return consulta[0][0];
@@ -227,6 +235,16 @@ async function editTelefone(username, telefone){
   }
 }
 
+async function  deleteVoluntario(username) {
+  try {
+    const consulta = bd.callProcedureWithParameter('sp_inativar_voluntario',[username]);
+    return consulta[0][0];
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 module.exports = {  getVoluntario , getFiltroVoluntario , setVoluntario, listVoluntarios,
                     getProjetosVoluntario, exitProjeto, listCidades, editNomeSocial, editBio,
-                    editCidade, editTelefone, setDisponibilidade, setHabilidade};
+                    editCidade, editTelefone, setDisponibilidade, setHabilidade, deleteVoluntario};

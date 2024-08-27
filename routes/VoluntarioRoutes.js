@@ -45,11 +45,12 @@ router.post('/filtrar', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/recrutar',ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada do front-end: ',req.session.user,req.body,'\n');
     voluntarioController.recrutarVoluntario(req)
     .then(resposta => {
-        console.log('Entrada do front-end: ',req.body);
+        console.log('\nResposta do back-end: ',resposta,'\n');
         if(!resposta.erro){
-            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta)}`);
+            res.redirect(`/projetos/visualizar?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{
             res.render('/filtro', {alerta: resposta.erro});
         }
@@ -94,6 +95,7 @@ router.post('/voluntariar-se', ensureAuthenticated, (req, res) => {
     console.log('\nEntrada do front-end: ',req.session.user, req.body,'\n');
     voluntarioController.voluntariarUsuario(req)
     .then(resposta => {
+        console.log('\nRetorno do back-end: ',resposta,'\n');
         if(!resposta.erro){
             res.redirect(`/voluntarios?alerta=${encodeURIComponent(resposta.alerta)}`);
         }else{

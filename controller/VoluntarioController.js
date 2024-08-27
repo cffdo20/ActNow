@@ -70,28 +70,44 @@ function filtrarVoluntario(req) {
     });
 }
 
-function voluntariarUsuario(req){
-    return new Promise((resolve, reject) => {
-        voluntario.setVoluntario(req.session.user.username, req.body.volCPF, req.body.volNome, req.body.volNomeSocial, req.body.volBio, req.body.volTelefone, req.body.volCidNome)
-        .then(resultado => {
-            if(!resultado.erro){
-                // Criou o voluntário, agora vamos adicionar a disponibilidade dele
-                const resultadoHabilidade = addHabilidade(req.session.user.username,req.body.voluntarioHabilidades);
-                if(!resultadoHabilidade.erro){
-                    req.body.voluntarioDias.map(dia => {
-                        resolve(addDisponibilidade(req.session.user.username,dia,req.body.voluntarioHorario));
-                    });
+async function voluntariarUsuario(req) {
+    try {
+        const resultadoSet = await voluntario.setVoluntario(req.session.user.username, req.body.volCPF, req.body.volNome, req.body.volNomeSocial, req.body.volBio, req.body.volTelefone, req.body.volCidNome);
+
+        if (!resultadoSet.erro) {
+            const resultadoHabilidade = await addHabilidade(req.session.user.username, req.body.voluntarioHabilidades);
+            if (!resultadoHabilidade.erro) {
+                if (Array.isArray(req.body.voluntarioDias)) {
+                    for (const dia of req.body.voluntarioDias) {
+                        const resultadoDisponibilidade = await addDisponibilidade(req.session.user.username, dia, req.body.voluntarioHorario);
+                        if (resultadoDisponibilidade.erro) {
+                            await dados.deleteVoluntario(req.session.user.username);
+                            return { alerta: 'Não foi possível criar o voluntário' };
+                        }
+                    }
+                } else {
+                    const resultadoDisponibilidade = await addDisponibilidade(req.session.user.username, req.body.voluntarioDias, req.body.voluntarioHorario);
+                    if (resultadoDisponibilidade.erro) {
+                        await dados.deleteVoluntario(req.session.user.username);
+                        return { alerta: 'Não foi possível criar o voluntário' };
+                    }
                 }
-                    
-            }else{
-                resolve({alerta: 'Não foi possível criar o voluntário'});
+
+                return { alerta: 'O Voluntário foi adicionado com sucesso' };
+            } else {
+                await dados.deleteVoluntario(req.session.user.username);
+                return { alerta: 'Não foi possível criar o voluntário' };
             }
-        })
-        .catch(error => {
-            reject(error)
-        })
-    })
+        } else {
+            await dados.deleteVoluntario(req.session.user.username);
+            return { alerta: 'Não foi possível criar o voluntário' };
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
+
 
 async function addDisponibilidade(user, dia, turno){
     try{
