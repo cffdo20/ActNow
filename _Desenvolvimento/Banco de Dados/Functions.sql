@@ -124,10 +124,10 @@ BEGIN
 					LEAVE l_constuir_string;
 				else
 					if v_cont=v_qt_proj_usuario then
-						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,',',v_linha,',');
+						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,'|',v_linha,'|');
 						set v_bpcu_string_projeto=substring(v_bpcu_string_projeto,2);
 					else
-						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,',',v_linha);
+						set v_bpcu_string_projeto=concat(v_bpcu_string_projeto,'|',v_linha);
 					end if;
                     SET v_cont = v_cont + 1;
 				END IF;
@@ -136,9 +136,9 @@ BEGIN
         end while;
 	else 
 		if v_qt_proj_usuario=1 then
-			set v_bpcu_string_projeto = convert((select projid
+			set v_bpcu_string_projeto = concat(convert((select projid
 									from projetosocial
-									where projuscod=p_bpcu_uscodigo), char);
+									where projuscod=p_bpcu_uscodigo), char),'|');
 		else
 			if v_qt_proj_usuario<1 then
                 set v_bpcu_string_projeto='0';
@@ -237,10 +237,10 @@ BEGIN
 					LEAVE l_constuir_string;
 				else
 					if v_cont=v_qt_ativ_projeto then
-						set  v_baip_string_atividade=concat(v_baip_string_atividade,',',v_linha,',');
+						set  v_baip_string_atividade=concat(v_baip_string_atividade,'|',v_linha,'|');
                         set v_baip_string_atividade=substring(v_baip_string_atividade,2);
 					else
-						set v_baip_string_atividade=concat(v_baip_string_atividade,',',v_linha);
+						set v_baip_string_atividade=concat(v_baip_string_atividade,'|',v_linha);
 					end if;
                     SET v_cont = v_cont + 1;
 				END IF;
@@ -249,9 +249,9 @@ BEGIN
         end while;
 	else 
 		if v_qt_ativ_projeto=1 then
-			set v_baip_string_atividade = convert((select atid
+			set v_baip_string_atividade = concat(convert((select atid
 													from atividade
-													where atprojid=p_baip_projid), char);
+													where atprojid=p_baip_projid), char),'|');
 		else
 			if v_qt_ativ_projeto<1 then
                 set v_baip_string_atividade='0';
@@ -396,7 +396,7 @@ DELIMITER ;
 
 -- função para buscar codigo pelo nome da da cidade;
 DELIMITER $$
-CREATE FUNCTION f_buscar_cidade_codigo(p_bcc_cidnome varchar(40)) RETURNS boolean
+CREATE FUNCTION f_buscar_cidade_codigo(p_bcc_cidnome varchar(40)) RETURNS int
 BEGIN
     DECLARE v_bcc_codigo_cidade int default 0;
     
@@ -407,6 +407,21 @@ BEGIN
     RETURN v_bcc_codigo_cidade;
 END$$
 DELIMITER ;
+
+-- função para buscar codigo pelo nome do estado;
+DELIMITER $$
+CREATE FUNCTION f_buscar_estado_codigo(p_bce_estnome varchar(30)) RETURNS int
+BEGIN
+    DECLARE v_bce_codigo_estado int default 0;
+    
+    set v_bce_codigo_estado = (select estcodigo
+		from estado
+        where estnome=p_bce_estnome);
+    
+    RETURN v_bce_codigo_estado;
+END$$
+DELIMITER ;
+-- drop FUNCTION f_buscar_estado_codigo;
 
 -- função para validar codigo de cidade
 DELIMITER $$
@@ -421,6 +436,8 @@ BEGIN
     RETURN v_vcc_status_cidade;
 END$$
 DELIMITER ;
+
+
 
 -- Função para consultar quantos projetos um usuário cadastrou pelo username:
 DELIMITER $$

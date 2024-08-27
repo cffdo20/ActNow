@@ -1,8 +1,10 @@
-const Usuario = require('../model/Usuario');
+const usuario = require('../model/Usuario');
 
 module.exports = {
     login: async (req, res) => {
-        const { userName, userSenha } = req.body;
+        const { userEmail, userSenha } = req.body;
+        var consulta = await usuario.getUsuarioByEmail(userEmail);
+        const userName = consulta.resposta;
       
         try {
           // Verifique se req.session existe e é um objeto
@@ -11,20 +13,22 @@ module.exports = {
             return res.render('login', { alerta: 'Ocorreu um erro na sessão. Tente novamente.' });
           }
       
-          const user = await Usuario.getUsuario(userName);
+          const user = await usuario.getUsuario(userName);
+          // Remover a senha do objeto 'user'
+          const { senha, ...userWithoutPassword } = user;
       
           if (!user || user.senha !== userSenha) {
             return res.render('login', { alerta: 'Credenciais inválidas. Tente novamente.' });
           }
       
-          req.session.user = user;
+          req.session.user = userWithoutPassword;
           res.redirect('/');
         } catch (error) {
           console.error(error);
           res.render('login', { alerta: 'Ocorreu um erro ao tentar fazer login. Tente novamente.' });
         }
       },
-          
+
 
   logout: (req, res) => {
     req.session.destroy(err => {

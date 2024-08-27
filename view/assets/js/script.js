@@ -46,3 +46,29 @@ createProjDemoButton.addEventListener("click", (e) => {
     hiddenParagraph.classList.add('active'); 
 
 })
+
+/* TESTE TESTE TESTE */
+introJs().setOptions({
+    steps:[{
+        title: 'Bem vindo(a) 👋',
+        intro: 'Este é o ActNow.'
+    },
+    {
+        element: document.querySelector('.how-to-start'),
+        intro: 'Antes de tudo, aprenda o que são Projetos Sociais'
+    },
+    {
+        element: document.querySelector('.register-button'),
+        intro: 'Após isso, crie uma conta'
+    },
+    {
+        element: document.querySelector('.login-button'),
+        intro: 'Ou, caso já possua, faça login'
+    },
+],
+nextLabel: 'Próximo',
+prevLabel: 'Anterior',
+doneLabel: 'Concluído',
+dontShowAgain: true,
+}).start();
+

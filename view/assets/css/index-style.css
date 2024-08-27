@@ -126,6 +126,7 @@ section{
 /* cards */
 .card{
     width: 22rem; 
+    height: 13.938rem; 
 }
 
 #card-tecnologia{

@@ -50,11 +50,13 @@
 
           <li class="nav-item">
             <!-- visualização dos projetos pode ser aqui - por enquanto (?) -->
-            <a href="/projetos" class="nav-link text-dark">Projetos</a>
+            <a href="/projetos" class="nav-link text-dark">
+              <span class="fa-solid fa-folder-tree"></span>
+              Projetos</a>
           </li>
 
           <li class="nav-item">
-            <a href="" class="btn me-3">
+            <a href="/usuarios" class="btn me-3">
               <span class="fa-solid fa-user"></span>
               Perfil</a>
           </li>
@@ -67,6 +69,12 @@
   <!-- FIM HEADER -->
 
 
+  <div class="d-flex justify-content-center align-items-center">
+    <div id="alerta" style = "display: none">
+  </div>
+
+  </div>
+  
   <main>
     <div class="proj-container main-box container mt-4">
       <div class="row">
@@ -83,6 +91,10 @@
                   <span class="fa-solid fa-plus"></span>Cadastrar Atividade</button>
               </div>  
             </div>
+            <div class="atv-content mb-3">
+              <span class = "d-flex align-items-center">Data de início</span>
+              <p class = "lead"> <%= Inicio %> </p>
+            </div>  
             <div class="atv-content mb-3" id = "description-container">
               <!-- <p>Data de início: 15/03/2024</p> -->
               <span class = "d-flex align-items-center">Descrição</span>
@@ -98,6 +110,7 @@
               </div>
 
               <div class="atv-content mb-3" id = "goals-container">
+                <span>Objetivos</span>
                 <ul class = "pt-4">
                   <li class = ""> <%= Objetivos %> </li>
                 </ul>
@@ -141,7 +154,7 @@
                 <span>Deseja excluir permanentemente o projeto?</span>
                 <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
                 <!-- Form apenas com submit para exclusão (?) -->
-                <form id = "exclusaoProjetoForm" action="/excluir-projeto" method = "POST" >
+                <form id = "exclusaoProjetoForm" action="/projetos/excluir" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
                   
@@ -160,7 +173,7 @@
                   <button id = "close-description-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-descricao" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-descricao" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico. Pode ser o ID do projeto (!?) -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -181,7 +194,7 @@
                   <button id = "close-justify-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-justificativa" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-justificativa" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -202,7 +215,7 @@
                   <button id = "close-goals-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-objetivos" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-objetivos" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -223,7 +236,7 @@
                   <button id = "close-audience-dialog"><span class="fa-solid fa-xmark"></span></button>
                 </div>
 
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/editar-publico" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/projetos/editar-publico" method = "POST" >
                   <!-- input oculto para relacionar edição a projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
@@ -247,15 +260,15 @@
                 </div>
 
                 <!-- form para cadastrar atividade -->
-                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/cadastrar-atividade" method = "POST" >
+                <form class = "edit-dialog-form" id = "exclusaoProjetoForm" action="/atividades/criar" method = "POST" >
                   <!-- input oculto enviando algum dado único do projeto para garantir que a atividade esteja relacionado a um projeto específico  -->
                   <input type="hidden" name="projNome" value="<%= Titulo %>">
 
-                  <input class = "input-field-dialog form-control" type="text" name = "atvNome" placeholder = "Título"></input>
+                  <input class = "input-field-dialog form-control" type="text" name = "tituloAtividade" placeholder = "Título"></input>
 
-                  <textarea class = "input-field-dialog form-control" type="text" name = "atvDescricao" placeholder = "Descrição"></textarea>
+                  <textarea class = "input-field-dialog form-control" type="text" name = "descricaoAtividade" placeholder = "Descrição"></textarea>
 
-                  <input class = "input-field-dialog form-control" type="date" name = "atvData" placeholder = "Data da atividade...">
+                  <input class = "input-field-dialog form-control" type="date" name = "dataEntregaAtividade" placeholder = "Data da atividade...">
 
                   <input type="submit" value="Salvar" class = "submit-field-dialog btn btn-primary text-light">
                 </form>
@@ -264,53 +277,119 @@
               </div>
             </dialog>
 
-            <a href="/recrutar-voluntario" class = "recruit-btn">
+            <!-- modal para excluir atividade -->
+            <dialog id = "exclusaoFormModal">
+              <div class="dialogExclusao">
+                <span id = "exclamation-triangle" class="bi bi-exclamation-triangle-fill"></span>
+                <span>Deseja excluir a atividade?</span>
+                <span id = "dialog-warning">Essa ação não poderá ser desfeita</span>
+                <!-- Form apenas com submit para exclusão (?) -->
+                <form id = "exclusaoAtividadeForm" action="/atividades/excluir" method = "POST" >
+                  <!-- input oculto para relacionar edição a projeto específico  -->
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
+                  <input type="hidden" name="tituloAtividade" value="">
+                  <input id = "delete-project-button" type="submit" value="Sim, excluir">
+                </form>
+                <button id = "close-delete-activity-modal">Manter atividade</button>
+              </div>
+            </dialog>
+
+
+            <!-- modal para editar atividade -->
+            <dialog id = "editAtividadeModal" class = "edit-field-dialog">
+              <div class="meuDialog">      
+                <div class="edit-description-header d-flex justify-content-between mb-2">
+                  <span>Editar Atividade</span>
+                  <button id = "close-edit-activity-dialog"><span class="fa-solid fa-xmark"></span></button>
+                </div>
+                <!-- form para editar atividade -->
+                <form class = "edit-dialog-form" id = "edicaoAtividadeForm" action="/atividades/editar" method = "POST" >
+                  <!-- input oculto enviando algum dado único do projeto para garantir que a atividade esteja relacionado a um projeto específico  -->
+                  <input type="hidden" name="projNome" value="<%= Titulo %>">
+                  <input type="hidden" name="tituloAtividade" value="">
+
+                  <textarea class = "input-field-dialog form-control" type="text" name = "descricaoAtividade" placeholder = "Nova descrição"></textarea>
+
+                  <input class = "input-field-dialog form-control" type="date" name = "dataEntregaAtividade" placeholder = "Nova data de entrega">
+
+                  <input type="submit" value="Salvar alterações" class = "submit-field-dialog btn btn-primary text-light">
+                </form>
+          
+                <!-- <button id = "returnPopBtn">Manter projeto</button> -->
+              </div>
+            </dialog>
+
+            <!-- <a href="/voluntarios/recrutar" class = "recruit-btn">
               <span class="fa-solid fa-users"></span>
-              Recrutar</a>
+              Recrutar</a> -->
+
+            <form action="/voluntarios/filtro" method="POST">
+                <input type="hidden" name="projNome" value="<%= Titulo %>">
+                <button type="submit" class="recruit-btn">
+                    <span class="fa-solid fa-users"></span> Recrutar
+                </button>
+            </form>
           </div>
 
-          <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->
-          <!-- <% if (typeof alerta !== 'undefined' && alerta) { %>
+          <!-- exibir voluntários  -->
+          <h4 id = "activity-calendar" class = "fw-bold">Voluntários</h4>
+          <% if (Voluntarios && Voluntarios.length > 0 && Voluntarios.every(voluntario => !voluntario.Nome || !voluntario.Telefone) ) { %>
             <div class="error-container">
-              <p><%= alerta %></p>
+              <p></p>
             </div>
-          <% } else if (typeof Atividades !== 'undefined' && Atividades.length > 0) { %>
-            <% Atividades.forEach(function(atividade, index) { %>
-              <div class="activities-calendar">
-                <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
-                <div class="activity-container mb-2 d-flex align-items-center">
-                  <span class = "activity-span"> <%= atividade.Descricao %> </span>
-                  <div class="d-flex align-items-center">
-                    <span class="bi bi-pencil-fill"></span>
-                    <span class="bi bi-dash-circle"></span>
+          <% } else if (typeof Voluntarios !== 'undefined' && Voluntarios.length > 0) { %>
+            <% Voluntarios.forEach(function(voluntario, index) { %>
+              <div class="volunteers-container">
+                <div class="volunteer-container  d-flex align-items-center">
+                  <div class="d-flex flex-column m-1">
+                    <div class="activity-header">
+                      <span class = "activity-span"> 
+                        <%= voluntario.Nome %> </span>
+                    </div>
+                      <p class = "register-text">
+                        <%= voluntario.Telefone %></p>
                   </div>
                 </div>
               </div>
             <% }); %>
-          <% } %> -->
-          <!-- <div class="activities-calendar">
-            <h4 class = "calendar-title mt-4">Calendário de Atividades</h4>
-            <div class="activity-container mb-2 d-flex align-items-center">
-              <span class = "activity-span">01/04/2024 - Visita ao local</span>
-              <div class="d-flex align-items-center">
-                <span class="bi bi-pencil-fill"></span>
+          <% } %>
+
+          <hr>
+          <!--  quando esses dados estiverem sendo cadastrados realmente, receber como array e usar map() -->
+          <h4 id = "activity-calendar" class = "fw-bold">Atividades</h4>
+          <% if (Atividades && Atividades.length > 0 && Atividades.every(atividade => !atividade.titulo || !atividade.descricao) ) { %>
+            <div class="error-container">
+              <p></p>
+            </div>
+          <% } else if (typeof Atividades !== 'undefined' && Atividades.length > 0) { %>
+            <% Atividades.forEach(function(atividade, index) { %>
+              <div class="activities-calendar">
+                <div class="activity-container mb-2 d-flex align-items-center">
+                  <div class="d-flex flex-column m-1">
+                    <div class="activity-header">
+                      <span class = "activity-span"> 
+                        <span class="bi bi-sticky-fill"></span>
+                        <%= atividade.titulo %> </span>
+                      <div class="d-flex gap-4">
+                        <span class="fa-solid fa-pencil edit-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
+                        <span class="fa fa-solid fa-trash delete-activity-btn" data-titulo = "<%= atividade.titulo %>"></span>
+                      </div>
+                    </div>
+                      <p><%= atividade.descricao %></p>
+                      <p class="activity-span"><%= atividade.Entrega %></p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="activity-container mb-2">
-              <span class = "activity-span">01/04/2024 - Visita ao local</span>
-              <span class="bi bi-pencil-fill"></span>
-            </div>
-            <div class="activity-container mb-2">
-              <span class = "activity-span">01/04/2024 - Visita ao local</span>
-              <span class="bi bi-pencil-fill"></span>
-            </div>
-          </div> -->
+            <% }); %>
+          <% } %>
+          
         </div>
       </div>
     </div>
 
     </div>
-    
+
+
     
   </main>
   

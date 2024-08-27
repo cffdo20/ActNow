@@ -122,7 +122,7 @@ BEGIN
 	else
 		if f_validar_atividade_id(v_adta_atid) is true then
 			update atividade set atdataentrega=v_adta_atdataentrega where atid=v_adta_atid;
-			if (select count(*) from atividade where atid=v_asta_atid and atdataentrega=v_adta_atdataentrega)<1 then
+			if (select count(*) from atividade where atid=v_adta_atid and atdataentrega=v_adta_atdataentrega)<1 then
 				select 'ERRO: Data de entrega da atividade não atualizada.' as erro;
 			else
 				SELECT 'Data de entrega da atividade alterada no banco de dados.' AS resposta;
@@ -133,7 +133,6 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
-
 -- Stored procedure para alterar o status de uma atividade
 
 DELIMITER $$
@@ -157,7 +156,7 @@ BEGIN
 			if !f_validar_string_status(v_asta_atstatus) then
 				select 'ERRO: O status informado para a atividade é inválido.' as erro;
 			else 
-				set v_asta_atstatustinyint = f_transforma_string_status(v_asta_atstatus);
+				set v_asta_atstatustinyint = f_transformar_string_status(v_asta_atstatus);
 				update atividade set atstatus=v_asta_atstatustinyint where atid=v_asta_atid;
 				if (select count(*) from atividade where atid=v_asta_atid and atstatus=v_asta_atstatustinyint)<1 then
 					select 'ERRO: Status da atividade não atualizada.' as erro;
@@ -171,6 +170,8 @@ BEGIN
 	end if;
 END$$
 DELIMITER ;
+
+-- drop procedure sp_alterar_status_atividade;
 
 -- Stored procedure ara alterar a descrição de uma atividade
 
@@ -788,7 +789,7 @@ BEGIN
 						insert into voluntario(volcpf, voluscod, volnome, volnomesocial, volbio, voltelefone, volcidcod)
 						values(v_crvol_volcpf, v_crvol_voluscod, v_crvol_volnome, v_crvol_volnomesocial, v_crvol_volbio, v_crvol_voltelefone, v_crvol_volcidcod);
 						if (select count(*) from voluntario where volcpf=v_crvol_volcpf and volstatus=1)<1 then
-							select 'ERRO: O Usuário não foi criado no banco de dados.' as erro;
+							select 'ERRO: O Voluntário não foi criado no banco de dados.' as erro;
 						else
 							select 'Voluntário criado com sucesso.' as resposta;
 						end if;
@@ -799,9 +800,15 @@ BEGIN
     end if;
 END$$
 DELIMITER ;
+
 /* 
 drop Procedure sp_criar_voluntario;
-call sp_criar_voluntario('user123|12345767889|TESTER|BETATESTER|TESTANDO ISSO AQUI!|11111111111|MANAUS|');
+delete from voluntario where volcpf='12345767889';
+call sp_criar_voluntario('juliascott|12345767889|TESTER||TESTúNDO, ISSO AQUI!|11111111111|MANAUS|');
+Call sp_criar_voluntario('juliascott|01235678460|Yulia Scott||Júlia SCHOTT, A melhor!|92992470452|MANAUS|');
+drop Procedure sp_criar_voluntario;
+call sp_criar_voluntario('user123|12345767889|TESTER||TESTANDO, ISSO AQUI!|11111111111|MANAUS|');
+select * from voluntario;
 select * from usuario;
 select * from voluntario;
 */
@@ -1321,3 +1328,14 @@ BEGIN
 END$$
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE sp_colsultar_cidades(in p_cc_parametros VARCHAR(1000))
+BEGIN
+	DECLARE v_cc_estnome VARCHAR(30);
+    declare v_cc_estcodigo int default 0;
+    SET v_cc_estnome = f_extrair_parametros(p_cc_parametros, 1);
+    set v_cc_estcodigo = f_buscar_estado_codigo(v_cc_estnome);
+	select cidnome from cidade where cidestcod = v_cc_estcodigo;
+END$$
+DELIMITER ;
+-- call sp_colsultar_cidades('Amazonas|');

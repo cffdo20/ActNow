@@ -25,21 +25,27 @@ const volutarioRoutes = require('./routes/VoluntarioRoutes.js');
 const projetoRoutes = require('./routes/ProjetoRoutes.js');
 const usuarioRoutes = require('./routes/UsuarioRoutes.js');
 const sessionRoutes = require('./routes/SessionRoutes.js');
+const atividadeRouter = require('./routes/AtividadeRoutes.js');
 
 /** Definição das Rotas */
 // Página: Index
 app.get('/', (req, res) => {
-    res.render('../index', { user: req.session.user });
+    if(req.session.user !== undefined)
+        res.render('user-page', { user: req.session.user });
+    else
+        res.render('../index', { user: req.session.user });
 });
 
 // Páginas de Voluntario
-app.use('/', volutarioRoutes);
+app.use('/voluntarios', volutarioRoutes);
 // Páginas de Projeto
-app.use('/', projetoRoutes);
+app.use('/projetos', projetoRoutes);
 // Páginas de Usuário
-app.use('/', usuarioRoutes);
+app.use('/usuarios', usuarioRoutes);
 // Páginas de Sessão
 app.use('/', sessionRoutes);
+// Páginas de Atividade
+app.use('/atividades', atividadeRouter);
 
 /** Inicialização do servidor */
 // Setando a porta a ser usada no localhost

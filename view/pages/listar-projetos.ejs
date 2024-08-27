@@ -51,19 +51,7 @@
         <ul class="navbar-nav ms-auto">
 
           <li class="nav-item">
-            <a href="" class="nav-link text-dark">Áreas</a>
-          </li>
-
-          <li class="nav-item">
-            <a href="" class="nav-link text-dark">Contatos</a>
-          </li>
-
-          <li class="nav-item me-2">
-            <a href="/" class="nav-link text-dark">Início</a>
-          </li>
-
-          <li class="nav-item">
-            <a href="" class="btn me-3">
+            <a href="/usuarios" class="btn me-3">
               <span class="fa-solid fa-user"></span>
               Perfil</a>
           </li>
@@ -85,18 +73,19 @@
     <p class="text-center register-text">Visualize seus projetos criados</p>
 
     <div class="row">
-      <% if (typeof alerta !== 'undefined' && alerta) { %>
-        <div class="error-container">
-          <p><%= alerta %></p>
+      <% if (Projetos && Projetos.length > 0 && Projetos.every(projeto => !projeto.Titulo || !projeto.Descricao))  { %>
+        <div class = "message-container">
+          <p>Você não possui projetos cadastrados<p>
+            <img src="../assets/img/no_projects.png" alt="" class="img-fluid">
         </div>
       <% } else if (typeof Projetos !== 'undefined' && Projetos.length > 0) { %>
         <% Projetos.forEach(function(projeto, index) { %>
           <div class="col-12 mb-3">
             <div class="project-container">
               <div class="project-main-info d-flex">
-                <span class="bi bi-kanban me-2"></span>
+                <span class="bi bi-folder-fill me-2"></span>
                 <a href="#" onclick="document.getElementById('form_<%= index %>').submit()"><%= projeto.Titulo %></a>
-                <form id="form_<%= index %>" action="/visualizar-projeto" method="POST" style="display:none;">
+                <form id="form_<%= index %>" action="/projetos/visualizar" method="POST" style="display:none;">
                   <input type="hidden" name="projNome" value="<%= projeto.Titulo %>">
                 </form>
               </div>
@@ -108,7 +97,7 @@
         <% }); %>
       <% } %>
       <div class="d-flex justify-content-center">
-        <a href="/criar-projeto" class="main-btn btn mt-2">
+        <a href="/projetos/criar" class="main-btn btn mt-2">
           <span class="fa-solid fa-plus"></span>
           Criar novo Projeto</a>
       </div>

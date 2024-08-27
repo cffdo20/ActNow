@@ -3,7 +3,7 @@ async function connect() {
     return global.connection;
 
   const mysql = require("mysql2/promise");
-  const dadosServerLocal = require('../Banco de Dados/configuracaoPessoalDB');
+  const dadosServerLocal = require('../_Desenvolvimento/Banco de Dados/configuracaoPessoalDB');
   const connection = await mysql.createConnection("mysql://"+dadosServerLocal.nomeServer+":"+dadosServerLocal.senha+"@localhost:3306/actnow24");
   console.log("Conectou no MySQL!");
   global.connection = connection;
@@ -18,6 +18,7 @@ async function callProcedureWithParameter(nomeProcedure, parametros = []) {
   const conn = await connect();
   const sql = 'Call ' + nomeProcedure + '(?);';
   const values = concatParametros(parametros);
+  console.log(`SQL Executado: ${sql.replace('?', `'${values}'`)}`); // Exibir no log o comando enviado ao servidor SQL
   const [resposta] = await conn.query(sql, values);
   return resposta;
 }

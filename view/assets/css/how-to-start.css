@@ -1,15 +1,13 @@
 .main-container{
     flex-direction: column;
-    display: flex; 
-    border-right: 1px solid #c1bbbb; 
-    border-left: 1px solid #c1bbbb;  
-     
+    display: flex;   
+    width: 80%;
 }
 
 
 ol>li{
     padding: 0.5rem; 
-    font-size: 1.125rem; 
+    font-size: 1rem; 
 }
 
 
@@ -32,6 +30,14 @@ ol>li{
     width: 60%;
 }
 
-.video-container{
-    padding: 1rem; 
+@media(max-width: 700px){
+    .video-container{
+        display: flex; 
+        justify-content: center;
+    }
+    iframe{
+
+        max-width: 90%; 
+        height: auto; 
+    }
 }

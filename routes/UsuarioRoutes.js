@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const usuarioController = require('../controller/UsuarioController.js');
+const voluntarioModel = require('../model/Voluntario.js');
+const ensureAuthenticated = require('../middleware/ensureAuthenticated.js');
 
 /*
   
@@ -43,6 +45,21 @@ router.post('/criar-conta', (req, res) => {
 
 */
 
+// Acessa o perfil de usuário
+router.get('/', ensureAuthenticated, (req,res) => {
+    console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
+    var dadosUsuario = { userName: req.session.user.username, userEmail: req.session.user['e-mail']};
+    voluntarioModel.getVoluntario(dadosUsuario.userName)
+    .then(Voluntario => {
+        console.log('\nResposta do back-end: ',{...dadosUsuario, Voluntario},'\n');
+        res.render('user-profile.ejs', {...dadosUsuario, Voluntario});
+    })
+    .catch(error => {
+        console.log(error);
+        console.log('\nresposta do back-end: ',{dadosUsuario, error},'\n');
+        res.redirect('/');
+    })
+});
 
 
 /*
@@ -55,7 +72,44 @@ router.post('/criar-conta', (req, res) => {
 
 */
 
+// Faz a edição do email do usuario
+router.post('/editar', ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
+    usuarioController.alterarEmailUsuario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            req.session.user['e-mail'] = req.body.userEmail;
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        }else{
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
 
+// Altera a senha do usuario
+router.post('/editar-senha', ensureAuthenticated, (req, res) => {
+    console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
+    usuarioController.alterarSenhaUsuario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',resposta.alerta,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.alerta)}`);
+        }else{
+            console.log('\nResposta do back-end: ',resposta.erro,'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent(resposta.erro)}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
 
 /*
 
@@ -67,5 +121,28 @@ router.post('/criar-conta', (req, res) => {
 
 */
 
+// Inativa um usuário
+router.post('/excluir', ensureAuthenticated, (req,res) => {
+    console.log('\nEntrada do front-end: ',req.body,req.session.user,'\n');
+    usuarioController.inativarUsuario(req)
+    .then(resposta => {
+        if(!resposta.erro){
+            console.log('\nResposta do back-end: ',{alerta: resposta},'\n');
+            req.session.destroy(err => {
+                if (err) {
+                  return res.redirect('/');
+                }
+                res.redirect('/');
+              });
+        }else{
+            console.log('\nResposta do back-end: ',{alerta: resposta.erro},'\n');
+            res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: resposta.erro})}`);
+        }
+    })
+    .catch(error => {
+        console.log('\nResposta do back-end (com erro): ',error,'\n');
+        res.redirect(`/usuarios?alerta=${encodeURIComponent({alerta: 'Houve um erro interno no servidor, tente mais tarde ou contacte o administrador do sistema.'})}`);
+    });
+});
 
 module.exports = router;
