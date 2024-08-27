@@ -9,7 +9,7 @@ function cadastrarAtividade(req){
                 resolve(resultado);
             }else{
                 resolve({
-                    alerta: resultado.resposta
+                    alerta: 'Atividade criada com sucesso!'
                 });
             }
         })
@@ -122,7 +122,7 @@ function inativarAtividade(req){
                 resolve(resultado);
             }else{
                 resolve({
-                    alerta: resultado.resposta
+                    alerta: 'Atividade excluída com sucesso!'
                 });
             }
         })

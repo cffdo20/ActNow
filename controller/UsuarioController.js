@@ -68,7 +68,6 @@ function alterarSenhaUsuario(req) {
   });
 }
 
-
 function alterarEmailUsuario(req) {
   return new Promise((resolve, reject) => {
     usuario.updateEmailUsuario(req.session.user.username, req.body.userEmail)

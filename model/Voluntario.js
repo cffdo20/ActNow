@@ -174,7 +174,11 @@ async function exitProjeto(tituloProj, username){
   const parametros = [tituloProj, username];
   try {
     const consulta = await bd.callProcedureWithParameter('sp_retirar_voluntario_projeto', parametros);
-    return consulta[0][0];
+    if(consulta.warningStatus === 0){
+      return {resposta: 'Você saiu do projeto!'};
+    } else {
+      return {erro: 'Ocorreu um erro ao sair do projeto'};
+    }
   } catch (error) {
     console.log(error);
     return error;
