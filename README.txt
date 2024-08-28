@@ -41,7 +41,7 @@ interessantes para conhecer/testar a aplicação, mas sinta-se livre para criar 
 
     Opção 3
         login: ashleywhite@example.com
-        senha: senha
+        senha; senha
 
     Opção 4
         login: chrisgreen@email.com
